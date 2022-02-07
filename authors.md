@@ -1,4 +1,4 @@
-##Authors
+The application authors are:
 1- Hiba Alsayegh 
 2- Ghaida Altuwaijri 
 3- Haneen Alawad 
