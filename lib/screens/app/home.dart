@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/screens/app/widget/home_body.dart';
-import 'package:focus_spot_finder/screens/add_place.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place.dart';
 
 class Home extends HookWidget {
   @override

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:focus_spot_finder/screens/add_place.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place.dart';
 import 'package:get/get.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/controller.dart';

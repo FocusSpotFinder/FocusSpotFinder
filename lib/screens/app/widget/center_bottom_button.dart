@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../add_place.dart';
+import '../../addPlace/add_place.dart';
 
 class CenterBottomButton extends HookWidget {
   const CenterBottomButton({

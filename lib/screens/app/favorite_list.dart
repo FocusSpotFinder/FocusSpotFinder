@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/favorite_list_model.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/add_place.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place.dart';
 import 'package:focus_spot_finder/screens/app/home.dart';
 import 'package:focus_spot_finder/screens/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
