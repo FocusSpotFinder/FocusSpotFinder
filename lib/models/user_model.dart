@@ -67,6 +67,7 @@ class UserModel {
       userModel.email = user.email;
       userModel.uid = user.uid;
       userModel.name = name;
+      userModel.country = "SA";
       await firebaseFirestore
           .collection("Users")
           .doc(user.uid)

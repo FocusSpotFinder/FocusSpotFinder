@@ -65,12 +65,12 @@ class _UserProfileState extends State<UserProfile> {
             controller: nameEditingController,
             keyboardType: TextInputType.name,
             validator: (value) {
-              RegExp regex = new RegExp(r'^.{3,}$');
+              RegExp regex = new RegExp(r'^.{2,}$');
               if (value.isEmpty) {
                 return ("Please Enter Your Name");
               }
               if (!regex.hasMatch(value)) {
-                return ("Please Enter a Valid Name, (Minumum of 3 Characters");
+                return ("Please Enter a Valid Name, (Minumum of 2 Characters");
               }
               return null;
             },
@@ -129,31 +129,35 @@ class _UserProfileState extends State<UserProfile> {
           child: initialCity == null
               ? SizedBox()
               : CountryListPick(
-                  pickerBuilder: (context, CountryCode countryCode) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment
-                          .spaceBetween, // use whichever suits your need
 
-                      children: [
-                        Icon(Icons.add_location_rounded,
-                            size: 35, color: Colors.black.withOpacity(0.4)),
-                        Text(countryCode.name,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black.withOpacity(0.4))),
-                        Icon(Icons.keyboard_arrow_down,
-                            size: 35, color: Colors.black.withOpacity(0.4)),
-                      ],
-                    );
-                  },
-                  initialSelection: initialCity ?? "DZ",
-                  onChanged: (CountryCode code) {
-                    print(code.name);
-                    initialCity = code.code;
-                  },
-                ),
+            pickerBuilder: (context, CountryCode countryCode) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceBetween,
+
+                children: [
+                  Icon(Icons.add_location_rounded,
+                      size: 35, color: Colors.black.withOpacity(0.4)),
+                  Text(countryCode.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black.withOpacity(0.4))),
+                  Icon(Icons.keyboard_arrow_down,
+                      size: 35, color: Colors.black.withOpacity(0.4)),
+                ],
+              );
+            },
+
+            initialSelection: initialCity ?? "DZ",
+
+
+            onChanged: (CountryCode code) {
+              print(code.name);
+              initialCity = code.code;
+            },
+          ),
         ),
       ),
     );
