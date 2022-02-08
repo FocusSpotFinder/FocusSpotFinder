@@ -35,15 +35,14 @@ class PlacesService {
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=park&rankby=distance&key=${Data().key}'));
     var json4 = convert.jsonDecode(response4.body);
 
-    //groub all the responsed and access the variable "results"
+    //group all the responses and access the variable "results"
     //and map the responses into place objects in a list
     var jsonResults = json['results'] +
         json2['results'] +
         json3['results'] +
         json4['results'] as List;
 
-    List<Place> list =
-        jsonResults.map((place) => Place.fromJson(place, icon)).toList();
+    List<Place> list = jsonResults.map((place) => Place.fromJson(place, icon)).toList();
 
     print("list google ${list.length}");
 
@@ -234,12 +233,3 @@ class PlacesService {
     return firebaseList;
   }
 }
-
-
-
-// https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRvAAAAwMpdHeWlXl-lH0vp7lez4znKPIWSWvgvZFISdKx45AwJVP1Qp37YOrH7sqHMJ8C-vBDC546decipPHchJhHZL94RcTUfPa1jWzo-rSHaTlbNtjh-N68RkcToUCuY9v2HNpo5mziqkir37WU8FJEqVBIQ4k938TI3e7bf8xq-uwDZcxoUbO_ZJzPxremiQurAYzCTwRhE_V0&sensor=false&key=AddYourOwnKeyHere
-
-// https://maps.googleapis.com/maps/api/place/photo
-//   ?maxwidth=400
-//   &photo_reference=Aap_uEDCYlCS_11syYitER9gL8JO8gvw8U8HAOAg67t-oEPco5v-huWxaDmTqdFCHzNYoA5v-FwNVoTeho7KMiFkgqFlX9cr0xrReme60MLVlO9e4b_rU4BhEPB0sBCS23Y-lPTWrgyZbsoqaj0uNqs6gGH6Q22mKogJ_MUq8gB4ViMaWRo2
-//   &key=AIzaSyACWoXHs--vIWycphQcc-infujRMkMlS08

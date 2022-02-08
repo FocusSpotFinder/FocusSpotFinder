@@ -16,7 +16,6 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app/widget/bottom_nav.dart';
-import 'app/widget/center_bottom_button.dart';
 
 class PlaceInfo extends StatefulWidget {
   final isFav;
@@ -585,15 +584,17 @@ class _PlaceInfoState extends State<PlaceInfo> {
         ],
       ),
 
-      floatingActionButton: CenterBottomButton(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: myPopMenu(context),
+        backgroundColor: Colors.white,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNav(
         onChange: (a) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (c) => AppPage(
-                        initialPage: a,
-                      )),
+                  builder: (c) => AppPage(initialPage: a,)),
               (route) => false);
         },
       ),

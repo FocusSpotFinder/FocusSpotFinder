@@ -27,7 +27,7 @@ class FocusSpotFinder extends StatelessWidget {
       ),
       home: SplashScreen(),
       routes: {
-        'signip': (context) => Signup(),
+        'signup': (context) => Signup(),
         'login': (context) => Login(),
         'initial_screen': (context) => InitialScreen(),
       },

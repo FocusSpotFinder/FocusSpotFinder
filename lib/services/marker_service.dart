@@ -30,7 +30,8 @@ class MarkerService {
                           place: place,
                           isFav: isFav,
                           geo: place.geometry,
-                        )),
+                        )
+                ),
               );
             }),
         position:

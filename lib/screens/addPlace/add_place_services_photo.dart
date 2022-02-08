@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/add_place_working_hours.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place_working_hours.dart';
 import 'package:focus_spot_finder/screens/controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
