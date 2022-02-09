@@ -75,9 +75,7 @@ class _FavListState extends State<FavList> {
                 separatorBuilder: (context, index) => SizedBox(height: 7.0),
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
-                  var noteInfo =
-                      snapshot.data.docs[index].data() as Map<String, dynamic>;
-                  // String docID = snapshot.data.docs[index].id;
+                  var noteInfo = snapshot.data.docs[index].data() as Map<String, dynamic>;
                   String placeId = noteInfo['placeId'];
                   String name = noteInfo['name'];
                   String vicinity = noteInfo['vicinity'];
@@ -134,52 +132,6 @@ class _FavListState extends State<FavList> {
           },
         ),
       ),
-    );
-  }
-
-  //the main menu
-  Widget myPopMenu(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        cardColor: Colors.white60,
-      ),
-      child: PopupMenuButton(
-          offset: const Offset(-35, -100),
-          icon: Image.asset('assets/logo.png', fit: BoxFit.cover, height: 40),
-          onCanceled: () {
-            setState(() {
-              isClicked = false;
-            });
-          },
-          onSelected: (value) {
-            setState(() {
-              isClicked = false;
-            });
-
-            print('pop up clicked');
-            if (value == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddPlace()),
-              );
-            }
-          },
-          itemBuilder: (context) {
-            setState(() {
-              isClicked = true;
-            });
-            return [
-              PopupMenuItem(
-                child: Center(
-                  child: Text(
-                    'Add Place',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                value: 0,
-              ),
-            ];
-          }),
     );
   }
 

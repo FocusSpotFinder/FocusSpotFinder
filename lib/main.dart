@@ -22,7 +22,7 @@ class FocusSpotFinder extends StatelessWidget {
       title: 'Focus Spot Finder',
       navigatorKey: navigatorKey,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: SplashScreen(),
       routes: {

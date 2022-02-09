@@ -313,49 +313,5 @@ class _ProfileState extends State<Profile> {
     setState(() {});
   }
 
-  Widget myPopMenu(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        cardColor: Colors.white60,
-      ),
-      child: PopupMenuButton(
-          offset: const Offset(-35, -100),
-          icon: Image.asset('assets/logo.png', fit: BoxFit.cover, height: 40),
-          onCanceled: () {
-            setState(() {
-              isClicked = false;
-            });
-          },
-          onSelected: (value) {
-            setState(() {
-              isClicked = false;
-            });
 
-            if (value == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddPlace()),
-              );
-            }
-
-            print('pop up clicked');
-          },
-          itemBuilder: (context) {
-            setState(() {
-              isClicked = true;
-            });
-            return [
-              PopupMenuItem(
-                child: Center(
-                  child: Text(
-                    'Add Place',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                value: 0,
-              ),
-            ];
-          }),
-    );
-  }
 }
