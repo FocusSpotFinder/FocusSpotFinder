@@ -45,6 +45,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
   final otherEditingController = new TextEditingController();
 
 
+
   double quietRate = 0;
   double crowdedRate = 0;
   double foodRate = 0;
@@ -694,6 +695,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
       },
     );
   }
+
 
   alertRate() {
     showDialog(
