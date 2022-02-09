@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/screens/app/widget/home_body.dart';
-import 'package:focus_spot_finder/screens/addPlace/add_place.dart';
 
 class Home extends HookWidget {
   @override
@@ -26,50 +25,9 @@ class Home extends HookWidget {
       body: HomeBody(),
     );
   }
-
-  //the main pop up menu
-  Widget myPopMenu(BuildContext context, ValueNotifier<bool> isClicked) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        cardColor: Colors.white60,
-      ),
-      child: PopupMenuButton(
-          offset: const Offset(-35, -100),
-          icon: Image.asset('assets/logo.png', fit: BoxFit.cover, height: 40),
-          onCanceled: () {
-            isClicked.value = false;
-          },
-          onSelected: (value) {
-            isClicked.value = false;
-
-            if (value == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddPlace()),
-              );
-            }
-
-            print('pop up clicked');
-          },
-          itemBuilder: (context) {
-            isClicked.value = false;
-            return [
-              PopupMenuItem(
-                child: Center(
-                  child: Text(
-                    'Add Place',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                value: 0,
-              ),
-            ];
-          }),
-    );
-  }
 }
 
-//shows alert if the user clicked on redierct to google map for navigation
+//shows alert if the user clicked on redirect to google map for navigation
 alertDialogGoogleNav(BuildContext context, onYes) {
   // set up the buttons
   Widget cancelButton = TextButton(
@@ -81,14 +39,12 @@ alertDialogGoogleNav(BuildContext context, onYes) {
   Widget continueButton = TextButton(child: Text("Continue"), onPressed: onYes);
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    //title: Text(""),
     content: Text("Would you like to open Google Maps?"),
     actions: [
       cancelButton,
       continueButton,
     ],
   );
-  // show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -97,6 +53,7 @@ alertDialogGoogleNav(BuildContext context, onYes) {
   );
 }
 
+//to format the types in the listTiles
 List<Text> typeFormat(List list) {
   List<Text> T = [];
 

@@ -21,13 +21,13 @@ class PermissionScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                "We need Location permission inorder to make app working",
+                "The application needs to access your location, inorder to make app working",
                 style: TextStyle(color: Colors.red),
               ),
             ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(), primary: Colors.green.shade300),
+                    shape: StadiumBorder(), primary: Colors.cyan.shade100),
                 onPressed: () async {
                   // await OpenAppSettings.openAppSettings();
                   Logger().i(await Permission.locationWhenInUse.status);

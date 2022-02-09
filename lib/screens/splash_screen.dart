@@ -8,7 +8,6 @@ import 'package:focus_spot_finder/screens/permission_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'auth/initial_screen.dart';
 
 class SplashScreen extends HookConsumerWidget {
@@ -17,14 +16,16 @@ class SplashScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
+      //if the user is logged in
+      //check location permission
+      //if permitted
       if (FirebaseAuth.instance.currentUser != null) {
         Permission.locationWhenInUse.request().then((value) {
           Logger().i(value);
           if (value.isGranted) {
             ref.read(placesProvider.notifier).init(context);
           } else {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => PermissionScreen()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PermissionScreen()));
           }
         });
       } else {
@@ -36,12 +37,14 @@ class SplashScreen extends HookConsumerWidget {
 
       return () {};
     }, []);
+
     ref.listen<PlacesState>(placesProvider, (p, c) {
       if (c.currentPosition != null && !c.loading) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => AppPage()));
       }
     });
+
     return Scaffold(
       body: Center(
         child: Column(

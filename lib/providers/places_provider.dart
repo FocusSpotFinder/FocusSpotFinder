@@ -7,14 +7,13 @@ import 'package:focus_spot_finder/services/places_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
-final placesProvider =
-    StateNotifierProvider<PlacesNotifier, PlacesState>((ref) {
+final placesProvider = StateNotifierProvider<PlacesNotifier, PlacesState>((ref) {
   return PlacesNotifier();
 });
 
 class PlacesNotifier extends StateNotifier<PlacesState> {
   PlacesNotifier() : super(PlacesState(false, [], null));
-  final placesService = PlacesService(); //i
+  final placesService = PlacesService();
   final locatorService = GeoLocatorService();
 
   Future<void> init(BuildContext context) async {
@@ -48,11 +47,7 @@ class PlacesNotifier extends StateNotifier<PlacesState> {
       openPlaces.sort((a, b) => a.distance.compareTo(b.distance));
       closedPlaces.sort((a, b) => a.distance.compareTo(b.distance));
       final sortedList = openPlaces + closedPlaces;
-      // data.sort((a, b) {
-      //   final int x = a.isOpen ? 0 : 1;
-      //   final int y = b.isOpen ? 0 : 1;
-      //   return x.compareTo(y);
-      // });
+
       try {
         final x = sortedList
             .map((e) => "${e.distance} and ${e.openingHours?.openNow ?? false}")

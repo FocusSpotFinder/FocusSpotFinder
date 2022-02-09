@@ -5,7 +5,6 @@ import 'package:focus_spot_finder/screens/app/favorite_list.dart';
 import 'package:focus_spot_finder/screens/app/home.dart';
 import 'package:focus_spot_finder/screens/app/profile/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'widget/bottom_nav.dart';
 import 'widget/center_bottom_button.dart';
 
@@ -15,8 +14,7 @@ class AppPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final controller =
-        usePageController(keepPage: false, initialPage: initialPage);
+    final controller = usePageController(keepPage: false, initialPage: initialPage);
     ref.listen<int>(appIndexProvider, (p, c) {
       controller.jumpToPage(c);
     });
@@ -40,7 +38,12 @@ class AppPage extends HookConsumerWidget {
       floatingActionButton: CenterBottomButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNav(
-        onChange: (a) {},
+        onChange: (a) {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (c) => AppPage(initialPage: a,)),
+                  (route) => false);
+        },
       ),
     );
   }

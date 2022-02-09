@@ -13,8 +13,7 @@ Future<void> main() async {
 }
 
 class FocusSpotFinder extends StatelessWidget {
-  static GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>(); // instance of class places_service
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
