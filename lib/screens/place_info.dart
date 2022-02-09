@@ -1033,14 +1033,35 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 color: Colors.blue,
                               )),
                           onPressed: () {
-                            Navigator.pop(context);
-                            alertAdditonalInfo();
+                            if(userChecked.isNotEmpty){
+                              AlertDialogSkip(context, () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                userChecked.clear();
+                                alertAdditonalInfo();
+                              });
+                            }else{
+                              AlertDialogSkip(context, () {
+                                Navigator.pop(context);
+                                alertAdditonalInfo();
+                              });
+                            }
+
+
+
                           }),
                       ElevatedButton(
                           child: Text("Next"),
                           onPressed: () {
-                            Navigator.pop(context);
-                            alertAdditonalInfo();
+                            if(userChecked.isEmpty){
+                              Fluttertoast.showToast(
+                                msg: "Please insure that you have entered information, or skip",
+                                toastLength: Toast.LENGTH_LONG,
+                              );
+                            }else {
+                              Navigator.pop(context);
+                              alertAdditonalInfo();
+                            }
                           })
                     ])
               ],
@@ -1165,42 +1186,109 @@ class _PlaceInfoState extends State<PlaceInfo> {
                           color: Colors.blue,
                         )),
                     onPressed: () {
-                      Navigator.pop(context);
-                      postRateAndReviewToFirestore(
-                          quietRate,
-                          crowdedRate,
-                          foodRate,
-                          techRate,
-                          reviewEditingController.text,
-                          userChecked,
-                          phoneNumberEditingController.text,
-                          websiteEditingController.text,
-                          twitterEditingController.text,
-                          instagramEditingController.text,
-                          context);
+                      if(phoneNumberEditingController.text != "" ||
+                          websiteEditingController.text != "" ||
+                          twitterEditingController.text != "" ||
+                          instagramEditingController.text != ""
+                      ){
+                        AlertDialogSkip(context, () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          phoneNumberEditingController.text = "";
+                          websiteEditingController.text = "";
+                          twitterEditingController.text = "";
+                          instagramEditingController.text = "";
+                          postRateAndReviewToFirestore(
+                              quietRate,
+                              crowdedRate,
+                              foodRate,
+                              techRate,
+                              reviewEditingController.text,
+                              userChecked,
+                              phoneNumberEditingController.text,
+                              websiteEditingController.text,
+                              twitterEditingController.text,
+                              instagramEditingController.text,
+                              context);
+                        });
+                      }else{
+                        Navigator.pop(context);
+                        postRateAndReviewToFirestore(
+                            quietRate,
+                            crowdedRate,
+                            foodRate,
+                            techRate,
+                            reviewEditingController.text,
+                            userChecked,
+                            phoneNumberEditingController.text,
+                            websiteEditingController.text,
+                            twitterEditingController.text,
+                            instagramEditingController.text,
+                            context);
+                      }
+
                     }),
                 ElevatedButton(
                     child: Text("Submit"),
                     onPressed: () {
-                      Navigator.pop(context);
-                      postRateAndReviewToFirestore(
-                          quietRate,
-                          crowdedRate,
-                          foodRate,
-                          techRate,
-                          reviewEditingController.text,
-                          userChecked,
-                          phoneNumberEditingController.text,
-                          websiteEditingController.text,
-                          twitterEditingController.text,
-                          instagramEditingController.text,
-                          context);
+                      if(phoneNumberEditingController.text == "" &&
+                          websiteEditingController.text == "" &&
+                          twitterEditingController.text == "" &&
+                          instagramEditingController.text == ""
+                      ){
+                        Fluttertoast.showToast(
+                          msg: "Please insure that you have entered information, or skip",
+                          toastLength: Toast.LENGTH_LONG,
+                        );
+                      }else{
+                        Navigator.pop(context);
+                        postRateAndReviewToFirestore(
+                            quietRate,
+                            crowdedRate,
+                            foodRate,
+                            techRate,
+                            reviewEditingController.text,
+                            userChecked,
+                            phoneNumberEditingController.text,
+                            websiteEditingController.text,
+                            twitterEditingController.text,
+                            instagramEditingController.text,
+                            context);
+                      }
+
                     })
               ])
             ],
           );
         });
   }
+
+  AlertDialogSkip(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to skip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 
   void _onSelected(bool selected, String dataName) {
     if (selected == true) {
@@ -1268,6 +1356,11 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Instagram": "$instagram",
       "PlaceId": "$placeId"
     });
+
+    Fluttertoast.showToast(
+      msg: "Rate & review submitted successfully",
+      toastLength: Toast.LENGTH_LONG,
+    );
 
     reviewEditingController.text = "";
     userChecked.clear();

@@ -112,7 +112,18 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
-          if (_formKey.currentState.validate()) {
+          if (phoneNumberEditingController.text == "" &&
+              websiteEditingController.text == "" &&
+              twitterEditingController.text == "" &&
+              instagramEditingController.text == "" ){
+            Fluttertoast.showToast(
+              msg: "Please insure that you have entered information, or skip",
+              toastLength: Toast.LENGTH_LONG,
+            );
+          }else if (phoneNumberEditingController.text != null ||
+              websiteEditingController.text != null ||
+              twitterEditingController.text != null ||
+              instagramEditingController.text != null ) {
             AlertDialogAddPlace(context, () {
               postPlaceDateToFirestoreSocial(
                   phoneNumberEditingController.text,
@@ -227,16 +238,35 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
                                   color: Colors.blue,
                                 )),
                             onPressed: () {
-                              postPlaceDateToFirestoreSocial(
-                                  phoneNumberEditingController.text,
-                                  websiteEditingController.text,
-                                  twitterEditingController.text,
-                                  instagramEditingController.text,
-                                  context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Home()));
+                              if(phoneNumberEditingController.text != "" ||
+                                  websiteEditingController.text != "" ||
+                                  twitterEditingController.text != "" ||
+                                  instagramEditingController.text != "" ){
+                                AlertDialogSkip(context, () {
+                                  postPlaceDateToFirestoreSocial(
+                                      phoneNumberEditingController.text,
+                                      websiteEditingController.text,
+                                      twitterEditingController.text,
+                                      instagramEditingController.text,
+                                      context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()));
+                                });
+                              }else{
+                                postPlaceDateToFirestoreSocial(
+                                    phoneNumberEditingController.text,
+                                    websiteEditingController.text,
+                                    twitterEditingController.text,
+                                    instagramEditingController.text,
+                                    context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()));
+                              }
+
                             }),
                       ],
                     ),
@@ -315,4 +345,32 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
       },
     );
   }
+
+  AlertDialogSkip(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to skip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 }

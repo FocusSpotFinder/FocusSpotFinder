@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       autofocus: false,
       controller: sundayStartEditingController,
       keyboardType: TextInputType.name,
-      readOnly: true, //set it true, so that user will not able to edit text
+      readOnly: true,
 
       validator: (value) {},
       onSaved: (value) {
@@ -83,15 +84,12 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
           print(pickedTime.format(context)); //output 10:51 PM
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            sundayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            sundayStartEditingController.text = formattedTime;
             mondayStartEditingController.text = formattedTime;
             tuesdayStartEditingController.text = formattedTime;
             wednesdayStartEditingController.text = formattedTime;
@@ -104,10 +102,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
 
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -133,18 +129,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            sundayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            sundayEndEditingController.text = formattedTime;
             mondayEndEditingController.text = formattedTime;
             tuesdayEndEditingController.text = formattedTime;
             wednesdayEndEditingController.text = formattedTime;
@@ -156,10 +149,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -181,18 +172,16 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
             mondayStartEditingController.text =
-                formattedTime; //set the value of text field.
+                formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -200,10 +189,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -225,18 +212,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            mondayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            mondayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -244,10 +228,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -269,18 +251,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            tuesdayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            tuesdayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -288,10 +267,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -313,18 +290,16 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
             tuesdayEndEditingController.text =
-                formattedTime; //set the value of text field.
+                formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -332,10 +307,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -357,18 +330,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            wednesdayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            wednesdayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -376,10 +346,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -401,18 +369,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            wednesdayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            wednesdayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -420,10 +385,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -445,18 +408,14 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
-
+          print(formattedTime);
           setState(() {
-            thursdayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            thursdayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -464,10 +423,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -489,18 +446,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            thursdayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            thursdayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -508,10 +462,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -533,18 +485,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            fridayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            fridayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -552,10 +501,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -577,18 +524,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            fridayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            fridayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -596,10 +540,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -621,18 +563,14 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
-
+          print(formattedTime);
           setState(() {
-            saturdayStartEditingController.text =
-                formattedTime; //set the value of text field.
+            saturdayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -640,10 +578,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -665,18 +601,15 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         );
 
         if (pickedTime != null) {
-          print(pickedTime.format(context)); //output 10:51 PM
+          print(pickedTime.format(context));
           DateTime parsedTime =
               DateFormat.jm().parse(pickedTime.format(context).toString());
-          //converting to DateTime so that we can further format on different pattern.
-          print(parsedTime); //output 1970-01-01 22:53:00.000
+          print(parsedTime);
           String formattedTime = DateFormat('HH:mm a').format(parsedTime);
-          print(formattedTime); //output 14:59:00
-          //DateFormat() is from intl package, you can format the time on any pattern you need.
+          print(formattedTime);
 
           setState(() {
-            saturdayEndEditingController.text =
-                formattedTime; //set the value of text field.
+            saturdayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -684,10 +617,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //prefixIcon: Icon(Icons.label),
           fillColor: Colors.grey.shade100,
           filled: true,
-          //hintText: "",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -700,6 +631,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
+
           if (sundayStartEditingController.text != "" &&
               sundayEndEditingController.text != "" &&
               mondayStartEditingController.text != "" &&
@@ -754,14 +686,11 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
                           addPlaceSocial(docId: widget.docId)));
             });
           } else {
-            AlertDialogAddPlaceWorkingHours(context, () {
-              postPlaceDateToFirestoreWorkingHours(wk, context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          addPlaceSocial(docId: widget.docId)));
-            });
+            Fluttertoast.showToast(
+              msg: "Please insure that you have entered information, or skip",
+              toastLength: Toast.LENGTH_LONG,
+            );
+
           }
         },
         child: Text(
@@ -958,12 +887,40 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
                                   color: Colors.blue,
                                 )),
                             onPressed: () {
-                              postPlaceDateToFirestoreWorkingHours(wk, context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          addPlaceSocial(docId: widget.docId)));
+
+                              if (sundayStartEditingController.text != "" ||
+                                  sundayEndEditingController.text != "" ||
+                                  mondayStartEditingController.text != "" ||
+                                  mondayEndEditingController.text != "" ||
+                                  tuesdayStartEditingController.text != "" ||
+                                  tuesdayEndEditingController.text != "" ||
+                                  wednesdayStartEditingController.text != "" ||
+                                  wednesdayEndEditingController.text != "" ||
+                                  thursdayStartEditingController.text != "" ||
+                                  thursdayEndEditingController.text != "" ||
+                                  fridayStartEditingController.text != "" ||
+                                  fridayEndEditingController.text != "" ||
+                                  saturdayStartEditingController.text != "" ||
+                                  saturdayEndEditingController.text != ""){
+
+                                AlertDialogSkip(context, () {
+                                  postPlaceDateToFirestoreWorkingHours(wk, context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              addPlaceSocial(docId: widget.docId)));
+                                });
+
+                              }else{
+                                postPlaceDateToFirestoreWorkingHours(wk, context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            addPlaceSocial(docId: widget.docId)));
+                              }
+
                             }),
                       ],
                     ),
@@ -1009,4 +966,32 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       },
     );
   }
+
+  AlertDialogSkip(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to skip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,15 +57,23 @@ class _AddPlaceRateReviewState extends State<AddPlaceRateReview> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
-          AlertDialogAddPlaceRateReview(context, () {
-            postPlaceDateToFirestoreRateReview(quietRate, crowdedRate, foodRate,
-                techRate, reviewEditingController.text, context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddPlaceServicesPhoto(docId: widget.docId)));
-          });
+
+          if(quietRate==0 || crowdedRate==0 || foodRate==0 || techRate==0 || reviewEditingController.text=="" ){
+            Fluttertoast.showToast(
+              msg: "Please insure that all information are entered",
+              toastLength: Toast.LENGTH_LONG,
+            );
+          }else {
+            AlertDialogAddPlaceRateReview(context, () {
+              postPlaceDateToFirestoreRateReview(
+                  quietRate, crowdedRate, foodRate,
+                  techRate, reviewEditingController.text, context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      AddPlaceServicesPhoto(docId: widget.docId)));
+            });
+          }
         },
         child: Text(
           'Next',
@@ -327,19 +336,24 @@ class _AddPlaceRateReviewState extends State<AddPlaceRateReview> {
                             color: Colors.blue,
                           )),
                       onPressed: () {
-                        postPlaceDateToFirestoreRateReview(
-                            quietRate,
-                            crowdedRate,
-                            foodRate,
-                            techRate,
-                            reviewEditingController.text,
-                            context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddPlaceServicesPhoto(
-                                    docId: widget.docId)));
-                      }),
+                        if(quietRate!=0 || crowdedRate!=0 || foodRate!=0 || techRate!=0 || reviewEditingController.text!="" ){
+                          AlertDialogSkip(context, () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddPlaceServicesPhoto(
+                                        docId: widget.docId)));
+                          });
+                        }else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddPlaceServicesPhoto(
+                                      docId: widget.docId)));
+                        }
+
+                      }
+                      ),
                   SizedBox(height: 40),
                 ],
               ),
@@ -401,4 +415,32 @@ class _AddPlaceRateReviewState extends State<AddPlaceRateReview> {
       },
     );
   }
+
+  AlertDialogSkip(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to skip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 }

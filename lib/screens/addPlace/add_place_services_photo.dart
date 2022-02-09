@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/screens/addPlace/add_place_working_hours.dart';
@@ -53,7 +54,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
           },
           child: Row(
               mainAxisAlignment:
-                  MainAxisAlignment.center, // use whichever suits your need
+              MainAxisAlignment.center, // use whichever suits your need
 
               children: [
                 Icon(Icons.local_see, size: 30, color: Colors.indigo.shade900),
@@ -74,23 +75,31 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
-          AlertDialogAddPlaceServicesPhoto(context, () async {
-            if (myController.f1.value != null &&
-                myController.f1.value.path.isNotEmpty) {
-              photo = await uploadImageToStorage(
-                  myController.f1.value, widget.docId);
-            }
+          if(userChecked.isEmpty && myController.f1.value.path.isEmpty){
+            Fluttertoast.showToast(
+              msg: "Please insure that you have entered information, or skip",
+              toastLength: Toast.LENGTH_LONG,
+            );
+          }else {
+            AlertDialogAddPlaceServicesPhoto(context, () async {
+              if (myController.f1.value != null &&
+                  myController.f1.value.path.isNotEmpty) {
+                photo = await uploadImageToStorage(
+                    myController.f1.value, widget.docId);
+              }
 
-            postPlaceDateToFirestoreServicesPhoto(photo, userChecked, context);
+              postPlaceDateToFirestoreServicesPhoto(
+                  photo, userChecked, context);
 
-            myController.f1 = File('').obs;
+              myController.f1 = File('').obs;
 
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        addPlaceworkingHours(docId: widget.docId)));
-          });
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          addPlaceworkingHours(docId: widget.docId)));
+            });
+          }
         },
         child: Text(
           'Next',
@@ -105,176 +114,194 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
-      height: height,
-      child: Stack(
-        children: <Widget>[
-          //to show the decoration on the background
-          Positioned(
-            top: -MediaQuery.of(context).size.height * .15,
-            right: -MediaQuery.of(context).size.width * .4,
-            child: Container(
-                child: Transform.rotate(
-              angle: -pi / 3.5,
-              child: ClipPath(
-                clipper: ClipPainter(),
+          height: height,
+          child: Stack(
+            children: <Widget>[
+              //to show the decoration on the background
+              Positioned(
+                top: -MediaQuery.of(context).size.height * .15,
+                right: -MediaQuery.of(context).size.width * .4,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * .5,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.cyan.shade50,
-                        Colors.cyan.shade400,
-                      ],
-                    ),
+                    child: Transform.rotate(
+                      angle: -pi / 3.5,
+                      child: ClipPath(
+                        clipper: ClipPainter(),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * .5,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.cyan.shade50,
+                                Colors.cyan.shade400,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: height * .2),
+                      //the title
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: 'Additional Information',
+                          style: GoogleFonts.lato(
+                            textStyle: Theme.of(context).textTheme.headline1,
+                            fontSize: 38,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.indigo.shade900,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 30),
+
+                      Text(
+                          "If you know any of the following additional place information, please add them, or leave it empty",
+                          style: GoogleFonts.lato(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          )),
+
+                      SizedBox(height: 30),
+
+                      SizedBox(height: 30),
+
+                      Text("Available Services",
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.indigo.shade900,
+                          )),
+                      SizedBox(height: 10),
+                      Column(
+                        children: <Widget>[
+                          SizedBox(
+                            // height: 300, // constrain height
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: _availableServices.length,
+                                itemBuilder: (context, i) {
+                                  return ListTile(
+                                      title: Text(_availableServices[i],
+                                          style: GoogleFonts.lato(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                          )),
+                                      trailing: Checkbox(
+                                        value: userChecked
+                                            .contains(_availableServices[i]),
+                                        onChanged: (val) {
+                                          _onSelected(val, _availableServices[i]);
+                                        },
+                                      )
+                                    //you can use checkboxlistTile too
+                                  );
+                                }),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 30),
+
+                      Text("Photo",
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.indigo.shade900,
+                          )),
+                      SizedBox(height: 10),
+
+                      Container(
+                        // color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: FileImage(myController.f1.value),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 30),
+                                  SizedBox(
+                                      width: 160.0,
+                                      height: 70.0,
+                                      child: addPlacePhotoButton),
+                                ]),
+                            SizedBox(height: 30),
+                            nextButton,
+                            TextButton(
+                                child: Text('Skip',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.blue,
+                                    )),
+                                onPressed: () {
+                                  if(userChecked.isNotEmpty || myController.f1.value.path.isNotEmpty) {
+
+                                    AlertDialogSkip(context, () {
+                                      photo = null;
+                                      userChecked.clear();
+
+                                      postPlaceDateToFirestoreServicesPhoto(
+                                          photo, userChecked, context);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  addPlaceworkingHours(
+                                                      docId: widget.docId)));
+                                    });
+
+                                  }else {
+                                    postPlaceDateToFirestoreServicesPhoto(
+                                        photo, userChecked, context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                addPlaceworkingHours(
+                                                    docId: widget.docId)));
+                                  }
+                                }),
+                            SizedBox(height: 40),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            )),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .2),
-                  //the title
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: 'Additional Information',
-                      style: GoogleFonts.lato(
-                        textStyle: Theme.of(context).textTheme.headline1,
-                        fontSize: 38,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.indigo.shade900,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 30),
-
-                  Text(
-                      "If you know any of the following additional place information, please add them, or leave it empty",
-                      style: GoogleFonts.lato(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                      )),
-
-                  SizedBox(height: 30),
-
-                  SizedBox(height: 30),
-
-                  Text("Available Services",
-                      style: GoogleFonts.lato(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.indigo.shade900,
-                      )),
-                  SizedBox(height: 10),
-                  Column(
-                    children: <Widget>[
-                      SizedBox(
-                        // height: 300, // constrain height
-                        child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: _availableServices.length,
-                            itemBuilder: (context, i) {
-                              return ListTile(
-                                  title: Text(_availableServices[i],
-                                      style: GoogleFonts.lato(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      )),
-                                  trailing: Checkbox(
-                                    value: userChecked
-                                        .contains(_availableServices[i]),
-                                    onChanged: (val) {
-                                      _onSelected(val, _availableServices[i]);
-                                    },
-                                  )
-                                  //you can use checkboxlistTile too
-                                  );
-                            }),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 30),
-
-                  Text("Photo",
-                      style: GoogleFonts.lato(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.indigo.shade900,
-                      )),
-                  SizedBox(height: 10),
-
-                  Container(
-                    // color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: FileImage(myController.f1.value),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                              SizedBox(
-                                  width: 160.0,
-                                  height: 70.0,
-                                  child: addPlacePhotoButton),
-                            ]),
-                        SizedBox(height: 30),
-                        nextButton,
-                        TextButton(
-                            child: Text('Skip',
-                                style: GoogleFonts.lato(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue,
-                                )),
-                            onPressed: () {
-                              postPlaceDateToFirestoreServicesPhoto(
-                                  photo, userChecked, context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          addPlaceworkingHours(
-                                              docId: widget.docId)));
-                            }),
-                        SizedBox(height: 40),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 
   void postPlaceDateToFirestoreServicesPhoto(
       photo, List<String> services, context) async {
     var doc =
-        FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+    FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
     if (photo != null) {
       var docRef = await doc.update({"Photo": "[$photo]"});
       photo = null;
@@ -283,7 +310,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
     }
 
     var collection =
-        FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+    FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
     var docReff = await collection.update({"Available services": "$services"});
   }
 
@@ -346,4 +373,32 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
       });
     }
   }
+
+  AlertDialogSkip(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to skip?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 }
