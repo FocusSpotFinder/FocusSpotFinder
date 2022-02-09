@@ -26,7 +26,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
     "Meetings Room",
     "Isolated Capsule Room",
     "Closed Room",
-    "Outdoor"
+    "Outdoor Seating"
   ];
   List<String> userChecked = [];
   String checked = "";

@@ -41,6 +41,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
   bool insertWorkingDaysButton = false;
 
   final reviewEditingController = new TextEditingController();
+  final incorrectInfoEditingController = new TextEditingController();
+  final otherEditingController = new TextEditingController();
+
+
   double quietRate = 0;
   double crowdedRate = 0;
   double foodRate = 0;
@@ -50,7 +54,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     "Meetings Room",
     "Isolated Capsule Room",
     "Closed Room",
-    "Outdoor"
+    "Outdoor Seating"
   ];
   List<String> userChecked = [];
   final phoneNumberEditingController = new TextEditingController();
@@ -90,61 +94,61 @@ class _PlaceInfoState extends State<PlaceInfo> {
         actions: <Widget>[
           favorited
               ? FavoriteButton(
-                  isFavorite: true,
-                  iconSize: 50,
-                  iconColor: Colors.red,
-                  iconDisabledColor: Colors.white,
-                  valueChanged: (_isFavorite) {
-                    print('Is Favorite $_isFavorite)');
-                    setState(() {
-                      FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(user.uid)
-                          .collection('Favorites')
-                          .doc(widget.place.placeId)
-                          .get()
-                          .then((DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists) {
-                          favoriteList.deleteItem(widget.place.placeId);
-                        } else {
-                          favoriteList.addItem(
-                              widget.place.placeId,
-                              widget.place.name,
-                              widget.place.vicinity,
-                              widget.place.types);
-                        }
-                      });
-                    });
-                  },
-                )
+            isFavorite: true,
+            iconSize: 50,
+            iconColor: Colors.red,
+            iconDisabledColor: Colors.white,
+            valueChanged: (_isFavorite) {
+              print('Is Favorite $_isFavorite)');
+              setState(() {
+                FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(user.uid)
+                    .collection('Favorites')
+                    .doc(widget.place.placeId)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  if (documentSnapshot.exists) {
+                    favoriteList.deleteItem(widget.place.placeId);
+                  } else {
+                    favoriteList.addItem(
+                        widget.place.placeId,
+                        widget.place.name,
+                        widget.place.vicinity,
+                        widget.place.types);
+                  }
+                });
+              });
+            },
+          )
               : FavoriteButton(
-                  isFavorite: false,
-                  iconSize: 50,
-                  iconColor: Colors.red,
-                  iconDisabledColor: Colors.white,
-                  valueChanged: (_isFavorite) {
-                    print('Is Favorite $_isFavorite)');
-                    setState(() {
-                      FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(user.uid)
-                          .collection('Favorites')
-                          .doc(widget.place.placeId)
-                          .get()
-                          .then((DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists) {
-                          favoriteList.deleteItem(widget.place.placeId);
-                        } else {
-                          favoriteList.addItem(
-                              widget.place.placeId,
-                              widget.place.name,
-                              widget.place.vicinity,
-                              widget.place.types);
-                        }
-                      });
-                    });
-                  },
-                ),
+            isFavorite: false,
+            iconSize: 50,
+            iconColor: Colors.red,
+            iconDisabledColor: Colors.white,
+            valueChanged: (_isFavorite) {
+              print('Is Favorite $_isFavorite)');
+              setState(() {
+                FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(user.uid)
+                    .collection('Favorites')
+                    .doc(widget.place.placeId)
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) {
+                  if (documentSnapshot.exists) {
+                    favoriteList.deleteItem(widget.place.placeId);
+                  } else {
+                    favoriteList.addItem(
+                        widget.place.placeId,
+                        widget.place.name,
+                        widget.place.vicinity,
+                        widget.place.types);
+                  }
+                });
+              });
+            },
+          ),
           PopupMenuButton(
             icon: Icon(Icons.ios_share, color: Colors.white, size: 30),
             onSelected: (result) {
@@ -224,22 +228,22 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ),
               widget.place.photos.isNotEmpty
                   ? CarouselSlider(
-                      options: CarouselOptions(
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        autoPlay: true,
-                      ),
-                      items: widget.place.photos
-                          .map((e) => ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Stack(
-                                    fit: StackFit.expand,
-                                    children: <Widget>[
-                                      widget.place.getImage(e)
-                                    ]),
-                              ))
-                          .toList(),
-                    )
+                options: CarouselOptions(
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  autoPlay: true,
+                ),
+                items: widget.place.photos
+                    .map((e) => ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        widget.place.getImage(e)
+                      ]),
+                ))
+                    .toList(),
+              )
                   : SizedBox.shrink(),
               SizedBox(
                 height: 7,
@@ -254,8 +258,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
               (widget.place.types != null)
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: typeFormat(widget.place.types))
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: typeFormat(widget.place.types))
                   : Row(),
 
               if (widget.place.openingHours.openNow == true)
@@ -299,8 +303,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   ),
                 ),
               for (int i = 0;
-                  i < widget.place.openingHours.workingDays.length;
-                  i++)
+              i < widget.place.openingHours.workingDays.length;
+              i++)
                 Visibility(
                   visible: workingDaysButton,
                   child: Text(
@@ -519,67 +523,67 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
               (widget.place.reviewsList.isNotEmpty)
                   ? Row(
-                      children: [
-                        new Flexible(
-                          child: ListView.separated(
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(height: 7.0),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.all(8),
-                              itemCount: widget.place.reviewsList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  height: 50,
-                                  child: ListTile(
-                                    isThreeLine: true,
-                                    shape: RoundedRectangleBorder(),
-                                    title: Text(
-                                      "${widget.place.reviewsList[index][0]}",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${widget.place.reviewsList[index][1]}",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
+                children: [
+                  new Flexible(
+                    child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 7.0),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: widget.place.reviewsList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 50,
+                            child: ListTile(
+                              isThreeLine: true,
+                              shape: RoundedRectangleBorder(),
+                              title: Text(
+                                "${widget.place.reviewsList[index][0]}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${widget.place.reviewsList[index][1]}",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.black,
                                     ),
                                   ),
-                                );
-                              }),
-                        ),
-                      ],
-                    )
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              )
                   : Text(
-                      "No reviews found\n  \n ",
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
+                "No reviews found\n  \n ",
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
           isClicked
               ? Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.black45,
-                )
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.black45,
+          )
               : SizedBox(),
         ],
       ),
@@ -595,7 +599,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (c) => AppPage(initialPage: a,)),
-              (route) => false);
+                  (route) => false);
         },
       ),
     );
@@ -624,7 +628,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             if (value == 0) {
               alertRate();
             } else if (value == 1) {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => addPlace()),);
+              alertReport();
             }
           },
           itemBuilder: (context) {
@@ -672,7 +676,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
       },
     );
     Widget continueButton =
-        TextButton(child: Text("Continue"), onPressed: onYes);
+    TextButton(child: Text("Continue"), onPressed: onYes);
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text(""),
@@ -921,7 +925,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 },
                 textInputAction: TextInputAction.next,
                 maxLines: 13,
-                // when user presses enter it will adapt to it
                 decoration: InputDecoration(
                     fillColor: Colors.grey.shade100,
                     filled: true,
@@ -1227,8 +1230,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     String placeId = widget.place.placeId;
 
     var collection = FirebaseFirestore.instance.collection('Review').doc();
-    var docReff = await collection
-        .set({"Review": "$review", "User ID": "$uid", "PlaceId": "$placeId"});
+    var docReff = await collection.set({"Review": "$review", "User ID": "$uid", "PlaceId": "$placeId"});
 
     var collection2 = FirebaseFirestore.instance.collection('Rate').doc();
     var docReff2 = await collection2.set({
@@ -1241,16 +1243,16 @@ class _PlaceInfoState extends State<PlaceInfo> {
     });
 
     if (phone == "") {
-      phone == widget.place.phoneNumber;
+      phone = widget.place.phoneNumber;
     }
     if (website == "") {
-      website == widget.place.website;
+      website = widget.place.website;
     }
     if (twitter == "") {
-      twitter == widget.place.twitter;
+      twitter = widget.place.twitter;
     }
     if (instagram == "") {
-      instagram == widget.place.instagram;
+      instagram = widget.place.instagram;
     }
 
     var collection3 = FirebaseFirestore.instance
@@ -1542,7 +1544,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                          "Measures the place technical facilities, such as caples, WiFi, computers, etc.",
+                          "Measures the place technical facilities, such as cables, WiFi, computers, etc.",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             fontSize: 15,
@@ -1591,4 +1593,383 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
     return T;
   }
+
+  alertReport() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text("Report an Issue",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.indigo.shade900,
+                  )),
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 300.0, // Change as per your requirement
+                      width: 300.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Material(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.cyan.shade100,
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                alertReportIncorrect();
+
+                              },
+                              child: Text('Incorrect information', style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.indigo.shade900,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          Material(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.cyan.shade100,
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                alertResieved();
+                              },
+                              child: Text('Place permanently closed', style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.indigo.shade900,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          Material(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.cyan.shade100,
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                alertResieved();
+                              },
+                              child: Text('Place not found', style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.indigo.shade900,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          Material(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.cyan.shade100,
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                alertReportOther();
+                                Navigator.pop(context);
+                                alertResieved();
+                              },
+                              child: Text('Other', style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.indigo.shade900,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                    ])
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  alertReportIncorrect() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text("Report an Issue",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.indigo.shade900,
+                  )),
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 300.0,
+                      width: 300.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Text("Let us know what information is incorrect",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.indigo.shade900,
+                              )),
+
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            autofocus: false,
+                            controller: incorrectInfoEditingController,
+                            validator: (value) {},
+                            onSaved: (value) {
+                              incorrectInfoEditingController.text = value;
+                            },
+                            textInputAction: TextInputAction.next,
+                            maxLines: 9,
+                            decoration: InputDecoration(
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                hintText: "Incorrect information",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            incorrectInfoEditingController.text="";
+                          }),
+                      ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            alertResieved();
+                          }),
+                    ])
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  alertReportOther() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text("Report an Issue",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.indigo.shade900,
+                  )),
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 300.0,
+                      width: 300.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Text("Let us know what issues you faced",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.indigo.shade900,
+                              )),
+
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            autofocus: false,
+                            controller: otherEditingController,
+                            validator: (value) {},
+                            onSaved: (value) {
+                              otherEditingController.text = value;
+                            },
+                            textInputAction: TextInputAction.next,
+                            maxLines: 9,
+                            decoration: InputDecoration(
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                hintText: "Other...",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            otherEditingController.text="";
+                          }),
+                      ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            alertResieved();
+                          }),
+                    ])
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  alertResieved() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text("Report an Issue",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.indigo.shade900,
+                  )),
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 300.0,
+                      width: 300.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Image.asset('assets/report.png', fit: BoxFit.fitHeight, height: 100),
+                          SizedBox(
+                              height: 15
+                          ),
+                          Text("Thank You",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.indigo.shade900,
+                              )),
+
+                          Text("Your report has been successfully sent to Focus Spot Finder team",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.indigo.shade900,
+                              )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          child: Text("Close"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                    ])
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
 }
+
