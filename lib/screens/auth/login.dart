@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/password_reset.dart';
+import 'package:focus_spot_finder/screens/auth/password_reset.dart';
 import 'package:focus_spot_finder/screens/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
