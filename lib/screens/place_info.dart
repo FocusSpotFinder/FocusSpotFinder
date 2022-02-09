@@ -50,7 +50,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     "Meetings Room",
     "Isolated Capsule Room",
     "Closed Room",
-    "Outdoor"
+    "Outdoor Seating"
   ];
   List<String> userChecked = [];
   final phoneNumberEditingController = new TextEditingController();
