@@ -352,8 +352,7 @@ class _UserProfileState extends State<UserProfile> {
                                     color: Colors.black.withOpacity(0.5)),
                                 Text(
                                   "Birthday:  "
-                                  "${age.day}/${age.month}/${age.year}",
-                                  style: TextStyle(
+                                 "  ${age.day}/${age.month}/${age.year}",                                  style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black.withOpacity(0.4)),
