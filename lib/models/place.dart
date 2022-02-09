@@ -151,6 +151,7 @@ class Place {
         // Get data from docs and convert map to List
         final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
+
         for (int x = 0; x < allData.length; x++) {
           var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
           if (noteInfo["PlaceId"] == placeId) {
@@ -246,6 +247,7 @@ class Place {
         var instagram = "";
         var services = "";
 
+        String ph;
         var collection = FirebaseFirestore.instance.collection('googlePlace');
         var docSnapshot = await collection.doc(placeId).get();
         if (docSnapshot.exists) {
@@ -255,10 +257,18 @@ class Place {
           twitter = data['Twitter'];
           instagram = data['Instagram'];
           services = data['Available services'];
+          ph = data['Photos'];
+          print(ph);
+
+         if(ph != ""){
+           ph = data['Photos'].replaceAll('[', '').replaceAll(']', '').replaceAll(' ','');
+           photoReference = ph.split(',');
+         }
+         print(photoReference);
         }
 
-        final regExp = new RegExp(r"(\w+\\?\'?\w*\s?\w+)");
-        var servicesList = regExp
+        final regExp2= new RegExp(r"(\w+\\?\'?\w*\s?\w+)");
+        var servicesList = regExp2
             .allMatches(services)
             .map((m) => m.group(1))
             .map((String item) => item.replaceAll(new RegExp(r'[\[\],]'), ''))
@@ -320,8 +330,8 @@ class Place {
         String photo = "";
         List<dynamic> photosList = [];
 
-        if (data['Photo'] != "") {
-          photo = data['Photo'].replaceAll('[', '').replaceAll(']', '');
+        if (data['Photos'] != "") {
+          photo = data['Photos'].replaceAll('[', '').replaceAll(']', '');
           photosList = photo.split(',');
         }
 
@@ -593,7 +603,6 @@ class Place {
     return _result;
   }
 
-  //get the place images from Google API
   Image getImage(photoReference) {
     if (photoReference.contains("firebase")) {
       log("firebase photo");

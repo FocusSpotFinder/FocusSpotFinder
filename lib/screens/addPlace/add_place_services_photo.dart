@@ -303,10 +303,10 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
     var doc =
     FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
     if (photo != null) {
-      var docRef = await doc.update({"Photo": "[$photo]"});
+      var docRef = await doc.update({"Photos": "[$photo]"});
       photo = null;
     } else {
-      var docRef = await doc.update({"Photo": ""});
+      var docRef = await doc.update({"Photos": ""});
     }
 
     var collection =

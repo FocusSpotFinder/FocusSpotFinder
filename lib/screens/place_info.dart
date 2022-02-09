@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +13,9 @@ import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:focus_spot_finder/screens/app/app_page.dart';
+import 'package:focus_spot_finder/screens/controller.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -62,6 +67,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
   final websiteEditingController = new TextEditingController();
   final twitterEditingController = new TextEditingController();
   final instagramEditingController = new TextEditingController();
+
+  var myController = Get.put(MyController());
+  var photo;
 
   @override
   void initState() {
@@ -625,7 +633,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
             });
 
             print('pop up clicked');
-            //if rate and review is clicked
             if (value == 0) {
               alertRate();
             } else if (value == 1) {
@@ -1041,10 +1048,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 alertAdditonalInfo();
                               });
                             }else{
-                              AlertDialogSkip(context, () {
                                 Navigator.pop(context);
                                 alertAdditonalInfo();
-                              });
                             }
 
 
@@ -1074,193 +1079,262 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   alertAdditonalInfo() {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            scrollable: true,
-            title: Text("Additional Information",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.indigo.shade900,
-                )),
-            content: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 300.0,
-                width: 300.0,
-                child: Column(children: [
-                  TextFormField(
-                    autofocus: false,
-                    controller: phoneNumberEditingController,
-                    keyboardType: TextInputType.phone,
-                    validator: (value) {},
-                    onSaved: (value) {
-                      phoneNumberEditingController.text = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.phone),
-                        fillColor: Colors.grey.shade100,
-                        filled: true,
-                        hintText: "Phone Number",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: false,
-                    controller: websiteEditingController,
-                    validator: (value) {},
-                    onSaved: (value) {
-                      websiteEditingController.text = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                        prefixIcon: Image.asset('assets/websiteGrey.jpg',
-                            height: 30, width: 30),
-                        fillColor: Colors.grey.shade100,
-                        filled: true,
-                        hintText: "Website",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: false,
-                    controller: twitterEditingController,
-                    validator: (value) {},
-                    onSaved: (value) {
-                      twitterEditingController.text = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                        prefixIcon: Image.asset('assets/twitter.png',
-                            height: 20, width: 20),
-                        fillColor: Colors.grey.shade100,
-                        filled: true,
-                        hintText: "@Twitter",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: false,
-                    controller: instagramEditingController,
-                    validator: (value) {},
-                    onSaved: (value) {
-                      instagramEditingController.text = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                        prefixIcon: Image.asset('assets/instagram.png',
-                            width: 15, height: 15),
-                        fillColor: Colors.grey.shade100,
-                        filled: true,
-                        hintText: "@Instagram",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                  ),
-                ]),
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text("Additional Information",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.indigo.shade900,
+                  )),
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 300.0,
+                      width: 300.0,
+                      child: Scrollbar(
+                          isAlwaysShown: true,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                            TextFormField(
+                              autofocus: false,
+                              controller: phoneNumberEditingController,
+                              keyboardType: TextInputType.phone,
+                              validator: (value) {},
+                              onSaved: (value) {
+                                phoneNumberEditingController.text = value;
+                              },
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.phone),
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "Phone Number",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              autofocus: false,
+                              controller: websiteEditingController,
+                              validator: (value) {},
+                              onSaved: (value) {
+                                websiteEditingController.text = value;
+                              },
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  prefixIcon: Image.asset('assets/websiteGrey.jpg',
+                                      height: 30, width: 30),
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "Website",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              autofocus: false,
+                              controller: twitterEditingController,
+                              validator: (value) {},
+                              onSaved: (value) {
+                                twitterEditingController.text = value;
+                              },
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  prefixIcon: Image.asset('assets/twitter.png',
+                                      height: 20, width: 20),
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "@Twitter",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              autofocus: false,
+                              controller: instagramEditingController,
+                              validator: (value) {},
+                              onSaved: (value) {
+                                instagramEditingController.text = value;
+                              },
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  prefixIcon: Image.asset('assets/instagram.png',
+                                      width: 15, height: 15),
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "@Instagram",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Material(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              child: MaterialButton(
+                                  minWidth: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  onPressed: () {
+                                    myController.displayBottomSheet(context);
+                                    setState(() {});
+                                  },
+                                  child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+
+                                      children: [
+                                        Icon(Icons.local_see, size: 30, color: Colors.indigo.shade900),
+                                        Text(
+                                          ' Add photo',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.indigo.shade900,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ])),
+                            ),
+
+                            Container(
+                              width: 50,
+                              height: 55,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: FileImage(myController.f1.value),
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                TextButton(
-                    child: Text('Skip',
-                        style: GoogleFonts.lato(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.blue,
-                        )),
-                    onPressed: () {
-                      if(phoneNumberEditingController.text != "" ||
-                          websiteEditingController.text != "" ||
-                          twitterEditingController.text != "" ||
-                          instagramEditingController.text != ""
-                      ){
-                        AlertDialogSkip(context, () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          phoneNumberEditingController.text = "";
-                          websiteEditingController.text = "";
-                          twitterEditingController.text = "";
-                          instagramEditingController.text = "";
-                          postRateAndReviewToFirestore(
-                              quietRate,
-                              crowdedRate,
-                              foodRate,
-                              techRate,
-                              reviewEditingController.text,
-                              userChecked,
-                              phoneNumberEditingController.text,
-                              websiteEditingController.text,
-                              twitterEditingController.text,
-                              instagramEditingController.text,
-                              context);
-                        });
-                      }else{
-                        Navigator.pop(context);
-                        postRateAndReviewToFirestore(
-                            quietRate,
-                            crowdedRate,
-                            foodRate,
-                            techRate,
-                            reviewEditingController.text,
-                            userChecked,
-                            phoneNumberEditingController.text,
-                            websiteEditingController.text,
-                            twitterEditingController.text,
-                            instagramEditingController.text,
-                            context);
-                      }
+              actions: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          child: Text('Skip',
+                              style: GoogleFonts.lato(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.blue,
+                              )),
+                          onPressed: () {
+                            if(myController.f1.value.path.isNotEmpty ||
+                                phoneNumberEditingController.text != "" ||
+                            websiteEditingController.text != "" ||
+                            twitterEditingController.text != "" ||
+                            instagramEditingController.text != ""){
+                              AlertDialogSkip(context, () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                myController.f1 = File('').obs;
+                                phoneNumberEditingController.text = "";
+                                websiteEditingController.text = "";
+                                twitterEditingController.text = "";
+                                instagramEditingController.text = "";
+                                postRateAndReviewToFirestore(
+                                    quietRate,
+                                    crowdedRate,
+                                    foodRate,
+                                    techRate,
+                                    reviewEditingController.text,
+                                    userChecked,
+                                    phoneNumberEditingController.text,
+                                    websiteEditingController.text,
+                                    twitterEditingController.text,
+                                    instagramEditingController.text,
+                                    photo,
+                                    context);
+                              });
+                            }else{
+                                Navigator.pop(context);
+                                postRateAndReviewToFirestore(
+                                    quietRate,
+                                    crowdedRate,
+                                    foodRate,
+                                    techRate,
+                                    reviewEditingController.text,
+                                    userChecked,
+                                    phoneNumberEditingController.text,
+                                    websiteEditingController.text,
+                                    twitterEditingController.text,
+                                    instagramEditingController.text,
+                                    photo,
+                                    context);
 
-                    }),
-                ElevatedButton(
-                    child: Text("Submit"),
-                    onPressed: () {
-                      if(phoneNumberEditingController.text == "" &&
-                          websiteEditingController.text == "" &&
-                          twitterEditingController.text == "" &&
-                          instagramEditingController.text == ""
-                      ){
-                        Fluttertoast.showToast(
-                          msg: "Please insure that you have entered information, or skip",
-                          toastLength: Toast.LENGTH_LONG,
-                        );
-                      }else{
-                        Navigator.pop(context);
-                        postRateAndReviewToFirestore(
-                            quietRate,
-                            crowdedRate,
-                            foodRate,
-                            techRate,
-                            reviewEditingController.text,
-                            userChecked,
-                            phoneNumberEditingController.text,
-                            websiteEditingController.text,
-                            twitterEditingController.text,
-                            instagramEditingController.text,
-                            context);
-                      }
+                            }
+                          }),
+                      ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            if(myController.f1.value.path.isEmpty &&
+                                phoneNumberEditingController.text == "" &&
+                                websiteEditingController.text == "" &&
+                                twitterEditingController.text == "" &&
+                                instagramEditingController.text == ""){
+                              Fluttertoast.showToast(
+                                msg: "Please insure that you have entered information, or skip",
+                                toastLength: Toast.LENGTH_LONG,
+                              );
+                            }else {
+                              if (myController.f1.value != null && myController.f1.value.path.isNotEmpty ) {
+                                photo = await uploadImageToStorage(myController.f1.value, widget.place.placeId);
 
-                    })
-              ])
-            ],
-          );
-        });
+                              }
+                              Navigator.pop(context);
+                              postRateAndReviewToFirestore(
+                                  quietRate,
+                                  crowdedRate,
+                                  foodRate,
+                                  techRate,
+                                  reviewEditingController.text,
+                                  userChecked,
+                                  phoneNumberEditingController.text,
+                                  websiteEditingController.text,
+                                  twitterEditingController.text,
+                                  instagramEditingController.text,
+                                  photo,
+                                  context);
+                            }
+                          },
+                          ),
+                    ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   AlertDialogSkip(BuildContext context, onYes) {
@@ -1313,6 +1387,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
       String website,
       String twitter,
       String instagram,
+      String photo,
       context) async {
     final _auth = FirebaseAuth.instance;
     User user = _auth.currentUser;
@@ -1356,6 +1431,35 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Instagram": "$instagram",
       "PlaceId": "$placeId"
     });
+
+    if(photo!= null){
+      List<dynamic> photosList = widget.place.photos;
+      photosList.add(photo);
+      print(photosList.toString());
+      if(widget.place.placeId.length == 27){
+        var collection4 = FirebaseFirestore.instance
+            .collection('googlePlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "$photosList",});
+      }else{
+        var collection4 = FirebaseFirestore.instance
+            .collection('newPlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "$photosList",});
+      }
+    }else{
+      if(widget.place.placeId.length == 27){
+        var collection4 = FirebaseFirestore.instance
+            .collection('googlePlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "",});
+      }
+    }
+    myController.f1 = File('').obs;
+
 
     Fluttertoast.showToast(
       msg: "Rate & review submitted successfully",
@@ -2064,6 +2168,29 @@ class _PlaceInfoState extends State<PlaceInfo> {
       },
     );
   }
+
+  Future<String> uploadImageToStorage(File imageFile, String docId) async {
+    var url;
+    var _data = DateTime.now().millisecondsSinceEpoch.toString();
+    try {
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child("newPlaceImages")
+          .child(docId)
+          .child("PlaceImages")
+          .child(_data);
+      UploadTask storageUploadTask = storageReference.putFile(imageFile);
+      url = await (await storageUploadTask.whenComplete(() => true))
+          .ref
+          .getDownloadURL();
+      return url;
+    } catch (e) {
+      print(e);
+    }
+
+    return url;
+  }
+
 
 }
 
