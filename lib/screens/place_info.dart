@@ -1791,8 +1791,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               onPressed: () {
                                 Navigator.pop(context);
                                 alertReportOther();
-                                Navigator.pop(context);
-                                alertResieved();
+
                               },
                               child: Text('Other', style: TextStyle(
                                   fontSize: 15,
