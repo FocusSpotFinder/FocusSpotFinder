@@ -1424,7 +1424,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
       var collection3 = FirebaseFirestore.instance
           .collection('googlePlace')
           .doc(widget.place.placeId);
-      var docReff3 = await collection3.update({
+      var docReff3 = await collection3.set({
         "Available services": "$services",
         "Phone number": "$phone",
         "Website": "$website",
@@ -2208,5 +2208,3 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
 
 }
-
-
