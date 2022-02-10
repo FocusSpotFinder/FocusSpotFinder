@@ -20,14 +20,19 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses Camera to upload your profile picture</string>
-	<!-- <key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string> -->
-	<!-- <key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string> -->
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Always and when in use!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Need location when in use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses Photo Library to upload your profile picture</string>
 	<key>UILaunchStoryboardName</key>
@@ -51,15 +56,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>https</string>
-      <string>http</string>
-    </array>
-
-	 <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Need location when in use</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Always and when in use!</string>
 </dict>
 </plist>

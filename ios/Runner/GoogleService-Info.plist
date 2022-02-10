@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>99093877653-81t0crkot2qgiq14n9j20011ste5cels.apps.googleusercontent.com</string>
+	<string>1011885434068-ddolqpq641sbo6pivov410thqjg9rkf2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.99093877653-81t0crkot2qgiq14n9j20011ste5cels</string>
+	<string>com.googleusercontent.apps.1011885434068-ddolqpq641sbo6pivov410thqjg9rkf2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDsNYMXdlHhv31bclkulKWjMp-v7cvCgLM</string>
+	<string>AIzaSyAQcbiXlaTXD-xzR6rauLjIB04fdE8JjKQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>99093877653</string>
+	<string>1011885434068</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.focusSpotFinder</string>
+	<string>com.fsf.focusSpotFinder</string>
 	<key>PROJECT_ID</key>
-	<string>focus-spot-finder-333708</string>
+	<string>focus-spot-finder-340900</string>
 	<key>STORAGE_BUCKET</key>
-	<string>focus-spot-finder-333708.appspot.com</string>
+	<string>focus-spot-finder-340900.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:99093877653:ios:f92fdb38fa7e5e6dc11c9c</string>
+	<string>1:1011885434068:ios:0b521d3a6c661eb18a4741</string>
 </dict>
 </plist>

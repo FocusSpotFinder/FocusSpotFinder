@@ -5,7 +5,7 @@ class Data {
   Data._();
   static Data _instance = Data._();
   factory Data() => _instance;
-  final String key = 'AIzaSyACWoXHs--vIWycphQcc-infujRMkMlS08';
+  final String key = 'AIzaSyAC2psGRULwPfw4sJCJQ_W_gwKuoPsdaog';
 
   BitmapDescriptor icon;
 

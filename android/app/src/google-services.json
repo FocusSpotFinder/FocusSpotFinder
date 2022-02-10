@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "99093877653",
-    "project_id": "focus-spot-finder-333708",
-    "storage_bucket": "focus-spot-finder-333708.appspot.com"
+    "project_number": "1011885434068",
+    "project_id": "focus-spot-finder-340900",
+    "storage_bucket": "focus-spot-finder-340900.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:99093877653:android:154d3780460297fbc11c9c",
+        "mobilesdk_app_id": "1:1011885434068:android:fc85af10641e43e78a4741",
         "android_client_info": {
           "package_name": "com.example.focus_spot_finder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "99093877653-iegkprmlq3k9ggr3n6ab0kkt8blf9lcv.apps.googleusercontent.com",
+          "client_id": "1011885434068-ke5scup4fu9s1o2nhsp7l9cju6j5ga7u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZ-2USL8LOpdTUrey-vgEsM2dyvJUO7Q8"
+          "current_key": "AIzaSyChzJUTpsGWbYZ8M4EwYaDi_OuBWP1Lb4s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "99093877653-iegkprmlq3k9ggr3n6ab0kkt8blf9lcv.apps.googleusercontent.com",
+              "client_id": "1011885434068-ke5scup4fu9s1o2nhsp7l9cju6j5ga7u.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "99093877653-81t0crkot2qgiq14n9j20011ste5cels.apps.googleusercontent.com",
+              "client_id": "1011885434068-ddolqpq641sbo6pivov410thqjg9rkf2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.focusSpotFinder"
+                "bundle_id": "com.fsf.focusSpotFinder"
               }
             }
           ]
