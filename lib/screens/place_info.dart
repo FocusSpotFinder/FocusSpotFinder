@@ -1048,8 +1048,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 alertAdditonalInfo();
                               });
                             }else{
-                                Navigator.pop(context);
-                                alertAdditonalInfo();
+                              Navigator.pop(context);
+                              alertAdditonalInfo();
                             }
 
 
@@ -1107,130 +1107,130 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                            TextFormField(
-                              autofocus: false,
-                              controller: phoneNumberEditingController,
-                              keyboardType: TextInputType.phone,
-                              validator: (value) {},
-                              onSaved: (value) {
-                                phoneNumberEditingController.text = value;
-                              },
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.phone),
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  hintText: "Phone Number",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              autofocus: false,
-                              controller: websiteEditingController,
-                              validator: (value) {},
-                              onSaved: (value) {
-                                websiteEditingController.text = value;
-                              },
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  prefixIcon: Image.asset('assets/websiteGrey.jpg',
-                                      height: 30, width: 30),
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  hintText: "Website",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              autofocus: false,
-                              controller: twitterEditingController,
-                              validator: (value) {},
-                              onSaved: (value) {
-                                twitterEditingController.text = value;
-                              },
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  prefixIcon: Image.asset('assets/twitter.png',
-                                      height: 20, width: 20),
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  hintText: "@Twitter",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              autofocus: false,
-                              controller: instagramEditingController,
-                              validator: (value) {},
-                              onSaved: (value) {
-                                instagramEditingController.text = value;
-                              },
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  prefixIcon: Image.asset('assets/instagram.png',
-                                      width: 15, height: 15),
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  hintText: "@Instagram",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Material(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              child: MaterialButton(
-                                  minWidth: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(vertical: 15),
-                                  onPressed: () {
-                                    myController.displayBottomSheet(context);
-                                    setState(() {});
+                                TextFormField(
+                                  autofocus: false,
+                                  controller: phoneNumberEditingController,
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {},
+                                  onSaved: (value) {
+                                    phoneNumberEditingController.text = value;
                                   },
-                                  child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-
-                                      children: [
-                                        Icon(Icons.local_see, size: 30, color: Colors.indigo.shade900),
-                                        Text(
-                                          ' Add photo',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.indigo.shade900,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ])),
-                            ),
-
-                            Container(
-                              width: 50,
-                              height: 55,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: FileImage(myController.f1.value),
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(Icons.phone),
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      hintText: "Phone Number",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
                                 ),
-                              ),
-                            ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  autofocus: false,
+                                  controller: websiteEditingController,
+                                  validator: (value) {},
+                                  onSaved: (value) {
+                                    websiteEditingController.text = value;
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Image.asset('assets/websiteGrey.jpg',
+                                          height: 30, width: 30),
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      hintText: "Website",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  autofocus: false,
+                                  controller: twitterEditingController,
+                                  validator: (value) {},
+                                  onSaved: (value) {
+                                    twitterEditingController.text = value;
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Image.asset('assets/twitter.png',
+                                          height: 20, width: 20),
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      hintText: "@Twitter",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  autofocus: false,
+                                  controller: instagramEditingController,
+                                  validator: (value) {},
+                                  onSaved: (value) {
+                                    instagramEditingController.text = value;
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Image.asset('assets/instagram.png',
+                                          width: 15, height: 15),
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      hintText: "@Instagram",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Material(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  child: MaterialButton(
+                                      minWidth: MediaQuery.of(context).size.width,
+                                      padding: EdgeInsets.symmetric(vertical: 15),
+                                      onPressed: () {
+                                        myController.displayBottomSheet(context);
+                                        setState(() {});
+                                      },
+                                      child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
 
-                          ],
-                        ),
-                      )
+                                          children: [
+                                            Icon(Icons.local_see, size: 30, color: Colors.indigo.shade900),
+                                            Text(
+                                              ' Add photo',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.indigo.shade900,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ])),
+                                ),
+
+                                Container(
+                                  width: 50,
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: FileImage(myController.f1.value),
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
                       ),
                     ),
                   ],
@@ -1238,79 +1238,29 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ),
               actions: [
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                          child: Text('Skip',
-                              style: GoogleFonts.lato(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.blue,
-                              )),
-                          onPressed: () {
-                            if(myController.f1.value.path.isNotEmpty ||
-                                phoneNumberEditingController.text != "" ||
-                            websiteEditingController.text != "" ||
-                            twitterEditingController.text != "" ||
-                            instagramEditingController.text != ""){
-                              AlertDialogSkip(context, () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                myController.f1 = File('').obs;
-                                phoneNumberEditingController.text = "";
-                                websiteEditingController.text = "";
-                                twitterEditingController.text = "";
-                                instagramEditingController.text = "";
-                                postRateAndReviewToFirestore(
-                                    quietRate,
-                                    crowdedRate,
-                                    foodRate,
-                                    techRate,
-                                    reviewEditingController.text,
-                                    userChecked,
-                                    phoneNumberEditingController.text,
-                                    websiteEditingController.text,
-                                    twitterEditingController.text,
-                                    instagramEditingController.text,
-                                    photo,
-                                    context);
-                              });
-                            }else{
-                                Navigator.pop(context);
-                                postRateAndReviewToFirestore(
-                                    quietRate,
-                                    crowdedRate,
-                                    foodRate,
-                                    techRate,
-                                    reviewEditingController.text,
-                                    userChecked,
-                                    phoneNumberEditingController.text,
-                                    websiteEditingController.text,
-                                    twitterEditingController.text,
-                                    instagramEditingController.text,
-                                    photo,
-                                    context);
-
-                            }
-                          }),
-                      ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () async {
-                            if(myController.f1.value.path.isEmpty &&
-                                phoneNumberEditingController.text == "" &&
-                                websiteEditingController.text == "" &&
-                                twitterEditingController.text == "" &&
-                                instagramEditingController.text == ""){
-                              Fluttertoast.showToast(
-                                msg: "Please insure that you have entered information, or skip",
-                                toastLength: Toast.LENGTH_LONG,
-                              );
-                            }else {
-                              if (myController.f1.value != null && myController.f1.value.path.isNotEmpty ) {
-                                photo = await uploadImageToStorage(myController.f1.value, widget.place.placeId);
-
-                              }
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        child: Text('Skip',
+                            style: GoogleFonts.lato(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.blue,
+                            )),
+                        onPressed: () {
+                          if(myController.f1.value.path.isNotEmpty ||
+                              phoneNumberEditingController.text != "" ||
+                              websiteEditingController.text != "" ||
+                              twitterEditingController.text != "" ||
+                              instagramEditingController.text != ""){
+                            AlertDialogSkip(context, () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
+                              myController.f1 = File('').obs;
+                              phoneNumberEditingController.text = "";
+                              websiteEditingController.text = "";
+                              twitterEditingController.text = "";
+                              instagramEditingController.text = "";
                               postRateAndReviewToFirestore(
                                   quietRate,
                                   crowdedRate,
@@ -1324,10 +1274,60 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                   instagramEditingController.text,
                                   photo,
                                   context);
-                            }
-                          },
-                          ),
-                    ],
+                            });
+                          }else{
+                            Navigator.pop(context);
+                            postRateAndReviewToFirestore(
+                                quietRate,
+                                crowdedRate,
+                                foodRate,
+                                techRate,
+                                reviewEditingController.text,
+                                userChecked,
+                                phoneNumberEditingController.text,
+                                websiteEditingController.text,
+                                twitterEditingController.text,
+                                instagramEditingController.text,
+                                photo,
+                                context);
+
+                          }
+                        }),
+                    ElevatedButton(
+                      child: Text("Submit"),
+                      onPressed: () async {
+                        if(myController.f1.value.path.isEmpty &&
+                            phoneNumberEditingController.text == "" &&
+                            websiteEditingController.text == "" &&
+                            twitterEditingController.text == "" &&
+                            instagramEditingController.text == ""){
+                          Fluttertoast.showToast(
+                            msg: "Please insure that you have entered information, or skip",
+                            toastLength: Toast.LENGTH_LONG,
+                          );
+                        }else {
+                          if (myController.f1.value != null && myController.f1.value.path.isNotEmpty ) {
+                            photo = await uploadImageToStorage(myController.f1.value, widget.place.placeId);
+
+                          }
+                          Navigator.pop(context);
+                          postRateAndReviewToFirestore(
+                              quietRate,
+                              crowdedRate,
+                              foodRate,
+                              techRate,
+                              reviewEditingController.text,
+                              userChecked,
+                              phoneNumberEditingController.text,
+                              websiteEditingController.text,
+                              twitterEditingController.text,
+                              instagramEditingController.text,
+                              photo,
+                              context);
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             );
@@ -1424,7 +1424,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
       var collection3 = FirebaseFirestore.instance
           .collection('googlePlace')
           .doc(widget.place.placeId);
-      var docReff3 = await collection3.set({
+      var docReff3 = await collection3.update({
         "Available services": "$services",
         "Phone number": "$phone",
         "Website": "$website",
@@ -2208,4 +2208,5 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
 
 }
+
 
