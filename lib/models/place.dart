@@ -565,7 +565,7 @@ class Place {
           phoneNumber: phone,
           website: websitee,
           types: typesList,
-          photos: photosList, //!!
+          photos: photosList,
           openingHours: openHours,
           quiet: quietAvg,
           crowded: crowdedAvg,
@@ -579,7 +579,7 @@ class Place {
 
         return p;
       } else {
-        throw "data doesnt exist";
+        throw "data doesn't exist";
       }
     }
   }
@@ -604,6 +604,8 @@ class Place {
   }
 
   Image getImage(photoReference) {
+    photoReference.replaceAll(' ','');
+
     if (photoReference.contains("firebase")) {
       log("firebase photo");
       return Image.network(

@@ -248,7 +248,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   child: Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
-                        widget.place.getImage(e)
+                        widget.place.getImage(e.replaceAll(' ',''))
                       ]),
                 ))
                     .toList(),
@@ -1230,8 +1230,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
                           ],
                         ),
+                      )
                       ),
-                ),
                     ),
                   ],
                 ),
@@ -1420,17 +1420,31 @@ class _PlaceInfoState extends State<PlaceInfo> {
       instagram = widget.place.instagram;
     }
 
-    var collection3 = FirebaseFirestore.instance
-        .collection('googlePlace')
-        .doc(widget.place.placeId);
-    var docReff3 = await collection3.set({
-      "Available services": "$services",
-      "Phone number": "$phone",
-      "Website": "$website",
-      "Twitter": "$twitter",
-      "Instagram": "$instagram",
-      "PlaceId": "$placeId"
-    });
+    if(widget.place.placeId.length == 27) {
+      var collection3 = FirebaseFirestore.instance
+          .collection('googlePlace')
+          .doc(widget.place.placeId);
+      var docReff3 = await collection3.update({
+        "Available services": "$services",
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "PlaceId": "$placeId"
+      });
+    }else{
+      var collection3 = FirebaseFirestore.instance
+          .collection('newPlace')
+          .doc(widget.place.placeId);
+      var docReff3 = await collection3.update({
+        "Available services": "$services",
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "PlaceId": "$placeId"
+      });
+    }
 
     if(photo!= null){
       List<dynamic> photosList = widget.place.photos;
@@ -1458,7 +1472,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-    myController.f1 = File('').obs;
 
 
     Fluttertoast.showToast(
@@ -1472,6 +1485,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
     websiteEditingController.text = "";
     twitterEditingController.text = "";
     instagramEditingController.text = "";
+    myController.f1 = File('').obs;
+
   }
 
   Future<void> launchPhone(String phonee) async {
