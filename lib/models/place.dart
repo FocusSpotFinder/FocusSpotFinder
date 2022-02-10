@@ -417,7 +417,7 @@ class Place {
         Location location = new Location(lat: lat, lng: lng);
         Geometry geometry = new Geometry(location: location);
         PlaceOpeningHours openHours = new PlaceOpeningHours(
-            openNow: openNow, workingDays: workingDaysList); //!!!
+            openNow: openNow, workingDays: workingDaysList);
 
         var twitter = "";
         if (data['Twitter'] != null) {
