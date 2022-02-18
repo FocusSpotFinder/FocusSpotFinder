@@ -4,7 +4,6 @@ Focus Spot Finder is a location based application for finding suitable workspace
 based on your current location, where you can Add new workspace or rate and review an existing
 workspace.
 
-We used .. 
 
 ## Getting Started
 
@@ -28,7 +27,7 @@ To open Focus Spot Finder on your device:
 To run Focus Spot Finder on iOS simulator:
 1.	Install XCode from AppStore through: https://apps.apple.com/us/app/xcode/id497799835?mt=12
       Then you have two options to run Focus Spot Finder on iOS simulator
-      First option: Run Focus Spot Finder through Android studio:
+      First option: Run Focus Spot Finder through Android studio: 121  
 1.	Click on Open iOS Simulator
 2.	Click on Run 
       

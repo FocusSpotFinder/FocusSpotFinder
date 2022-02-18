@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:focus_spot_finder/screens/app/home.dart';
 import 'package:focus_spot_finder/screens/auth/initial_screen.dart';
 import 'package:focus_spot_finder/screens/auth/signup.dart';
 import 'package:focus_spot_finder/screens/splash_screen.dart';
@@ -79,6 +78,7 @@ class UserModel {
             (route) => false);
       });
     }).catchError((e) {
+      print(e);
       emailUsed = true;
       (context as Element).markNeedsBuild();
     });

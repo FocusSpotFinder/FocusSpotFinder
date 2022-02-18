@@ -1,13 +1,12 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/addPlace/add_place_location_picker.dart';
-import 'package:focus_spot_finder/screens/app/home.dart';
+import 'package:focus_spot_finder/screens/app/app_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:multiselect/multiselect.dart';
 
 class addPlaceSocial extends StatefulWidget {
   String docId;
@@ -20,6 +19,7 @@ class addPlaceSocial extends StatefulWidget {
 class _addPlaceSocialState extends State<addPlaceSocial> {
   final _formKey = GlobalKey<FormState>();
   final currentUser = UserModel();
+  User user = FirebaseAuth.instance.currentUser;
 
   final phoneNumberEditingController = new TextEditingController();
   final websiteEditingController = new TextEditingController();
@@ -252,7 +252,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Home()));
+                                          builder: (context) => AppPage()));
                                 });
                               }else{
                                 postPlaceDateToFirestoreSocial(
@@ -264,7 +264,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Home()));
+                                        builder: (context) => AppPage()));
                               }
 
                             }),
@@ -311,13 +311,30 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
       "Phone number": "$phone",
       "Website": "$website",
       "Twitter": "$twitter",
-      "Instagram": "$instagram"
+      "Instagram": "$instagram",
+      "Status": "Waiting",
     });
-    Fluttertoast.showToast(
-      msg: "Place added successfully",
-      toastLength: Toast.LENGTH_LONG,
-    );
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+
+    postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
+
+    AlertDialogPlaceAdded(context, () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => AppPage()));
+    });
+
+  }
+
+  void postPlaceDateToFirestoreReports(String uid, String placeId, String type, String message, context) async {
+    DateTime reportTime = DateTime.now();
+    var collection = FirebaseFirestore.instance.collection('Reports');
+    var docRef = await collection.add({
+      "UserId": "$uid",
+      "PlaceId": "$placeId",
+      "Type":"$type",
+      "Status":"Waiting",
+      "Report time": "$reportTime",
+      "Message":"$message",
+      "Resolve time":""});
+
   }
 
   AlertDialogAddPlace(BuildContext context, onYes) {
@@ -360,6 +377,25 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
       content: Text("Are sure you want to skip?"),
       actions: [
         cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  AlertDialogPlaceAdded(BuildContext context, onYes) {
+    // set up the buttons
+    Widget continueButton = TextButton(child: Text("Close"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Place added successfully!!\nWaiting for its approval\n Thank you!"),
+      actions: [
         continueButton,
       ],
     );

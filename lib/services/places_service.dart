@@ -61,6 +61,7 @@ class PlacesService {
     for (int i = 0; i < value.size; i++) {
       var noteInfo = value.docs[i].data() as Map<String, dynamic>;
       String placeId = value.docs[i].id;
+      String status = noteInfo['Status'];
       String name = noteInfo['Name'];
       String vicinity = noteInfo['Vicinity'];
       String types = noteInfo['Types'];
@@ -190,8 +191,6 @@ class PlacesService {
       Location l = new Location(lat: lat, lng: lng);
       Geometry g = new Geometry(location: l);
 
-      // print("G pic Link :${photo.toString()}");
-
       Place place = Place(
         placeId: placeId,
         geometry: g,
@@ -204,31 +203,10 @@ class PlacesService {
         openingHours: poh,
         icon: iconMarker,
       );
-      print('   || ');
-      print('---------------------------');
-      print("  Name :${place.name}");
-      print("  Id   :${place.placeId}");
-      print("  Icon :${place.icon}");
-      print("       :${place.icon.toJson().toString()}");
-      print("  Location :${place.geometry}");
-      print("       lat :${place.geometry.location.lat}");
-      print("       lng :${place.geometry.location.lng}");
-      print("  Vicinity :${place.vicinity}");
-      print("  Phone No :${place.phoneNumber}");
-      print("  WebSite  :${place.website}");
-      print("  Types :${place.types}");
-      print("  Open Hour :${place.openingHours}");
-      if (place.openingHours != null) {
-        print("       open :${place.openingHours.openNow}");
-        print("       days :${place.openingHours.workingDays}");
+
+      if(status == "Approved"){
+        firebaseList.add(place);
       }
-
-      print("G pic Link :${photo.toString()}");
-      print('---------------------------');
-      print('   || ');
-      print('   |');
-
-      firebaseList.add(place);
     }
     return firebaseList;
   }

@@ -40,8 +40,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
 
   @override
   void initState() {
-    sundayStartEditingController.text =
-        ""; //set the initial value of text field
+    sundayStartEditingController.text = "";
     sundayEndEditingController.text = "";
     mondayStartEditingController.text = "";
     mondayEndEditingController.text = "";
@@ -477,6 +476,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       validator: (value) {},
       onSaved: (value) {
         fridayStartEditingController.text = value;
+        saturdayStartEditingController.text = value;
       },
       onTap: () async {
         TimeOfDay pickedTime = await showTimePicker(
@@ -494,6 +494,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
 
           setState(() {
             fridayStartEditingController.text = formattedTime;
+            saturdayStartEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");
@@ -516,6 +517,8 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
       validator: (value) {},
       onSaved: (value) {
         fridayEndEditingController.text = value;
+        saturdayEndEditingController.text = value;
+
       },
       onTap: () async {
         TimeOfDay pickedTime = await showTimePicker(
@@ -533,6 +536,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
 
           setState(() {
             fridayEndEditingController.text = formattedTime;
+            saturdayEndEditingController.text = formattedTime;
           });
         } else {
           print("Time is not selected");

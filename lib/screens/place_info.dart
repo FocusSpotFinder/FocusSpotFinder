@@ -868,7 +868,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
             ),
             actions: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                ElevatedButton(
+                SizedBox(
+                  height: 36,
+                  width: 85,
+                  child: ElevatedButton(
                     child: Text("Cancel"),
                     onPressed: () {
                       Navigator.pop(context);
@@ -877,18 +880,25 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       foodRate = 0;
                       techRate = 0;
                     }),
-                ElevatedButton(
-                    child: Text("Next"),
-                    onPressed: () {
-                      if (quietRate != 0) {
-                        if (crowdedRate != 0) {
-                          if (foodRate != 0) {
-                            if (techRate != 0) {
-                              Navigator.pop(context);
-                              alertReview();
+          ),
+                SizedBox(
+                  height: 36,
+                  width: 85,
+                  child: ElevatedButton(
+                      child: Text("Next"),
+                      onPressed: () {
+                        if (quietRate != 0) {
+                          if (crowdedRate != 0) {
+                            if (foodRate != 0) {
+                              if (techRate != 0) {
+                                Navigator.pop(context);
+                                alertReview();
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter ratings");
+                              }
                             } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please enter ratings");
+                              Fluttertoast.showToast(msg: "Please enter ratings");
                             }
                           } else {
                             Fluttertoast.showToast(msg: "Please enter ratings");
@@ -896,10 +906,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         } else {
                           Fluttertoast.showToast(msg: "Please enter ratings");
                         }
-                      } else {
-                        Fluttertoast.showToast(msg: "Please enter ratings");
-                      }
-                    })
+                      })
+                ),
               ])
             ],
           );
@@ -946,7 +954,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
           ),
           actions: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              ElevatedButton(
+          SizedBox(
+              height: 36,
+              width: 85,
+              child: ElevatedButton(
                   child: Text("Cancel"),
                   onPressed: () {
                     Navigator.pop(context);
@@ -956,7 +967,11 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     techRate = 0;
                     reviewEditingController.text = "";
                   }),
-              ElevatedButton(
+          ),
+          SizedBox(
+              height: 36,
+              width: 85,
+              child: ElevatedButton(
                   child: Text("Next"),
                   onPressed: () {
                     if (reviewEditingController.text != "") {
@@ -966,6 +981,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       Fluttertoast.showToast(msg: "Please enter review");
                     }
                   })
+          ),
             ])
           ],
         );
@@ -1051,11 +1067,11 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               Navigator.pop(context);
                               alertAdditonalInfo();
                             }
-
-
-
                           }),
-                      ElevatedButton(
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Next"),
                           onPressed: () {
                             if(userChecked.isEmpty){
@@ -1068,6 +1084,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               alertAdditonalInfo();
                             }
                           })
+                      ),
                     ])
               ],
             );
@@ -1293,7 +1310,10 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
                           }
                         }),
-                    ElevatedButton(
+                    SizedBox(
+                      height: 36,
+                      width: 85,
+                      child: ElevatedButton(
                       child: Text("Submit"),
                       onPressed: () async {
                         if(myController.f1.value.path.isEmpty &&
@@ -1327,8 +1347,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         }
                       },
                     ),
-                  ],
-                ),
+                    ),
+                  ]),
               ],
             );
           },
@@ -1472,7 +1492,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-
+    postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "New rate & review added", "New rate & review added", context);
 
     Fluttertoast.showToast(
       msg: "Rate & review submitted successfully",
@@ -1613,11 +1633,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            ElevatedButton(
+          SizedBox(
+          height: 36,
+          width: 85,
+          child: ElevatedButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
+          ),
           ],
         );
       },
@@ -1669,11 +1693,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            ElevatedButton(
+          SizedBox(
+          height: 36,
+          width: 85,
+          child: ElevatedButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
+          ),
           ],
         );
       },
@@ -1725,11 +1753,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            ElevatedButton(
+          SizedBox(
+          height: 36,
+          width: 85,
+          child:           ElevatedButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
+          ),
           ],
         );
       },
@@ -1782,11 +1814,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            ElevatedButton(
+          SizedBox(
+          height: 36,
+          width: 85,
+          child: ElevatedButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
+          ),
           ],
         );
       },
@@ -1811,7 +1847,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
   alertReport() {
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
@@ -1834,9 +1869,14 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Material(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.cyan.shade100,
+                          OutlinedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                                side: MaterialStateProperty.all(BorderSide(
+                                    color: Colors.cyan.shade100,
+                                    width: 2.0,
+                                    style: BorderStyle.solid))
+                            ),
                             child: MaterialButton(
                               minWidth: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(vertical: 12),
@@ -1857,15 +1897,26 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             height: 15,
                           ),
 
-                          Material(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.cyan.shade100,
+                          OutlinedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                                side: MaterialStateProperty.all(BorderSide(
+                                    color: Colors.cyan.shade100,
+                                    width: 2.0,
+                                    style: BorderStyle.solid))
+                            ),
                             child: MaterialButton(
                               minWidth: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(vertical: 12),
                               onPressed: () {
-                                Navigator.pop(context);
-                                alertResieved();
+                                AlertDialogReportConfirm(context, () {
+                                  Navigator.pop(context);
+                                  postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Place permanently closed", "Place permanently closed" , context);
+                                  Navigator.pop(context);
+                                  alertResieved();
+                                });
+
+
                               },
                               child: Text('Place permanently closed', style: TextStyle(
                                   fontSize: 15,
@@ -1879,15 +1930,26 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             height: 15,
                           ),
 
-                          Material(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.cyan.shade100,
+                          OutlinedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                                side: MaterialStateProperty.all(BorderSide(
+                                    color: Colors.cyan.shade100,
+                                    width: 2.0,
+                                    style: BorderStyle.solid))
+                            ),
                             child: MaterialButton(
                               minWidth: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(vertical: 12),
                               onPressed: () {
-                                Navigator.pop(context);
-                                alertResieved();
+
+                                AlertDialogReportConfirm(context, () {
+                                  Navigator.pop(context);
+                                  postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Place not found", "Place not found" , context);
+                                  Navigator.pop(context);
+                                  alertResieved();
+                                });
+
                               },
                               child: Text('Place not found', style: TextStyle(
                                   fontSize: 15,
@@ -1901,13 +1963,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             height: 15,
                           ),
 
-                          Material(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.cyan.shade100,
+                          OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                                side: MaterialStateProperty.all(BorderSide(
+                                    color: Colors.cyan.shade100,
+                                    width: 2.0,
+                                    style: BorderStyle.solid))
+                            ),
                             child: MaterialButton(
                               minWidth: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(vertical: 12),
                               onPressed: () {
+
                                 Navigator.pop(context);
                                 alertReportOther();
 
@@ -1918,6 +1986,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                   fontWeight: FontWeight.bold),
                               ),
                             ),
+
                           ),
                         ],
                       ),
@@ -1929,11 +1998,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Cancel"),
                           onPressed: () {
                             Navigator.pop(context);
                           }),
+                      ),
                     ])
               ],
             );
@@ -2008,18 +2081,31 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Cancel"),
                           onPressed: () {
                             Navigator.pop(context);
                             incorrectInfoEditingController.text="";
                           }),
-                      ElevatedButton(
+                      ),
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () {
-                            Navigator.pop(context);
-                            alertResieved();
+                            AlertDialogReportConfirm(context, () {
+                              Navigator.pop(context);
+                              postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Incorrect information", incorrectInfoEditingController.text , context);
+                              Navigator.pop(context);
+                              incorrectInfoEditingController.text="";
+                              alertResieved();
+                            });
                           }),
+                      ),
                     ])
               ],
             );
@@ -2054,7 +2140,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
                           Text("Let us know what issues you faced",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lato(
@@ -2094,18 +2179,31 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Cancel"),
                           onPressed: () {
                             Navigator.pop(context);
                             otherEditingController.text="";
                           }),
-                      ElevatedButton(
+                      ),
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Submit"),
                           onPressed: () {
-                            Navigator.pop(context);
-                            alertResieved();
+                            AlertDialogReportConfirm(context, () {
+                              Navigator.pop(context);
+                              postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Other", otherEditingController.text , context);
+                              Navigator.pop(context);
+                              otherEditingController.text="";
+                              alertResieved();
+                            });
                           }),
+                      ),
                     ])
               ],
             );
@@ -2170,11 +2268,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
+                      SizedBox(
+                          height: 36,
+                          width: 85,
+                          child: ElevatedButton(
                           child: Text("Close"),
                           onPressed: () {
                             Navigator.pop(context);
                           }),
+                      ),
                     ])
               ],
             );
@@ -2204,6 +2306,47 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
 
     return url;
+  }
+
+  void postPlaceDateToFirestoreReports(String uid, String placeId, String type, String message, context) async {
+    DateTime reportTime = DateTime.now();
+    var collection = FirebaseFirestore.instance.collection('Reports');
+    var docRef = await collection.add({
+      "UserId": "$uid",
+      "PlaceId": "$placeId",
+      "Type":"$type",
+      "Status":"Unresolved",
+      "Report time": "$reportTime",
+      "Message":"$message",
+    "Resolve time":""});
+
+  }
+
+
+  AlertDialogReportConfirm(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to submit a report?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 
