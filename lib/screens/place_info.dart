@@ -1013,6 +1013,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                       height: 300.0, // Change as per your requirement
                       width: 300.0,
                       child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: _availableServices.length,
@@ -1756,7 +1757,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           SizedBox(
           height: 36,
           width: 85,
-          child:           ElevatedButton(
+          child:  ElevatedButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.pop(context);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/admin/edit_place.dart';
 import 'package:focus_spot_finder/screens/app/app_page.dart';
 import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
@@ -241,7 +242,17 @@ class _issueInfoState extends State<issueInfo> {
                                   icon: Image.asset('assets/edit.png'),
                                   iconSize: 60,
                                   onPressed: () async {
+                                    Place place = await Place.getPlaceInfo(
+                                        widget.issue.placeId);
 
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => editPlace(
+                                          place: place,
+                                        ),
+                                      ),
+                                    );
 
                                   },
                                 ),

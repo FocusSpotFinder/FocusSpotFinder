@@ -189,8 +189,8 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
                       Column(
                         children: <Widget>[
                           SizedBox(
-                            // height: 300, // constrain height
                             child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemCount: _availableServices.length,
