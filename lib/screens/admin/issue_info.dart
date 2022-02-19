@@ -455,8 +455,11 @@ class _issueInfoState extends State<issueInfo> {
                                       ]),
 
                                 ]): Row(),
-                          ])
-                  )
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ]),
+                  ),
               )
             ]
 
