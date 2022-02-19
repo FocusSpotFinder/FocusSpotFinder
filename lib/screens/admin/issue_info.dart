@@ -70,267 +70,400 @@ class _issueInfoState extends State<issueInfo> {
           ],
         ),
         body:  Stack(
-            children: [
+            children: <Widget> [
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: SingleChildScrollView(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                      children: [
-                        IconButton(
-                          icon: Image.asset('assets/logo.png'),
-                          iconSize: 60,
-                          onPressed: () async {
-
-                            Place place = await Place.getPlaceInfo(
-                                widget.issue.placeId);
-                            bool isFav = await Place.checkIfFav(
-                                widget.issue.placeId);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PlaceInfo(
-                                  place: place,
-                                  isFav: isFav,
-                                  geo: place.geometry,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-
-                        Text("Place",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.indigo.shade900,
-                            )),
-                      ]),
-
-                ]
-              ),
-
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Issue type: "+widget.issue.type,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade900,
-                        )),
-                    Text("Status: "+widget.issue.status,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade900,
-                        )),
-                    Text("PlaceId: "+widget.issue.placeId,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade900,
-                        )),
-                    Text("User Id: "+widget.issue.userId,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade900,
-                        )),
-                    Text("Report date: "+widget.issue.reportTime,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.lato(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade900,
-                        )),
-                    (widget.issue.status == "Resolved" || widget.issue.status == "Approved"|| widget.issue.status == "Declined")?
-                      Text("Resolve time: "+widget.issue.resolveTime,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.indigo.shade900,
-                          ))
-                    : Row(),
-
-                    SizedBox(
-                      height: 120,
-                    ),
-
-
-                    (widget.issue.type == "New place added")?
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
+                            SizedBox(
+                              height: 15,
+                            ),
                             Column(
-                                children: [
-                                  IconButton(
-                                    icon: Image.asset('assets/check.png'),
-                                    iconSize: 60,
-                                    onPressed: () async {
-                                      var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
-                                      var docRef = await collection.update({
-                                          "Status": "Approved",
-                                      });
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                              children:[
+                                Text("Type",
+                                    //textAlign: TextAlign.start,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    )),
 
-                                      DateTime resolveTime = DateTime.now();
+                                Text(widget.issue.type,
+                                    //textAlign: TextAlign.start,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.blueGrey.shade700,
+                                    )),
+                              ]
+                            ),
 
-                                      var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
-                                      var docRef2 = await collection2.update({
-                                        "Status": "Approved",
-                                        "Resolve time": "$resolveTime",
-                                      });
-
-                                      Navigator.of(context).pop();
-
-                                    },
-
-
-                                  ),
-
-                                  Text("Approve",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.indigo.shade900,
-                                      )),
-                                ]),
+                            SizedBox(
+                              height: 15,
+                            ),
                             Column(
-                                children: [
-                                  IconButton(
-                                    icon: Image.asset('assets/x.png'),
-                                    iconSize: 60,
-                                    onPressed: () async {
-                                      var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
-                                      var docRef = await collection.update({
-                                        "Status": "Not approved",
-                                      });
-
-                                      DateTime resolveTime = DateTime.now();
-
-                                      var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
-                                      var docRef2 = await collection2.update({
-                                        "Status": "Declined",
-                                        "Resolve time": "$resolveTime",
-                                      });
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-
-                                  Text("Decline",
-                                      textAlign: TextAlign.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("Status",
+                                      //textAlign: TextAlign.start,
                                       style: GoogleFonts.lato(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.indigo.shade900,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
                                       )),
-                                ]),
-                          ])
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                              children: [
-                                IconButton(
-                                  icon: Image.asset('assets/edit.png'),
-                                  iconSize: 60,
-                                  onPressed: () async {
-                                    Place place = await Place.getPlaceInfo(
-                                        widget.issue.placeId);
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => editPlace(
-                                          place: place,
+                                  Text(widget.issue.status,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
+
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("Place ID",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.placeId,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
+
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("User ID",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.userId,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
+
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("Report date",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.reportTime,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
+                            (widget.issue.status == "Resolved" || widget.issue.status == "Approved"|| widget.issue.status == "Declined")?
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Text("Resolve date",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.resolveTime,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ):Row(),
+
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("Message",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.message,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
+
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/logo.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+
+                                            Place place = await Place.getPlaceInfo(
+                                                widget.issue.placeId);
+                                            bool isFav = await Place.checkIfFav(
+                                                widget.issue.placeId);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => PlaceInfo(
+                                                  place: place,
+                                                  isFav: isFav,
+                                                  geo: place.geometry,
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
-                                    );
 
-                                  },
-                                ),
+                                        Text("Place",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
 
-                                Text("Edit",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.indigo.shade900,
-                                    )),
-                              ]),
+                                ]
+                            ),
 
-                          Column(
-                              children: [
-                                IconButton(
-                                  icon: Image.asset('assets/delete.png'),
-                                  iconSize: 60,
-                                  onPressed: () async {
-                                    AlertDialogDelete(context, () {
-                                      Navigator.of(context).pop();
-                                      //delete place
-                                      Fluttertoast.showToast(
-                                        msg: "Place deleted successfully",
-                                        toastLength: Toast.LENGTH_LONG,
-                                      );
-                                    });
-                                  },
-                                ),
+                            (widget.issue.type == "New place added")?
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/check.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+                                            var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
+                                            var docRef = await collection.update({
+                                              "Status": "Approved",
+                                            });
 
-                                Text("Delete",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.indigo.shade900,
-                                    )),
-                              ]),
+                                            DateTime resolveTime = DateTime.now();
 
-                        ]),
+                                            var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
+                                            var docRef2 = await collection2.update({
+                                              "Status": "Approved",
+                                              "Resolve time": "$resolveTime",
+                                            });
+
+                                            Navigator.of(context).pop();
+
+                                          },
 
 
-                    (widget.issue.type != "New place added")?
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                              children: [
-                                IconButton(
-                                  icon: Image.asset('assets/check.png'),
-                                  iconSize: 60,
-                                  onPressed: () async {
-                                    DateTime resolveTime = DateTime.now();
+                                        ),
 
-                                    var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
-                                    var docRef2 = await collection2.update({
-                                      "Status": "Resolved",
-                                      "Resolve time": "$resolveTime",
-                                    });
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
+                                        Text("Approve",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/x.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+                                            var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
+                                            var docRef = await collection.update({
+                                              "Status": "Not approved",
+                                            });
 
-                                Text("Resolve",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.indigo.shade900,
-                                    )),
-                              ]),
+                                            DateTime resolveTime = DateTime.now();
 
-                        ]): Row(),
+                                            var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
+                                            var docRef2 = await collection2.update({
+                                              "Status": "Declined",
+                                              "Resolve time": "$resolveTime",
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
 
-                  ])
+                                        Text("Decline",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
+                                ])
+                                : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/edit.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+                                            Place place = await Place.getPlaceInfo(
+                                                widget.issue.placeId);
+
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => editPlace(
+                                                  place: place,
+                                                ),
+                                              ),
+                                            );
+
+                                          },
+                                        ),
+
+                                        Text("Edit",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
+
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/delete.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+                                            AlertDialogDelete(context, () {
+                                              Navigator.of(context).pop();
+                                              //delete place
+                                              Fluttertoast.showToast(
+                                                msg: "Place deleted successfully",
+                                                toastLength: Toast.LENGTH_LONG,
+                                              );
+                                            });
+                                          },
+                                        ),
+
+                                        Text("Delete",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
+
+                                ]),
 
 
+                            (widget.issue.type != "New place added")?
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/check.png'),
+                                          iconSize: 60,
+                                          onPressed: () async {
+                                            DateTime resolveTime = DateTime.now();
+
+                                            var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
+                                            var docRef2 = await collection2.update({
+                                              "Status": "Resolved",
+                                              "Resolve time": "$resolveTime",
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+
+                                        Text("Resolve",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.indigo.shade900,
+                                            )),
+                                      ]),
+
+                                ]): Row(),
+                          ])
+                  )
+              )
             ]
+
+
+
+
+
         ),
 
         floatingActionButton: CenterBottomButton(),
