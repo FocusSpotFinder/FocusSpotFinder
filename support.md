@@ -8,5 +8,6 @@
 - Email : gp.teamm@gmail.com
 - Twitter: @FocusSpotFinder
 
+Do not hesitate to contact us  
 
-**Thank you !**
+**Thank you**
