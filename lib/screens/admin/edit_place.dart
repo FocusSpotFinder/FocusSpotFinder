@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
+import 'package:focus_spot_finder/models/location.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/app/app_page.dart';
 import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
@@ -70,13 +71,17 @@ class _editPlaceState extends State<editPlace> {
     instagramEditingController.text = widget.place.instagram;
     lat = widget.place.geometry.location.lat;
     lng = widget.place.geometry.location.lng;
+    LatLng latlng = new LatLng (lat, lng);
+    _markers.add(Marker(markerId: MarkerId('mark'), position: latlng));
 
     print(widget.place.geometry.location.lat);
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
 
     final nameField = TextFormField(
       autofocus: false,
@@ -308,7 +313,54 @@ class _editPlaceState extends State<editPlace> {
                                   )
                                 ]
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Location",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
 
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  SizedBox(
+                                    width: 350,
+                                    child:  Container(
+                                      height: MediaQuery.of(context).size.height / 3,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: GoogleMap(
+                                        initialCameraPosition: CameraPosition(
+                                            target: LatLng(lat,lng),
+                                            zoom: 16.0),
+                                        zoomGesturesEnabled: true,
+                                        myLocationEnabled: true,
+                                        myLocationButtonEnabled: true,
+                                        compassEnabled: true,
+                                        tiltGesturesEnabled: true,
+                                        markers: Set<Marker>.of(_markers),
+                                        onTap: (LatLng latLng) {
+                                          _markers.add(
+                                            Marker(
+                                              markerId: MarkerId('mark'),
+                                              position: latLng,
+                                            ),
+                                          );
+                                          print('${latLng.latitude}, ${latLng.longitude}');
+                                          lat = latLng.latitude;
+                                          lng = latLng.longitude;
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ]
+                            ),
                             SizedBox(
                               height: 15,
                             ),
@@ -475,30 +527,10 @@ class _editPlaceState extends State<editPlace> {
                                 ]
                             ),
 
-                            Container(
-                              height: MediaQuery.of(context).size.height / 3,
-                              width: MediaQuery.of(context).size.width,
-                              child: GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                    target: LatLng(lat,lng),
-                                    zoom: 16.0),
-                                zoomGesturesEnabled: true,
-                                myLocationEnabled: true,
-                                myLocationButtonEnabled: true,
-                                compassEnabled: true,
-                                tiltGesturesEnabled: false,
-                                onTap: (LatLng latLng) {
-                                  _markers
-                                      .add(Marker(markerId: MarkerId('mark'), position: latLng));
-                                  print('${latLng.latitude}, ${latLng.longitude}');
-                                  lat = latLng.latitude;
-                                  lng = latLng.longitude;
-                                  setState(() {});
-                                },
-                                markers: Set<Marker>.of(_markers),
-                              ),
-                            ),
 
+                            SizedBox(
+                              height: 25,
+                            ),
                           ])
                   )
               )
