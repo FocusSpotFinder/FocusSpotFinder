@@ -20,7 +20,7 @@ class Home extends HookWidget {
               tooltip: 'Chatbot',
               onPressed: () {
                 //later
-               // Navigator.push(context, MaterialPageRoute(builder: (context) => issuesList()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => issuesList()));
               },
             ),
           ),

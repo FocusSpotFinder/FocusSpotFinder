@@ -103,13 +103,13 @@ class Place {
         }
 
         double lat;
-        if (placeDetails.data["result"]["lat"] != null) {
-          lat = placeDetails.data["result"]["lat"];
+        if (placeDetails.data["result"]["geometry"]["location"]["lat"] != null) {
+          lat = placeDetails.data["result"]["geometry"]["location"]["lat"];
         }
 
         double lng;
-        if (placeDetails.data["result"]["lng"] != null) {
-          lng = placeDetails.data["result"]["lng"];
+        if (placeDetails.data["result"]["geometry"]["location"]["lng"] != null) {
+          lng = placeDetails.data["result"]["geometry"]["location"]["lng"];
         }
 
         List<dynamic> types;

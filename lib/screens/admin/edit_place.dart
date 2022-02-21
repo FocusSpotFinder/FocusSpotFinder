@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
@@ -11,6 +12,7 @@ import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class editPlace extends StatefulWidget {
   final void Function() onBackPress;
@@ -44,6 +46,9 @@ class _editPlaceState extends State<editPlace> {
   final websiteEditingController = new TextEditingController();
   final twitterEditingController = new TextEditingController();
   final instagramEditingController = new TextEditingController();
+  Set<Marker> _markers = Set();
+  double lat;
+  double lng;
 
   @override
   void initState() {
@@ -63,7 +68,10 @@ class _editPlaceState extends State<editPlace> {
     websiteEditingController.text = widget.place.website;
     twitterEditingController.text = widget.place.twitter;
     instagramEditingController.text = widget.place.instagram;
+    lat = widget.place.geometry.location.lat;
+    lng = widget.place.geometry.location.lng;
 
+    print(widget.place.geometry.location.lat);
     super.initState();
   }
 
@@ -264,7 +272,6 @@ class _editPlaceState extends State<editPlace> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Name",
-                                      //textAlign: TextAlign.start,
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -467,6 +474,31 @@ class _editPlaceState extends State<editPlace> {
                                   )
                                 ]
                             ),
+
+                            Container(
+                              height: MediaQuery.of(context).size.height / 3,
+                              width: MediaQuery.of(context).size.width,
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                    target: LatLng(lat,lng),
+                                    zoom: 16.0),
+                                zoomGesturesEnabled: true,
+                                myLocationEnabled: true,
+                                myLocationButtonEnabled: true,
+                                compassEnabled: true,
+                                tiltGesturesEnabled: false,
+                                onTap: (LatLng latLng) {
+                                  _markers
+                                      .add(Marker(markerId: MarkerId('mark'), position: latLng));
+                                  print('${latLng.latitude}, ${latLng.longitude}');
+                                  lat = latLng.latitude;
+                                  lng = latLng.longitude;
+                                  setState(() {});
+                                },
+                                markers: Set<Marker>.of(_markers),
+                              ),
+                            ),
+
                           ])
                   )
               )
