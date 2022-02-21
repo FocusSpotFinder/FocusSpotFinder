@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -233,6 +234,26 @@ class _editPlaceState extends State<editPlace> {
           )),
     );
 
+    final updateButton = Material(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      color: Colors.cyan.shade100,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        onPressed: () {
+
+
+        },
+        child: Text(
+          'Update Place',
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.indigo.shade900,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
 
     return WillPopScope(
       onWillPop: () async {
@@ -270,6 +291,15 @@ class _editPlaceState extends State<editPlace> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text("Edit Place ",
+                                style: GoogleFonts.lato(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.indigo.shade900,
+                                )),
                             SizedBox(
                               height: 15,
                             ),
@@ -526,10 +556,72 @@ class _editPlaceState extends State<editPlace> {
                                   )
                                 ]
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            (widget.place.photos.isNotEmpty)?
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Photos",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+                                  Text("Click on the photo you would like to delete",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey,
+                                      )),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  SizedBox(
+                                    width: 350,
+                                    child: widget.place.photos.isNotEmpty
+                                        ? CarouselSlider(
+                                      options: CarouselOptions(
 
+                                        enlargeCenterPage: true,
+                                        enableInfiniteScroll: false,
+                                        autoPlay: false,
+                                      ),
+                                      items: widget.place.photos
+                                          .map((e) => ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            print(e);
+                                            AlertDialogDeletePhoto(context, () {
+                                              Navigator.of(context).pop();
+
+
+                                            });
+                                          },
+                                          child: Stack(
+                                            fit: StackFit.expand,
+                                            children: <Widget>[
+                                              widget.place.getImage(e.replaceAll(' ',''))
+                                            ]),
+                                      )
+                                      ))
+                                          .toList(),
+                                    )
+                                        : SizedBox.shrink(),
+                                  )
+                                ]
+                            ): SizedBox.shrink(),
 
                             SizedBox(
                               height: 25,
+                            ),
+
+                            updateButton,
+
+                            SizedBox(
+                              height: 35,
                             ),
                           ])
                   )
@@ -554,7 +646,7 @@ class _editPlaceState extends State<editPlace> {
     );
   }
 
-  AlertDialogDelete(BuildContext context, onYes) {
+  AlertDialogDeletePhoto(BuildContext context, onYes) {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text("No"),
@@ -565,7 +657,7 @@ class _editPlaceState extends State<editPlace> {
     Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Are sure you want to delete this place?"),
+      content: Text("Are sure you want to delete this photo?"),
       actions: [
         cancelButton,
         continueButton,
@@ -686,79 +778,6 @@ class _editPlaceState extends State<editPlace> {
   }
 
 
-  /*alertMap() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              scrollable: true,
-              title: Text("Place Location",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.lato(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.indigo.shade900,
-                  )),
-              content: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 300.0, // Change as per your requirement
-                      width: 300.0,
-                      child: Container(
-                        height:200.
-                        width: MediaQuery.of(context).size.width,
-                        child: GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                              target:
-                              LatLng(currentPosition.latitude, currentPosition.longitude),
-                              zoom: 16.0),
-                          zoomGesturesEnabled: true,
-                          myLocationEnabled: true,
-                          myLocationButtonEnabled: true,
-                          compassEnabled: true,
-                          tiltGesturesEnabled: false,
-                          onTap: (LatLng latLng) {
-                            _markers.value
-                                .add(Marker(markerId: MarkerId('mark'), position: latLng));
-                            print('${latLng.latitude}, ${latLng.longitude}');
-                            lat.value = latLng.latitude;
-                            lng.value = latLng.longitude;
-                          },
-                          markers: Set<Marker>.of(_markers.value),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              actions: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                              child: Text("Submit"),
-                              onPressed: () {
-
-                              })
-                      ),
-                    ])
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-*/
 
 
 }
