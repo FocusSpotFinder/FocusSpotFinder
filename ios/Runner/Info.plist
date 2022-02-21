@@ -29,10 +29,13 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses Camera to upload your profile picture</string>
+
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Always and when in use!</string>
+	<string>Sharing your location at all times will allow the application to list workspaces near you.</string>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need location when in use</string>
+	<string>Sharing your location will allow the application to list workspaces near you.</string>
+
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses Photo Library to upload your profile picture</string>
 	<key>UILaunchStoryboardName</key>
