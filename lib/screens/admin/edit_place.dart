@@ -45,6 +45,7 @@ class _editPlaceState extends State<editPlace> {
     "Outdoor Seating"
   ];
   List<String> userCheckedServices = [];
+  final hoursEditingController = new TextEditingController();
   final websiteEditingController = new TextEditingController();
   final twitterEditingController = new TextEditingController();
   final instagramEditingController = new TextEditingController();
@@ -70,6 +71,7 @@ class _editPlaceState extends State<editPlace> {
     websiteEditingController.text = widget.place.website;
     twitterEditingController.text = widget.place.twitter;
     instagramEditingController.text = widget.place.instagram;
+    hoursEditingController.text = widget.place.openingHours.workingDays.join("\n");
     lat = widget.place.geometry.location.lat;
     lng = widget.place.geometry.location.lng;
     LatLng latlng = new LatLng (lat, lng);
@@ -155,6 +157,34 @@ class _editPlaceState extends State<editPlace> {
           fillColor: Colors.grey.shade100,
           filled: true,
           hintText: "Address",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          )),
+    );
+
+    final workingHoursField = TextFormField(
+      autofocus: false,
+      controller: hoursEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value.isEmpty) {
+        }
+        return null;
+      },
+      onSaved: (value) {
+        hoursEditingController.text = value;
+      },
+      textInputAction: TextInputAction.next,
+      maxLines: 8,
+      decoration: InputDecoration(
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(bottom:160),
+            child: Icon(Icons.access_time_rounded
+            ),
+          ),
+          fillColor: Colors.grey.shade100,
+          filled: true,
+          hintText: "Working Hours",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -465,7 +495,28 @@ class _editPlaceState extends State<editPlace> {
                                   )
                                 ]
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Working Hours",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
 
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  SizedBox(
+                                    width: 350,
+                                    child: workingHoursField,
+                                  )
+                                ]
+                            ),
                             SizedBox(
                               height: 15,
                             ),
