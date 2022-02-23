@@ -20,6 +20,7 @@ class Issue {
         .collection('Reports')
         .orderBy('Status', descending: true);
 
+
     issues = reportsCollection.snapshots();
     return issues;
   }
