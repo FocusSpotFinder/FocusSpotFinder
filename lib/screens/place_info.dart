@@ -58,7 +58,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
   List<String> _availableServices = [
     "WiFi",
     "Meetings Room",
-    "Isolated Capsule Room",
+    "Isolated Capsule",
     "Closed Room",
     "Outdoor Seating"
   ];

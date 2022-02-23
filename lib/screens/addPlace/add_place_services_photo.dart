@@ -25,7 +25,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
   List<String> _availableServices = [
     "WiFi",
     "Meetings Room",
-    "Isolated Capsule Room",
+    "Isolated Capsule",
     "Closed Room",
     "Outdoor Seating"
   ];
