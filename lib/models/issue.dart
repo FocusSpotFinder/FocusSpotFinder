@@ -16,10 +16,10 @@ class Issue {
       this.reportTime, this.resolveTime, this.issues});
 
   Stream<QuerySnapshot> readItems() {
-    CollectionReference reportsCollection = FirebaseFirestore.instance
+    Query reportsCollection = FirebaseFirestore.instance
         .collection('Reports')
-        .doc()
-        .parent;
+        .orderBy('Status', descending: true);
+
     issues = reportsCollection.snapshots();
     return issues;
   }
