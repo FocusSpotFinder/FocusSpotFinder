@@ -51,6 +51,7 @@ class _FavListState extends State<FavList> {
             onPressed: widget.onBackPress,
           ),
           toolbarHeight: 55,
+          /*
           actions: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 8),
@@ -62,6 +63,7 @@ class _FavListState extends State<FavList> {
               ),
             ),
           ],
+           */
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: favoriteList.readItems(),

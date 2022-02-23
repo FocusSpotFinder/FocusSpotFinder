@@ -48,6 +48,7 @@ class _ProfileState extends State<Profile> {
             onPressed: widget.onBackPress,
           ),
           toolbarHeight: 55,
+          /*
           actions: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 8),
@@ -59,6 +60,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ],
+           */
         ),
         //end appBar
 

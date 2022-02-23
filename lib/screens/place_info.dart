@@ -158,6 +158,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
               });
             },
           ),
+          SizedBox(width: 10,), //remove this box when we impliment share
+          /*
           PopupMenuButton(
             icon: Icon(Icons.ios_share, color: Colors.white, size: 30),
             onSelected: (result) {
@@ -224,6 +226,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ),
             ],
           ),
+          */
         ],
       ),
       //end appBar

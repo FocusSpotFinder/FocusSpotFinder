@@ -173,6 +173,7 @@ class _UserProfileState extends State<UserProfile> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         toolbarHeight: 55,
+        /*
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 8),
@@ -184,6 +185,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
           ),
         ],
+         */
       ),
       //end appBar
 
