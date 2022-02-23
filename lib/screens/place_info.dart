@@ -1914,7 +1914,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                   Navigator.pop(context);
                                   postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Place permanently closed", "Place permanently closed" , context);
                                   Navigator.pop(context);
-                                  alertResieved();
+                                  alertRecieved();
                                 });
 
 
@@ -1948,7 +1948,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                   Navigator.pop(context);
                                   postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Place not found", "Place not found" , context);
                                   Navigator.pop(context);
-                                  alertResieved();
+                                  alertRecieved();
                                 });
 
                               },
@@ -1996,9 +1996,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 ),
               ),
               actions: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
                       SizedBox(
                           height: 36,
                           width: 85,
@@ -2008,7 +2005,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             Navigator.pop(context);
                           }),
                       ),
-                    ])
               ],
             );
           },
@@ -2103,7 +2099,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Incorrect information", incorrectInfoEditingController.text , context);
                               Navigator.pop(context);
                               incorrectInfoEditingController.text="";
-                              alertResieved();
+                              alertRecieved();
                             });
                           }),
                       ),
@@ -2201,7 +2197,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Other", otherEditingController.text , context);
                               Navigator.pop(context);
                               otherEditingController.text="";
-                              alertResieved();
+                              alertRecieved();
                             });
                           }),
                       ),
@@ -2214,7 +2210,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     );
   }
 
-  alertResieved() {
+  alertRecieved() {
     showDialog(
       context: context,
       builder: (context) {
@@ -2266,9 +2262,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 ),
               ),
               actions: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
                       SizedBox(
                           height: 36,
                           width: 85,
@@ -2278,7 +2271,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
                             Navigator.pop(context);
                           }),
                       ),
-                    ])
               ],
             );
           },
