@@ -15,7 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 class issueInfo extends StatefulWidget {
   final void Function() onBackPress;
   final Issue issue;
-
   const issueInfo({this.issue, Key key, @required this.onBackPress}) : super(key: key);
 
   @override
@@ -87,7 +86,6 @@ class _issueInfoState extends State<issueInfo> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                               children:[
                                 Text("Type",
-                                    //textAlign: TextAlign.start,
                                     style: GoogleFonts.lato(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -95,7 +93,6 @@ class _issueInfoState extends State<issueInfo> {
                                     )),
 
                                 Text(widget.issue.type,
-                                    //textAlign: TextAlign.start,
                                     style: GoogleFonts.lato(
                                       fontSize: 18,
                                       fontWeight: FontWeight.normal,
@@ -401,9 +398,17 @@ class _issueInfoState extends State<issueInfo> {
                                           icon: Image.asset('assets/delete.png'),
                                           iconSize: 60,
                                           onPressed: () async {
-                                            AlertDialogDelete(context, () {
+                                            AlertDialogDelete(context, ()  {
                                               Navigator.of(context).pop();
                                               //delete place
+                                              if(widget.issue.placeId.length == 27){
+                                                //google place
+                                                //black list
+                                              }else{
+                                                //new place
+                                              deleteFirebasePlace(widget.issue.placeId);
+
+                                              }
                                               Fluttertoast.showToast(
                                                 msg: "Place deleted successfully",
                                                 toastLength: Toast.LENGTH_LONG,
@@ -510,4 +515,8 @@ class _issueInfoState extends State<issueInfo> {
     );
   }
 
+  deleteFirebasePlace (placeId) async {
+     FirebaseFirestore.instance.collection('newPlace').doc(placeId).delete();
+
+  }
 }

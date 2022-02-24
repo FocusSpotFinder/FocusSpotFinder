@@ -360,12 +360,51 @@ class _editPlaceState extends State<editPlace> {
                             SizedBox(
                               height: 15,
                             ),
-                            Text("Edit Place ",
-                                style: GoogleFonts.lato(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.indigo.shade900,
-                                )),
+
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: [
+                                  Text("Edit Place",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.indigo.shade900,
+                                      )),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              scrollable: true,
+                                              title: Text('Edit Place'),
+                                              content: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    "You can fully edit new places (FSF place)\nGoogle place (Google Place API) information can be partially edited",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.normal,
+                                                      color: Colors.black,
+                                                    )
+                                                ),
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                    child: Text("Close"),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    })
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    icon: Icon(Icons.info_outline, color: Colors.grey),
+                                  ),
+                                ]
+                            ),
+
                             SizedBox(
                               height: 30,
                             ),
@@ -752,10 +791,13 @@ class _editPlaceState extends State<editPlace> {
                                         borderRadius: BorderRadius.circular(8),
                                         child: GestureDetector(
                                           onTap: () {
+                                            print(widget.place.photos);
                                             print(e);
                                             AlertDialogDeletePhoto(context, () {
                                               Navigator.of(context).pop();
-
+                                              widget.place.photos.remove(e);
+                                              print(widget.place.photos.length);
+                                              setState(() {});
 
                                             });
                                           },
@@ -912,30 +954,22 @@ class _editPlaceState extends State<editPlace> {
 
     if(placeId.length == 27){
       //googlePlace
-      var collection = FirebaseFirestore.instance.collection('newPlace');
-      var docRef = await collection.add({
-        "Name": "$name",
-        "Types": "$types",
-        "Vicinity": "$vicinity",
-        "Address":GeoPoint(lat, lng),
+      var doc = FirebaseFirestore.instance.collection('googlePlace').doc(placeId);
+      var docRef = await doc.update({
         "Available services": "$services",
-        "WorkingHours":"[$hours]",
         "Phone number": "$phone",
         "Website":"$website",
         "Twitter":"$twitter",
         "Instagram":"$instagram",
-        "Status": "Approved"
       });
-      var documentId = docRef.id;
 
-      if (photos != null && photos =="[]") {
-        var doc2 = FirebaseFirestore.instance.collection('newPlace').doc(documentId);
-        var docRef2 = await doc2.update({"Photos": "[$photos]"});
+      if (photos.isNotEmpty) {
+        var docRef2 = await doc.update({"Photos": "$photos"});
         photos = null;
       } else {
-        var doc2 = FirebaseFirestore.instance.collection('newPlace').doc(documentId);
-        var docRef2 = await doc2.update({"Photos": ""});
+        var docRef2 = await doc.update({"Photos": ""});
       }
+
 
     }else{
       //new place
@@ -958,8 +992,8 @@ class _editPlaceState extends State<editPlace> {
         var docRef2 = await doc.update({"WorkingHours": ""});
       }
 
-      if (photos != null && photos =="[]") {
-        var docRef2 = await doc.update({"Photos": "[$photos]"});
+      if (photos.isNotEmpty) {
+        var docRef2 = await doc.update({"Photos": "$photos"});
         photos = null;
       } else {
         var docRef2 = await doc.update({"Photos": ""});

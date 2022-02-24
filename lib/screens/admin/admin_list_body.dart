@@ -77,7 +77,7 @@ class adminListBody extends HookConsumerWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => issueInfo(issue: issue )),
+                                  builder: (context) => issueInfo(issue: issue)),
                             );
                           }
                           ),
