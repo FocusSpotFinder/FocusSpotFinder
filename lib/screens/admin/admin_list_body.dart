@@ -79,7 +79,8 @@ class adminListBody extends HookConsumerWidget {
                               MaterialPageRoute(
                                   builder: (context) => issueInfo(issue: issue )),
                             );
-                          }),
+                          }
+                          ),
                     );
                   },
                 );

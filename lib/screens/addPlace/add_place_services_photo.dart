@@ -300,8 +300,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
 
   void postPlaceDateToFirestoreServicesPhoto(
       photo, List<String> services, context) async {
-    var doc =
-    FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+    var doc = FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
     if (photo != null) {
       var docRef = await doc.update({"Photos": "[$photo]"});
       photo = null;

@@ -20,7 +20,9 @@ class _AddPlaceState extends State<AddPlace> {
   final nameEditingController = new TextEditingController();
   List<String> types = [];
   final typesEditingController = new TextEditingController();
-  List<String> _types = ['Cafe', 'Library', 'Book Store', 'Park'];
+  List<String> _types = [
+    'Cafe', 'Library', 'Book Store', 'Park'
+  ];
   List<String> userChecked = [];
   String documentId;
 
@@ -223,7 +225,7 @@ class _AddPlaceState extends State<AddPlace> {
       String name, List<String> types, context) async {
     var collection = FirebaseFirestore.instance.collection('newPlace');
     var docRef = await collection.add({"Name": "$name", "Types": "$types"});
-    var documentId = docRef.id; // <-- Document ID
+    var documentId = docRef.id;
     Navigator.push(
         context,
         MaterialPageRoute(

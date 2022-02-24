@@ -13,6 +13,7 @@ import 'package:focus_spot_finder/screens/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -32,11 +33,14 @@ class _editPlaceState extends State<editPlace> {
   UserModel loggedInUser = UserModel();
 
   final nameEditingController = new TextEditingController();
-  final typesEditingController = new TextEditingController();
   List<String> _types = ['Cafe', 'cafe', 'food', 'Library', 'Book Store', 'Park'];
   List<String> userChecked = [];
   final phoneNumberEditingController = new TextEditingController();
   final vicinityEditingController = new TextEditingController();
+  List<String> types = [
+    'Cafe', 'Library', 'Book Store', 'Park'
+  ];
+  List<dynamic> userCheckedTypes = [];
   List<String> _availableServices = [
     "WiFi",
     "Meetings Room",
@@ -52,7 +56,9 @@ class _editPlaceState extends State<editPlace> {
   Set<Marker> _markers = Set();
   double lat;
   double lng;
-
+  final _formKey = GlobalKey<FormState>();
+  bool isEnabled = true;
+  bool MapDisabled = false;
   @override
   void initState() {
     FirebaseFirestore.instance
@@ -64,9 +70,14 @@ class _editPlaceState extends State<editPlace> {
       setState(() {});
     });
 
+    if(widget.place.placeId.length == 27){
+      isEnabled = false;
+      MapDisabled = true;
+    }
+
     nameEditingController.text = widget.place.name;
-    typesEditingController.text = typeFormat(widget.place.types).join(', ');
     vicinityEditingController.text = widget.place.vicinity;
+    userCheckedTypes = widget.place.types;
     userCheckedServices = widget.place.services;
     phoneNumberEditingController.text = widget.place.phoneNumber;
     websiteEditingController.text = widget.place.website;
@@ -88,6 +99,7 @@ class _editPlaceState extends State<editPlace> {
 
 
     final nameField = TextFormField(
+      enabled: isEnabled,
       autofocus: false,
       controller: nameEditingController,
       keyboardType: TextInputType.name,
@@ -111,35 +123,8 @@ class _editPlaceState extends State<editPlace> {
           )),
     );
 
-    final typesField = TextFormField(
-      autofocus: false,
-      controller: typesEditingController,
-      keyboardType: TextInputType.name,
-      readOnly: true,
-      validator: (value) {
-        if (value.isEmpty) {
-          return ("Please enter place type");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        typesEditingController.text = value;
-      },
-      onTap: () {
-        alertTypes();
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.dashboard_outlined),
-          fillColor: Colors.grey.shade100,
-          filled: true,
-          hintText: "Types",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
-    );
-
     final vicinityField = TextFormField(
+      enabled: isEnabled,
       autofocus: false,
       controller: vicinityEditingController,
       keyboardType: TextInputType.name,
@@ -164,13 +149,11 @@ class _editPlaceState extends State<editPlace> {
     );
 
     final workingHoursField = TextFormField(
+      enabled: isEnabled,
       autofocus: false,
       controller: hoursEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
-        if (value.isEmpty) {
-        }
-        return null;
       },
       onSaved: (value) {
         hoursEditingController.text = value;
@@ -272,23 +255,58 @@ class _editPlaceState extends State<editPlace> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
-          AlertDialogUpdate(context, () {
-            updatePlaceDateToFirestore(
-                widget.place.placeId,
-                nameEditingController.text,
-                typesEditingController.text,
-                lat,
-                lng,
-                vicinityEditingController.text,
-                userCheckedServices.toString(),
-                hoursEditingController.text,
-                phoneNumberEditingController.text,
-                websiteEditingController.text,
-                twitterEditingController.text,
-                instagramEditingController.text,
-                widget.place.photos,
-                context);
-          });
+          if (_formKey.currentState.validate()) {
+            if (userCheckedTypes.isEmpty) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      scrollable: true,
+                      title: Text('Place types',
+                          style: GoogleFonts.lato(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.red,
+                          )),
+                      content: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            "Place types cant be left empty",
+                            style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.red,
+                            )
+                        ),
+                      ),
+                      actions: [
+                        ElevatedButton(
+                            child: Text("Close"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                      ],
+                    );
+                  });
+            } else {
+              AlertDialogUpdate(context, () {
+                updatePlaceDateToFirestore(
+                    widget.place.placeId,
+                    nameEditingController.text,
+                    userCheckedTypes.toString(),
+                    lat,
+                    lng,
+                    vicinityEditingController.text,
+                    userCheckedServices.toString(),
+                    hoursEditingController.text,
+                    phoneNumberEditingController.text,
+                    websiteEditingController.text,
+                    twitterEditingController.text,
+                    instagramEditingController.text,
+                    widget.place.photos,
+                    context);
+              });
+            }
+          }
         },
         child: Text(
           'Update Place',
@@ -333,7 +351,9 @@ class _editPlaceState extends State<editPlace> {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 40),
                   child: SingleChildScrollView(
-                      child: Column(
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -347,7 +367,7 @@ class _editPlaceState extends State<editPlace> {
                                   color: Colors.indigo.shade900,
                                 )),
                             SizedBox(
-                              height: 15,
+                              height: 30,
                             ),
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,8 +393,7 @@ class _editPlaceState extends State<editPlace> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Types ",
-                                      //textAlign: TextAlign.start,
+                                  Text("Types",
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -384,11 +403,41 @@ class _editPlaceState extends State<editPlace> {
                                     height: 15,
                                   ),
                                   SizedBox(
-                                      width: 350,
-                                      child: typesField
+                                    width: 350,
+                                    child: Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          child: ListView.builder(
+                                              physics: const NeverScrollableScrollPhysics(),
+
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              itemCount: types.length,
+                                              itemBuilder: (context, i) {
+                                                return ListTile(
+                                                    title: Text(types[i],
+                                                        style: GoogleFonts.lato(
+                                                          fontSize: 15,
+                                                          fontWeight: FontWeight.w700,
+                                                          color: Colors.black,
+                                                        )),
+                                                    trailing: Checkbox(
+                                                      value: userCheckedTypes
+                                                          .contains(types[i]) || widget.place.types
+                                                          .contains(types[i]),
+                                                      onChanged: (val) {
+                                                        _onSelectedTypes(val, types[i]);
+                                                      },
+                                                    )
+                                                );
+                                              }),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ]
                             ),
+
                             SizedBox(
                               height: 15,
                             ),
@@ -410,7 +459,9 @@ class _editPlaceState extends State<editPlace> {
                                     child:  Container(
                                       height: MediaQuery.of(context).size.height / 3,
                                       width: MediaQuery.of(context).size.width,
-                                      child: GoogleMap(
+                                      child: AbsorbPointer(
+                                        absorbing: MapDisabled,
+                                        child: GoogleMap(
                                         initialCameraPosition: CameraPosition(
                                             target: LatLng(lat,lng),
                                             zoom: 16.0),
@@ -420,7 +471,7 @@ class _editPlaceState extends State<editPlace> {
                                         compassEnabled: true,
                                         tiltGesturesEnabled: true,
                                         markers: Set<Marker>.of(_markers),
-                                        onTap: (LatLng latLng) {
+                                        onTap: (LatLng latLng) async {
                                           _markers.add(
                                             Marker(
                                               markerId: MarkerId('mark'),
@@ -430,8 +481,13 @@ class _editPlaceState extends State<editPlace> {
                                           print('${latLng.latitude}, ${latLng.longitude}');
                                           lat = latLng.latitude;
                                           lng = latLng.longitude;
+                                          final coordinates = new Coordinates(lat, lng);
+                                          var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                                          var first = addresses.first;
+                                          vicinityEditingController.text = first.addressLine;
                                           setState(() {});
                                         },
+                                      ),
                                       ),
                                     ),
                                   )
@@ -517,12 +573,48 @@ class _editPlaceState extends State<editPlace> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Working Hours",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      )),
+                                  Row(
+                                    children: [
+                                      Text("Working Hours",
+                                          style: GoogleFonts.lato(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          )),
+                                      IconButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  scrollable: true,
+                                                  title: Text('Working Hours'),
+                                                  content: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                        "Working hours should be typed in the following format:\n\nSunday : 09:00 AM - 23:00 PM, \nMonday : 09:00 AM - 23:00 PM, \nTuesday : 09:00 AM - 23:00 PM, \nWednesday : 09:00 AM - 23:00 PM, \nThursday : 09:00 AM - 23:00 PM, \nFriday : 10:00 AM - 23:30 PM, \nSaturday : 10:00 AM - 23:30 PM",
+                                                        style: GoogleFonts.lato(
+                                                      fontSize: 13,
+                                                      fontWeight: FontWeight.normal,
+                                                      color: Colors.black,
+                                                    )
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    ElevatedButton(
+                                                        child: Text("Close"),
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        })
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        icon: Icon(Icons.info_outline, color: Colors.grey),
+                                      ),
+                                    ]
+                                  ),
+                                  
 
                                   SizedBox(
                                     height: 15,
@@ -680,17 +772,15 @@ class _editPlaceState extends State<editPlace> {
                                   )
                                 ]
                             ): SizedBox.shrink(),
-
                             SizedBox(
                               height: 25,
                             ),
-
                             updateButton,
-
                             SizedBox(
                               height: 35,
                             ),
                           ])
+                  )
                   )
               )
 
@@ -739,71 +829,6 @@ class _editPlaceState extends State<editPlace> {
     );
   }
 
-  alertTypes() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              scrollable: true,
-              title: Text("Place Type",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.lato(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.indigo.shade900,
-                  )),
-              content: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 250.0, // Change as per your requirement
-                      width: 300.0,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: _types.length,
-                          itemBuilder: (context, i) {
-                            return StatefulBuilder(builder:
-                                (BuildContext context, StateSetter setState) {
-                              return Center(
-                                child: ListTile(
-                                    title: Text(_types[i],
-                                        style: GoogleFonts.lato(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                        )),
-                                    trailing: Checkbox(
-                                      value: userChecked.contains(_types[i]) || widget.place.types.contains(_types[i]),
-                                      onChanged: (val) {
-                                        setState(() {});
-                                        _onSelected(val, _types[i]);
-                                      },
-                                    )),
-                              );
-                            });
-                          }),
-                    )
-                  ],
-                ),
-              ),
-              actions: [
-                ElevatedButton(
-                    child: Text("Close"),
-                    onPressed: () {
-                      typesEditingController.text = userChecked.join(", ");
-                      Navigator.pop(context);
-                    })
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
 
   void _onSelected(bool selected, String dataName) {
     if (selected == true) {
@@ -817,19 +842,17 @@ class _editPlaceState extends State<editPlace> {
     }
   }
 
-  List<String> typeFormat(List list) {
-    List<String> T = [];
 
-    for (int i = 0; i < list.length && i < 2; i++) {
-      if (list[i] != null) {
-        if (i == 0) {
-          T.add(list[i].replaceAll('_', ' ').toString());
-        } else {
-          T.add(list[i].replaceAll('_', ' ').toString());
-        }
-      }
+  void _onSelectedTypes(bool selected, String dataName) {
+    if (selected == true) {
+      setState(() {
+        userCheckedTypes.add(dataName);
+      });
+    } else {
+      setState(() {
+        userCheckedTypes.remove(dataName);
+      });
     }
-    return T;
   }
 
   void _onSelectedServices(bool selected, String dataName) {
@@ -889,10 +912,10 @@ class _editPlaceState extends State<editPlace> {
 
     if(placeId.length == 27){
       //googlePlace
-    }else{
-      var doc = FirebaseFirestore.instance.collection('newPlace').doc(placeId);
-      var docRef = await doc.update({
+      var collection = FirebaseFirestore.instance.collection('newPlace');
+      var docRef = await collection.add({
         "Name": "$name",
+        "Types": "$types",
         "Vicinity": "$vicinity",
         "Address":GeoPoint(lat, lng),
         "Available services": "$services",
@@ -901,9 +924,40 @@ class _editPlaceState extends State<editPlace> {
         "Website":"$website",
         "Twitter":"$twitter",
         "Instagram":"$instagram",
+        "Status": "Approved"
       });
+      var documentId = docRef.id;
 
-      print(photos);
+      if (photos != null && photos =="[]") {
+        var doc2 = FirebaseFirestore.instance.collection('newPlace').doc(documentId);
+        var docRef2 = await doc2.update({"Photos": "[$photos]"});
+        photos = null;
+      } else {
+        var doc2 = FirebaseFirestore.instance.collection('newPlace').doc(documentId);
+        var docRef2 = await doc2.update({"Photos": ""});
+      }
+
+    }else{
+      //new place
+      var doc = FirebaseFirestore.instance.collection('newPlace').doc(placeId);
+      var docRef = await doc.update({
+        "Name": "$name",
+        "Types": "$types",
+        "Vicinity": "$vicinity",
+        "Address":GeoPoint(lat, lng),
+        "Available services": "$services",
+        "Phone number": "$phone",
+        "Website":"$website",
+        "Twitter":"$twitter",
+        "Instagram":"$instagram",
+      });
+      if (hours != null && hours =="[]") {
+        var docRef2 = await doc.update({"WorkingHours": "[$photos]"});
+        photos = null;
+      } else {
+        var docRef2 = await doc.update({"WorkingHours": ""});
+      }
+
       if (photos != null && photos =="[]") {
         var docRef2 = await doc.update({"Photos": "[$photos]"});
         photos = null;
@@ -911,15 +965,15 @@ class _editPlaceState extends State<editPlace> {
         var docRef2 = await doc.update({"Photos": ""});
       }
 
-      Navigator.of(context).pop();
-
-      Fluttertoast.showToast(
-        msg: "Place information updated",
-        toastLength: Toast.LENGTH_LONG,
-      );
 
     }
 
+    Navigator.of(context).pop();
+
+    Fluttertoast.showToast(
+      msg: "Place information updated",
+      toastLength: Toast.LENGTH_LONG,
+    );
 
   }
 

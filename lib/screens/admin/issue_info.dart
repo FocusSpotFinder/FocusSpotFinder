@@ -286,7 +286,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
 
@@ -328,7 +328,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
                                   Column(
@@ -358,7 +358,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
                                 ])
@@ -391,7 +391,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
 
@@ -417,7 +417,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
 
@@ -450,7 +450,7 @@ class _issueInfoState extends State<issueInfo> {
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.indigo.shade900,
+                                              color: Colors.black,
                                             )),
                                       ]),
 
