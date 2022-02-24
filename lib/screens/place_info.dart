@@ -73,6 +73,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   @override
   void initState() {
+    userChecked = widget.place.services;
+
     setState(() {});
 
     favorited = widget.isFav;
@@ -724,7 +726,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                height: 300.0, // Change as per your requirement
+                height: 300.0, // 
                 width: 300.0,
                 child: Column(children: [
                   Column(children: [
@@ -1013,7 +1015,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 300.0, // Change as per your requirement
+                      height: 300.0,
                       width: 300.0,
                       child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -1032,10 +1034,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                           color: Colors.black,
                                         )),
                                     trailing: Checkbox(
-                                      //value: userChecked.contains(_availableServices[i]) || widget.place.services.contains(_availableServices[i]) ,
-                                      value: userChecked
-                                          .contains(_availableServices[i]),
-
+                                      value: userChecked.contains(_availableServices[i]) || widget.place.services.contains(_availableServices[i]) ,
                                       onChanged: (val) {
                                         setState(() {});
                                         _onSelected(val, _availableServices[i]);
@@ -1868,7 +1867,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 300.0, // Change as per your requirement
+                      height: 300.0, // 
                       width: 300.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -497,7 +497,7 @@ class _editPlaceState extends State<editPlace> {
                                                           )),
                                                       trailing: Checkbox(
                                                         value: userCheckedServices
-                                                            .contains(_availableServices[i]) ||widget.place.services
+                                                            .contains(_availableServices[i]) || widget.place.services
                                                             .contains(_availableServices[i]),
                                                         onChanged: (val) {
                                                           _onSelectedServices(val, _availableServices[i]);
