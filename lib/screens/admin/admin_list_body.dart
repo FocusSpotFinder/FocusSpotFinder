@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/screens/admin/issue_info.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -52,7 +53,8 @@ class adminListBody extends HookConsumerWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          subtitle: Column(
+                          subtitle: (status == "Unresolved" || status == "Waiting")?
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -60,6 +62,23 @@ class adminListBody extends HookConsumerWidget {
                                 "$status",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.lato(
+                                color: Colors.red,
+                              ),
+                              ),
+                            ],
+                          ):
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "$status",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.lato(
+                                  color: Colors.green,
+                                ),
                               ),
                             ],
                           ),

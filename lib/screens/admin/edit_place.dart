@@ -304,6 +304,9 @@ class _editPlaceState extends State<editPlace> {
                     instagramEditingController.text,
                     widget.place.photos,
                     context);
+
+                Navigator.pop(context);
+
               });
             }
           }
@@ -465,7 +468,12 @@ class _editPlaceState extends State<editPlace> {
                                                           .contains(types[i]) || widget.place.types
                                                           .contains(types[i]),
                                                       onChanged: (val) {
-                                                        _onSelectedTypes(val, types[i]);
+                                                        if(isEnabled) {
+                                                          _onSelectedTypes(
+                                                              val, types[i]);
+                                                        }else{
+                                                          null;
+                                                        }
                                                       },
                                                     )
                                                 );
