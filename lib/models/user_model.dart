@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:focus_spot_finder/screens/admin/issues_list.dart';
 import 'package:focus_spot_finder/screens/auth/initial_screen.dart';
 import 'package:focus_spot_finder/screens/auth/signup.dart';
 import 'package:focus_spot_finder/screens/splash_screen.dart';
@@ -113,14 +116,28 @@ class UserModel {
     final _auth = FirebaseAuth.instance;
     await _auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((user) {
+        .then((user) async {
       if (user.user.emailVerified) {
         Fluttertoast.showToast(
           msg: "Login Successful",
           toastLength: Toast.LENGTH_LONG,
         );
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => SplashScreen()));
+
+        /*
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
+        final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        for (int x = 0; x < allData.length; x++) {
+          var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+          if (noteInfo["Email"] == email) {
+            log("Admin: "+noteInfo["Email"]);
+            //redirect the admin to his pages
+           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => issuesList()));
+           // break;
+          }
+         }
+        */
+
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SplashScreen()));
       } else {
         emailNotValidated = true;
       }

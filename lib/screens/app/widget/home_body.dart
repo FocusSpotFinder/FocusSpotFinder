@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:focus_spot_finder/screens/splash_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../models/place.dart';
@@ -160,7 +162,43 @@ class HomeBody extends HookConsumerWidget {
                   ],
                 )
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                      //CircularProgressIndicator(),
+                      Icon(
+                        Icons.warning_amber,
+                        color: Colors.red,
+                        size: 50,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          "The application needs to access your location, to be able to list workspaces around you",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: StadiumBorder(), primary: Colors.cyan.shade100),
+                          onPressed: () async {
+                            // await OpenAppSettings.openAppSettings();
+                            Logger().i(await Permission.locationWhenInUse.status);
+                            if (await Permission.locationWhenInUse
+                                .request()
+                                .then((value) => value.isGranted)) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SplashScreen()));
+                            } else {
+                              Logger().i("opening setting");
+                              openAppSettings();
+                            }
+                          },
+                          child: Text('Allow Permission')
+                      ),
+                    ]
+                  ),
                 ),
           isClicked.value
               ? Container(
