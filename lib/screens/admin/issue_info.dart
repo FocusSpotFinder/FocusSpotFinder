@@ -56,17 +56,6 @@ class _issueInfoState extends State<issueInfo> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           toolbarHeight: 55,
-          actions: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 8),
-              child: IconButton(
-                icon: Image.asset('assets/chatbot.png',
-                    fit: BoxFit.fitHeight, height: 40),
-                tooltip: 'Chatbot',
-                onPressed: () {},
-              ),
-            ),
-          ],
         ),
         body:  Stack(
             children: <Widget> [
