@@ -227,6 +227,7 @@ class Place {
           var noteInfo = querySnapshot2.docs[x].data() as Map<String, dynamic>;
           if (noteInfo["PlaceId"] == placeId) {
             String userId = noteInfo["User ID"];
+            String docId = querySnapshot2.docs[x].id;
 
             var collection2 = FirebaseFirestore.instance.collection('Users');
             var docSnapshot2 = await collection2.doc(userId).get();
@@ -235,7 +236,7 @@ class Place {
               userName = data['name'];
             }
 
-            reviews.add([userName, noteInfo["Review"]]);
+            reviews.add([userName, noteInfo["Review"], docId]);
           }
         }
         reviewsList = reviews;
@@ -533,8 +534,7 @@ class Place {
         var reviewsList = [];
 
         // Get docs from collection reference
-        QuerySnapshot querySnapshot2 =
-            await FirebaseFirestore.instance.collection('Review').get();
+        QuerySnapshot querySnapshot2 = await FirebaseFirestore.instance.collection('Review').get();
 
         // Get data from docs and convert map to List
         final allData2 = querySnapshot2.docs.map((doc) => doc.data()).toList();
@@ -544,6 +544,8 @@ class Place {
           var noteInfo = querySnapshot2.docs[x].data() as Map<String, dynamic>;
           if (noteInfo["PlaceId"] == placeId) {
             String userId = noteInfo["User ID"];
+            String docId = querySnapshot2.docs[x].id;
+
 
             var collection2 = FirebaseFirestore.instance.collection('Users');
             var docSnapshot2 = await collection2.doc(userId).get();
@@ -552,7 +554,7 @@ class Place {
               userName = data['name'];
             }
 
-            reviews.add([userName, noteInfo["Review"]]);
+            reviews.add([userName, noteInfo["Review"], docId]);
           }
         }
         reviewsList = reviews;

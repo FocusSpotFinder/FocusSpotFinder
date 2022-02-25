@@ -815,6 +815,103 @@ class _editPlaceState extends State<editPlace> {
                                 ]
                             ): SizedBox.shrink(),
                             SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Reviews",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  SizedBox(
+                                    width: 350,
+                                    child: Column(
+                                      children: [
+                                        (widget.place.reviewsList.isNotEmpty)
+                                            ? Row(
+                                          children: [
+                                            new Flexible(
+                                              child: ListView.separated(
+                                                  physics: const NeverScrollableScrollPhysics(),
+                                                  separatorBuilder: (context, index) =>
+                                                      SizedBox(height: 7.0),
+                                                  scrollDirection: Axis.vertical,
+                                                  shrinkWrap: true,
+                                                  padding: const EdgeInsets.all(8),
+                                                  itemCount: widget.place.reviewsList.length,
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    return Container(
+                                                      height: 50,
+                                                      child: ListTile(
+                                                        isThreeLine: true,
+                                                        shape: RoundedRectangleBorder(),
+                                                        title: Text(
+                                                          "${widget.place.reviewsList[index][0]}",
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        subtitle: Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              "${widget.place.reviewsList[index][1]}",
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        trailing: IconButton(
+                                                            icon: Icon(Icons.delete_outline),
+                                                            color: Colors.red,
+                                                            onPressed: () {
+                                                              AlertDialogDelete(context, ()  {
+                                                                Navigator.of(context).pop();
+                                                                deleteReview(widget.place.reviewsList[index][2]);
+                                                                widget.place.reviewsList.removeAt(index);
+                                                                setState((){});
+
+                                                                Fluttertoast.showToast(
+                                                                  msg: "Review deleted successfully",
+                                                                  toastLength: Toast.LENGTH_LONG,
+                                                                );
+                                                              });
+                                                            }),
+                                                      ),
+                                                    );
+                                                  }),
+                                            ),
+                                          ],
+                                        )
+                                            : Text(
+                                          "No reviews found\n  \n ",
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ]
+                                    ),
+                                  )
+                                ]
+                            ),
+                            SizedBox(
                               height: 25,
                             ),
                             updateButton,
@@ -871,18 +968,6 @@ class _editPlaceState extends State<editPlace> {
     );
   }
 
-
-  void _onSelected(bool selected, String dataName) {
-    if (selected == true) {
-      setState(() {
-        userChecked.add(dataName);
-      });
-    } else {
-      setState(() {
-        userChecked.remove(dataName);
-      });
-    }
-  }
 
 
   void _onSelectedTypes(bool selected, String dataName) {
@@ -1011,6 +1096,36 @@ class _editPlaceState extends State<editPlace> {
 
   }
 
+
+  AlertDialogDelete(BuildContext context, onYes) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Are sure you want to delete this review?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  deleteReview (docId) async {
+    FirebaseFirestore.instance.collection('Review').doc(docId).delete();
+  }
 
 
 

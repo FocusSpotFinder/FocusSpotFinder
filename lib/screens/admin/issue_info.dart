@@ -383,7 +383,7 @@ class _issueInfoState extends State<issueInfo> {
                                           },
                                         ),
 
-                                        Text("Edit",
+                                        Text("Edit Place",
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
@@ -404,6 +404,8 @@ class _issueInfoState extends State<issueInfo> {
                                               if(widget.issue.placeId.length == 27){
                                                 //google place
                                                 //black list
+                                                deleteGooglePlace(widget.issue.placeId);
+
                                               }else{
                                                 //new place
                                               deleteFirebasePlace(widget.issue.placeId);
@@ -417,7 +419,7 @@ class _issueInfoState extends State<issueInfo> {
                                           },
                                         ),
 
-                                        Text("Delete",
+                                        Text("Delete Place",
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
@@ -450,7 +452,7 @@ class _issueInfoState extends State<issueInfo> {
                                           },
                                         ),
 
-                                        Text("Resolve",
+                                        Text("Resolve Issue",
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
@@ -515,8 +517,12 @@ class _issueInfoState extends State<issueInfo> {
     );
   }
 
-  deleteFirebasePlace (placeId) async {
-     FirebaseFirestore.instance.collection('newPlace').doc(placeId).delete();
+  deleteGooglePlace (placeId) async {
 
   }
+
+  deleteFirebasePlace (placeId) async {
+     FirebaseFirestore.instance.collection('newPlace').doc(placeId).delete();
+  }
+
 }
