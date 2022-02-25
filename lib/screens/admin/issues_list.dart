@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/admin/admin_list_body.dart';
@@ -7,6 +8,7 @@ import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class issuesList extends StatefulWidget {
   final void Function() onBackPress;
@@ -49,6 +51,19 @@ class _issuesListState extends State<issuesList> {
             tooltip: 'Back',
             onPressed: () => Navigator.of(context).pop(),
           ),
+          actions: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 8),
+              child: IconButton(
+                icon: Image.asset('assets/firebase.png',
+                    fit: BoxFit.fitHeight, height: 32),
+                tooltip: 'Firebase',
+                onPressed: () {
+                  launchFirebase();
+                },
+              ),
+            ),
+          ],
           toolbarHeight: 55,
         ),
         body: adminListBody(),
@@ -67,4 +82,19 @@ class _issuesListState extends State<issuesList> {
       ),
     );
   }
+
+  Future<void> launchFirebase() async {
+    String url = "https://firebase.google.com/?gclid=Cj0KCQiAmeKQBhDvARIsAHJ7mF6OmPIeu2W7gn63okFHkH8LhJvzQ7fQhWAUKbBA49A0IutQzYCMBEgaArhQEALw_wcB&gclsrc=aw.ds";
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      Fluttertoast.showToast(
+        msg: "Could not open this website",
+        toastLength: Toast.LENGTH_LONG,
+      );
+      throw 'Could not open this website';
+    }
+  }
+
 }
