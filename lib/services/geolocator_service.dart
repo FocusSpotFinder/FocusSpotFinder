@@ -8,7 +8,7 @@ class GeoLocatorService {
         desiredAccuracy: LocationAccuracy.high);
   }
 
-  //calcs the distance between the users lat and lng, and the place lat and lng
+  //calculates the distance between the users lat and lng, and the place lat and lng
   double getDistance(double startLatitude, double startLongitude,
       double endLatitude, double endLongitude) {
     return Geolocator.distanceBetween(

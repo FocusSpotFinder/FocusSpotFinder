@@ -6,12 +6,3 @@ final loactionProvider = FutureProvider<Position>((ref) async {
   final locatorService = GeoLocatorService();
   return await locatorService.getLocation();
 });
-
-
-
-// final loactionProvider = FutureProvider<Position>((ref) async {
-//      ImageConfiguration configuration =
-//                 createLocalImageConfiguration(context);
-//             return await BitmapDescriptor.fromAssetImage(
-//                 configuration, 'assets/marker.png');
-// });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:focus_spot_finder/screens/admin/issues_list.dart';
 import 'package:focus_spot_finder/screens/app/widget/home_body.dart';
 
 class Home extends HookWidget {
@@ -21,7 +20,6 @@ class Home extends HookWidget {
               tooltip: 'Chatbot',
               onPressed: () {
                 //later
-                Navigator.push(context, MaterialPageRoute(builder: (context) => issuesList()));
               },
             ),
           ),

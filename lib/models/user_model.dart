@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:focus_spot_finder/screens/admin/issues_list.dart';
+import 'package:focus_spot_finder/screens/admin/admin_splash_screen.dart';
 import 'package:focus_spot_finder/screens/auth/initial_screen.dart';
 import 'package:focus_spot_finder/screens/auth/signup.dart';
 import 'package:focus_spot_finder/screens/splash_screen.dart';
@@ -21,12 +20,12 @@ class UserModel {
 
   UserModel(
       {this.uid,
-      this.name,
-      this.email,
-      this.country,
-      this.gender,
-      this.birthday,
-      this.profileImage});
+        this.name,
+        this.email,
+        this.country,
+        this.gender,
+        this.birthday,
+        this.profileImage});
 
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -37,7 +36,7 @@ class UserModel {
       gender: map['gender'],
       profileImage: map['profileImage'],
       birthday:
-          map['birthday'] != null ? map['birthday'].toDate() : DateTime.now(),
+      map['birthday'] != null ? map['birthday'].toDate() : DateTime.now(),
     );
   }
 
@@ -78,7 +77,7 @@ class UserModel {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => InitialScreen()),
-            (route) => false);
+                (route) => false);
       });
     }).catchError((e) {
       print(e);
@@ -111,6 +110,7 @@ class UserModel {
   bool emailNotFound = false;
   bool emailNotValidated = false;
   bool wrongPassword = false;
+  bool isAdmin = false;
 
   void signIn(String email, String password, context) async {
     final _auth = FirebaseAuth.instance;
@@ -123,23 +123,31 @@ class UserModel {
           toastLength: Toast.LENGTH_LONG,
         );
 
-        /*
+
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
         final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
         for (int x = 0; x < allData.length; x++) {
           var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
           if (noteInfo["Email"] == email) {
             log("Admin: "+noteInfo["Email"]);
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminSplashScreen()));
+            isAdmin = true;
+            break;
             //redirect the admin to his pages
-           // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => issuesList()));
-           // break;
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => issuesList()));
+            // break;
           }
-         }
-        */
-
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SplashScreen()));
+        }
+        if (!isAdmin) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => SplashScreen()));
+        }
       } else {
         emailNotValidated = true;
+        Fluttertoast.showToast(
+          msg: "Not a user",
+          toastLength: Toast.LENGTH_LONG,
+        );
       }
     }).catchError((e) {
       //  if (e.code == 'auth/wrong-password') {

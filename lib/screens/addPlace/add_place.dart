@@ -6,9 +6,6 @@ import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/addPlace/add_place_location_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:focus_spot_finder/screens/app/app_page.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
-
 class AddPlace extends StatefulWidget {
   @override
   State<AddPlace> createState() => _AddPlaceState();
@@ -208,16 +205,6 @@ class _AddPlaceState extends State<AddPlace> {
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNav(
-      //   onChange: (a) {
-      //     Navigator.of(context).pushAndRemoveUntil(
-      //         MaterialPageRoute(
-      //             builder: (c) => AppPage(
-      //                   initialPage: a,
-      //                 )),
-      //         (route) => false);
-      //   },
-      // ),
     );
   }
 

@@ -451,9 +451,9 @@ class _issueInfoState extends State<issueInfo> {
                                       ]),
 
                                 ]): Row(),
-                          SizedBox(
-                            height: 20,
-                          ),
+                            SizedBox(
+                              height: 35,
+                            ),
                           ]),
                   ),
               )
@@ -507,7 +507,9 @@ class _issueInfoState extends State<issueInfo> {
   }
 
   deleteGooglePlace (placeId) async {
-
+    var collection = FirebaseFirestore.instance.collection('googlePlaceBlackList');
+    var docRef = await collection.add({"PlaceId": "$placeId"});
+    var documentId = docRef.id;
   }
 
   deleteFirebasePlace (placeId) async {

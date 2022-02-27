@@ -2,22 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/admin/issues_list.dart';
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import '../../../Widget/customClipper.dart';
-import 'user_profile.dart';
+import 'package:focus_spot_finder/screens/app/profile/user_profile.dart';
 import 'package:focus_spot_finder/screens/controller.dart';
 
-class Profile extends StatefulWidget {
+class AdminProfile extends StatefulWidget {
   final void Function() onBackPress;
 
-  const Profile({Key key, @required this.onBackPress}) : super(key: key);
+  const AdminProfile({Key key, @required this.onBackPress}) : super(key: key);
   @override
-  State<Profile> createState() => _ProfileState();
+  State<AdminProfile> createState() => _AdminProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _AdminProfileState extends State<AdminProfile> {
   bool isClicked = false;
   var myController = Get.put(MyController());
 
@@ -71,25 +72,25 @@ class _ProfileState extends State<Profile> {
                 right: -MediaQuery.of(context).size.width * .4,
                 child: Container(
                     child: Transform.rotate(
-                  angle: -pi / 3.5,
-                  child: ClipPath(
-                    clipper: ClipPainter(),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * .5,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.cyan.shade50,
-                            Colors.cyan.shade400,
-                          ],
+                      angle: -pi / 3.5,
+                      child: ClipPath(
+                        clipper: ClipPainter(),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * .5,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.cyan.shade50,
+                                Colors.cyan.shade400,
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )),
+                    )),
               ),
               Container(
                 child: Container(
@@ -107,52 +108,52 @@ class _ProfileState extends State<Profile> {
                         width: MediaQuery.of(context).size.width,
                         color: Colors.transparent,
                         child: Obx(
-                          () => Column(
+                              () => Column(
                             children: [
                               CircleAvatar(
                                 radius:
-                                    MediaQuery.of(context).size.height * 0.1,
+                                MediaQuery.of(context).size.height * 0.1,
                                 backgroundColor:
-                                    Colors.cyan.shade100.withOpacity(0.8),
+                                Colors.cyan.shade100.withOpacity(0.8),
                                 child: ClipOval(
                                   child: Stack(
                                     children: [
                                       myController.f1.value.path.isEmpty
                                           ? (loggedInUser.profileImage !=
-                                                      null &&
-                                                  loggedInUser
-                                                      .profileImage.isNotEmpty)
-                                              ? CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  radius: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.1,
-                                                  backgroundImage: NetworkImage(
-                                                      loggedInUser
-                                                          .profileImage),
-                                                )
-                                              : CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  radius: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.1,
-                                                  backgroundImage: AssetImage(
-                                                    'assets/place_holder.png',
-                                                  ))
+                                          null &&
+                                          loggedInUser
+                                              .profileImage.isNotEmpty)
+                                          ? CircleAvatar(
+                                        backgroundColor:
+                                        Colors.transparent,
+                                        radius: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                            0.1,
+                                        backgroundImage: NetworkImage(
+                                            loggedInUser
+                                                .profileImage),
+                                      )
                                           : CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              radius: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
-                                              backgroundImage: FileImage(
-                                                  myController.f1.value),
-                                            ),
+                                          backgroundColor:
+                                          Colors.transparent,
+                                          radius: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.1,
+                                          backgroundImage: AssetImage(
+                                            'assets/place_holder.png',
+                                          ))
+                                          : CircleAvatar(
+                                        backgroundColor:
+                                        Colors.transparent,
+                                        radius: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                            0.1,
+                                        backgroundImage: FileImage(
+                                            myController.f1.value),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -162,7 +163,7 @@ class _ProfileState extends State<Profile> {
                                       0.02),
                               Column(
                                 children: [
-                                  Text(" ${myController.userName.value}",
+                                  Text("Admin: ${myController.userName.value}",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -171,8 +172,8 @@ class _ProfileState extends State<Profile> {
                                       )),
                                   SizedBox(
                                       height:
-                                          MediaQuery.of(context).size.height *
-                                              0.003),
+                                      MediaQuery.of(context).size.height *
+                                          0.003),
                                   Text(" ${loggedInUser.email}",
                                       style: TextStyle(
                                         fontSize: 13,
@@ -194,7 +195,7 @@ class _ProfileState extends State<Profile> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserProfile()));
+                                  builder: (context) => issuesList()));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -202,7 +203,7 @@ class _ProfileState extends State<Profile> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                              BorderRadius.all(Radius.circular(10)),
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
                                     color: Color(0xffe0f7fa).withAlpha(100),
@@ -214,7 +215,59 @@ class _ProfileState extends State<Profile> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal:
-                                    MediaQuery.of(context).size.width * 0.02),
+                                MediaQuery.of(context).size.width * 0.02),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.report,
+                                  color: Colors.black54,
+                                ),
+                                Text(
+                                  'Issues List',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black54,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserProfile()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.symmetric(vertical: 13),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Color(0xffe0f7fa).withAlpha(100),
+                                    offset: Offset(2, 4),
+                                    blurRadius: 8,
+                                    spreadRadius: 2)
+                              ],
+                              color: Colors.cyan.shade50),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                MediaQuery.of(context).size.width * 0.02),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -253,7 +306,7 @@ class _ProfileState extends State<Profile> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                              BorderRadius.all(Radius.circular(10)),
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
                                     color: Color(0xffe0f7fa).withAlpha(100),
@@ -265,7 +318,7 @@ class _ProfileState extends State<Profile> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal:
-                                    MediaQuery.of(context).size.width * 0.02),
+                                MediaQuery.of(context).size.width * 0.02),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

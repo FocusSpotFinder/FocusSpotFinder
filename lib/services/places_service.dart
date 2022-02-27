@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:focus_spot_finder/data/data.dart';
@@ -16,48 +14,72 @@ import 'package:intl/intl.dart';
 class PlacesService {
   Future<List<Place>> getPlaces(
       double lat, double lng, BitmapDescriptor icon) async {
+    //get places from firebase
     List<Place> firebaseList = await getPlacesFirebase();
 
     //request for cafe
     var response = await http.get(Uri.parse(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=cafe&rankby=distance&key=${Data().key}'));
     var json = convert.jsonDecode(response.body);
+
     //request for library
-    var response2 = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=library&rankby=distance&key=${Data().key}'));
+    var response2 = await http.get(Uri.parse('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=library&rankby=distance&key=${Data().key}'));
     var json2 = convert.jsonDecode(response2.body);
+
     //request for book_store
-    var response3 = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=book_store&rankby=distance&key=${Data().key}'));
+    var response3 = await http.get(Uri.parse('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=book_store&rankby=distance&key=${Data().key}'));
     var json3 = convert.jsonDecode(response3.body);
+
     //request for park
-    var response4 = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=park&rankby=distance&key=${Data().key}'));
+    var response4 = await http.get(Uri.parse('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=park&rankby=distance&key=${Data().key}'));
     var json4 = convert.jsonDecode(response4.body);
 
     //group all the responses and access the variable "results"
     //and map the responses into place objects in a list
-    var jsonResults = json['results'] +
+    var jsonResults =
+        json['results'] +
         json2['results'] +
         json3['results'] +
         json4['results'] as List;
 
     List<Place> list = jsonResults.map((place) => Place.fromJson(place, icon)).toList();
 
-    print("list google ${list.length}");
 
+    List<String> blackList = [];
+
+    // Get the black listed places from firebase and add the place id into the blackList list
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('googlePlaceBlackList').get();
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (int x = 0; x < allData.length; x++) {
+      var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+      blackList.add(noteInfo["PlaceId"]);
+    }
+
+
+    //loop over google place api list and remove the black listed places
+    for (int i = 0; i < list.length; i++){
+      for (int j = 0; j < blackList.length; j++) {
+        if (list[i].placeId == blackList[j]){
+          list.removeAt(i);
+        }
+      }
+    }
+
+
+
+    //add firebase list and return it
     list.addAll(firebaseList);
-    print("list new ${list.length}");
     return list;
   }
 
+  //this method gets the places stored in firebase
   Future<List<Place>> getPlacesFirebase() async {
-    List<Place> firebaseList = [];
-    QuerySnapshot value =
-        await FirebaseFirestore.instance.collection("newPlace").get();
-    BitmapDescriptor iconMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 1.0), 'assets/marker.png');
 
+    List<Place> firebaseList = [];
+    QuerySnapshot value = await FirebaseFirestore.instance.collection("newPlace").get();
+    BitmapDescriptor iconMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 1.0), 'assets/marker.png');
+
+    //loop on the querysnapshot to access the docs
     for (int i = 0; i < value.size; i++) {
       var noteInfo = value.docs[i].data() as Map<String, dynamic>;
       String placeId = value.docs[i].id;
