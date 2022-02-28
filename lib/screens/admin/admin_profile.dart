@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/admin/admin_profile_info.dart';
 import 'package:focus_spot_finder/screens/admin/issues_list.dart';
 import 'dart:math';
 import 'package:get/get.dart';
@@ -247,7 +248,7 @@ class _AdminProfileState extends State<AdminProfile> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserProfile()));
+                                  builder: (context) => AdminProfileInfo()));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,

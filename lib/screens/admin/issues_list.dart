@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
 import 'package:focus_spot_finder/screens/admin/admin_list_body.dart';
-import 'package:focus_spot_finder/screens/app/app_page.dart';
 import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -74,7 +74,7 @@ class _issuesListState extends State<issuesList> {
           onChange: (a) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (c) => AppPage(initialPage: a,)),
+                    builder: (c) => AdminAppPage(initialPage: a,)),
                     (route) => false);
           },
 
