@@ -1874,6 +1874,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         children: [
                           OutlinedButton(
                             style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan.shade100),
                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                                 side: MaterialStateProperty.all(BorderSide(
                                     color: Colors.cyan.shade100,
@@ -1902,6 +1903,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
                           OutlinedButton(
                             style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan.shade100),
                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                                 side: MaterialStateProperty.all(BorderSide(
                                     color: Colors.cyan.shade100,
@@ -1935,6 +1937,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
                           OutlinedButton(
                             style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan.shade100),
                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                                 side: MaterialStateProperty.all(BorderSide(
                                     color: Colors.cyan.shade100,
@@ -1968,7 +1971,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
                           OutlinedButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.cyan.shade100),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),
                                 side: MaterialStateProperty.all(BorderSide(
                                     color: Colors.cyan.shade100,
                                     width: 2.0,
@@ -2313,7 +2317,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Status":"Unresolved",
       "Report time": "$reportTime",
       "Message":"$message",
-    "Resolve time":""});
+    "Resolve time":"",
+    "Resolved by":""
+    });
 
   }
 

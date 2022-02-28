@@ -38,6 +38,7 @@ class adminListBody extends HookConsumerWidget {
                     String message = noteInfo['Message'];
                     String reportTime = noteInfo['Report time'];
                     String resovleTime = noteInfo['Resolve time'];
+                    String resovledBy = noteInfo['Resolved by'];
 
                     return Ink(
                       decoration: BoxDecoration(
@@ -90,7 +91,8 @@ class adminListBody extends HookConsumerWidget {
                                 status: status,
                                 message: message,
                                 reportTime: reportTime,
-                                resolveTime: resovleTime );
+                                resolveTime: resovleTime,
+                                resolvedBy: resovledBy);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

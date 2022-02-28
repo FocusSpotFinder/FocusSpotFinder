@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
 import 'package:focus_spot_finder/screens/admin/edit_place.dart';
 import 'package:focus_spot_finder/screens/app/app_page.dart';
 import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
@@ -69,6 +70,47 @@ class _issueInfoState extends State<issueInfo> {
 
                             SizedBox(
                               height: 15,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Image.asset('assets/logo.png'),
+                                          iconSize: 80,
+                                          onPressed: () async {
+
+                                            Place place = await Place.getPlaceInfo(
+                                                widget.issue.placeId);
+                                            bool isFav = await Place.checkIfFav(
+                                                widget.issue.placeId);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => PlaceInfo(
+                                                  place: place,
+                                                  isFav: isFav,
+                                                  geo: place.geometry,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Text("Place",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                            )),
+                                      ]),
+
+                                ]
+                            ),
+                            SizedBox(
+                              height: 25,
                             ),
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,6 +231,30 @@ class _issueInfoState extends State<issueInfo> {
                                       )),
                                 ]
                             ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  Text("Message",
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      )),
+
+                                  Text(widget.issue.message,
+                                      //textAlign: TextAlign.start,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.blueGrey.shade700,
+                                      )),
+                                ]
+                            ),
                             (widget.issue.status == "Resolved" || widget.issue.status == "Approved"|| widget.issue.status == "Declined")?
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,14 +281,15 @@ class _issueInfoState extends State<issueInfo> {
                                 ]
                             ):Row(),
 
-                            SizedBox(
-                              height: 15,
-                            ),
+                            (widget.issue.status == "Resolved" || widget.issue.status == "Approved"|| widget.issue.status == "Declined")?
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  Text("Message",
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Text("Resolve by",
                                       //textAlign: TextAlign.start,
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
@@ -230,7 +297,7 @@ class _issueInfoState extends State<issueInfo> {
                                         color: Colors.black,
                                       )),
 
-                                  Text(widget.issue.message,
+                                  Text(widget.issue.resolvedBy,
                                       //textAlign: TextAlign.start,
                                       style: GoogleFonts.lato(
                                         fontSize: 18,
@@ -238,45 +305,10 @@ class _issueInfoState extends State<issueInfo> {
                                         color: Colors.blueGrey.shade700,
                                       )),
                                 ]
-                            ),
+                            ):Row(),
 
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                      children: [
-                                        IconButton(
-                                          icon: Image.asset('assets/logo.png'),
-                                          iconSize: 60,
-                                          onPressed: () async {
-
-                                            Place place = await Place.getPlaceInfo(
-                                                widget.issue.placeId);
-                                            bool isFav = await Place.checkIfFav(
-                                                widget.issue.placeId);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => PlaceInfo(
-                                                  place: place,
-                                                  isFav: isFav,
-                                                  geo: place.geometry,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-
-                                        Text("Place",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.lato(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.black,
-                                            )),
-                                      ]),
-
-                                ]
+                            SizedBox(
+                              height: 25,
                             ),
 
                             (widget.issue.type == "New place added")?
@@ -418,8 +450,9 @@ class _issueInfoState extends State<issueInfo> {
                                       ]),
 
                                 ]),
-
-
+                            SizedBox(
+                              height: 25,
+                            ),
                             (widget.issue.type != "New place added")?
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -436,6 +469,7 @@ class _issueInfoState extends State<issueInfo> {
                                             var docRef2 = await collection2.update({
                                               "Status": "Resolved",
                                               "Resolve time": "$resolveTime",
+                                              "Resolved by": "${loggedInUser.email}"
                                             });
                                             Navigator.of(context).pop();
                                           },
@@ -471,7 +505,7 @@ class _issueInfoState extends State<issueInfo> {
           onChange: (a) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (c) => AppPage(initialPage: a,)),
+                    builder: (c) => AdminAppPage(initialPage: a,)),
                     (route) => false);
           },
 

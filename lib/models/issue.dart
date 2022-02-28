@@ -9,11 +9,12 @@ class Issue {
   String message;
   String reportTime;
   String resolveTime;
+  String resolvedBy;
 
   Stream<QuerySnapshot> issues;
 
   Issue({this.placeId, this.userId, this.reportId, this.type, this.status, this.message,
-      this.reportTime, this.resolveTime, this.issues});
+      this.reportTime, this.resolveTime, this.resolvedBy, this.issues});
 
   Stream<QuerySnapshot> readItems() {
     Query reportsCollection = FirebaseFirestore.instance
