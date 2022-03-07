@@ -331,6 +331,7 @@ class _issueInfoState extends State<issueInfo> {
                                             var docRef2 = await collection2.update({
                                               "Status": "Approved",
                                               "Resolve time": "$resolveTime",
+                                              "Resolved by": "${loggedInUser.email}",
                                             });
 
                                             Navigator.of(context).pop();
@@ -365,6 +366,7 @@ class _issueInfoState extends State<issueInfo> {
                                             var docRef2 = await collection2.update({
                                               "Status": "Declined",
                                               "Resolve time": "$resolveTime",
+                                              "Resolved by": "${loggedInUser.email}",
                                             });
                                             Navigator.of(context).pop();
                                           },
