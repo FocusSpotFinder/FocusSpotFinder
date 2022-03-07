@@ -310,38 +310,32 @@ class _issueInfoState extends State<issueInfo> {
                               height: 25,
                             ),
 
-                            (widget.issue.type == "New place added")?
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            (widget.issue.type == "New place added" && widget.issue.status == "Waiting")?
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Column(
                                       children: [
                                         IconButton(
-                                          icon: Image.asset('assets/check.png'),
+                                          icon: Image.asset('assets/edit.png'),
                                           iconSize: 60,
                                           onPressed: () async {
-                                            var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
-                                            var docRef = await collection.update({
-                                              "Status": "Approved",
-                                            });
+                                            Place place = await Place.getPlaceInfo(
+                                                widget.issue.placeId);
 
-                                            DateTime resolveTime = DateTime.now();
-
-                                            var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
-                                            var docRef2 = await collection2.update({
-                                              "Status": "Approved",
-                                              "Resolve time": "$resolveTime",
-                                              "Resolved by": "${loggedInUser.email}",
-                                            });
-
-                                            Navigator.of(context).pop();
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => editPlace(
+                                                  place: place,
+                                                ),
+                                              ),
+                                            );
 
                                           },
-
-
                                         ),
 
-                                        Text("Approve",
+                                        Text("Edit Place",
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 15,
@@ -349,39 +343,94 @@ class _issueInfoState extends State<issueInfo> {
                                               color: Colors.black,
                                             )),
                                       ]),
-                                  Column(
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        IconButton(
-                                          icon: Image.asset('assets/x.png'),
-                                          iconSize: 60,
-                                          onPressed: () async {
-                                            var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
-                                            var docRef = await collection.update({
-                                              "Status": "Not approved",
-                                            });
+                                        Column(
+                                            children: [
+                                              IconButton(
+                                                icon: Image.asset('assets/check.png'),
+                                                iconSize: 60,
+                                                onPressed: () async {
+                                                  var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
+                                                  var docRef = await collection.update({
+                                                    "Status": "Approved",
+                                                  });
 
-                                            DateTime resolveTime = DateTime.now();
+                                                  DateTime resolveTime = DateTime.now();
 
-                                            var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
-                                            var docRef2 = await collection2.update({
-                                              "Status": "Declined",
-                                              "Resolve time": "$resolveTime",
-                                              "Resolved by": "${loggedInUser.email}",
-                                            });
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
+                                                  var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
+                                                  var docRef2 = await collection2.update({
+                                                    "Status": "Approved",
+                                                    "Resolve time": "$resolveTime",
+                                                    "Resolved by": "${loggedInUser.email}",
+                                                  });
 
-                                        Text("Decline",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.lato(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.black,
-                                            )),
-                                      ]),
-                                ])
-                                : Row(
+                                                  widget.issue.status = "Approved";
+                                                  Fluttertoast.showToast(
+                                                    msg: "Place approved successfully",
+                                                    toastLength: Toast.LENGTH_LONG,
+                                                  );
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+
+                                              Text("Approve",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.black,
+                                                  )),
+                                            ]),
+
+                                        Column(
+                                            children: [
+                                              IconButton(
+                                                icon: Image.asset('assets/x.png'),
+                                                iconSize: 60,
+                                                onPressed: () async {
+                                                  var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.issue.placeId);
+                                                  var docRef = await collection.update({
+                                                    "Status": "Not approved",
+                                                  });
+
+                                                  DateTime resolveTime = DateTime.now();
+
+                                                  var collection2 = FirebaseFirestore.instance.collection('Reports').doc(widget.issue.reportId);
+                                                  var docRef2 = await collection2.update({
+                                                    "Status": "Declined",
+                                                    "Resolve time": "$resolveTime",
+                                                    "Resolved by": "${loggedInUser.email}",
+                                                  });
+                                                  widget.issue.status = "Declined";
+                                                  Fluttertoast.showToast(
+                                                    msg: "Place decliend successfully",
+                                                    toastLength: Toast.LENGTH_LONG,
+                                                  );
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+
+                                              Text("Decline",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.black,
+                                                  )),
+                                            ]),
+                                      ]
+                                  )
+
+
+                                ]): Row(),
+
+                            (widget.issue.type != "New place added" && widget.issue.status != "Resolved")?
+                            Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Column(
@@ -424,8 +473,7 @@ class _issueInfoState extends State<issueInfo> {
                                               Navigator.of(context).pop();
                                               //delete place
                                               if(widget.issue.placeId.length == 27){
-                                                //google place
-                                                //black list
+                                                //google place, black list
                                                 deleteGooglePlace(widget.issue.placeId);
 
                                               }else{
@@ -449,12 +497,11 @@ class _issueInfoState extends State<issueInfo> {
                                               color: Colors.black,
                                             )),
                                       ]),
-
-                                ]),
+                                ]): Row(),
                             SizedBox(
                               height: 25,
                             ),
-                            (widget.issue.type != "New place added")?
+                            (widget.issue.type != "New place added"  && widget.issue.status != "Resolved")?
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
@@ -472,6 +519,11 @@ class _issueInfoState extends State<issueInfo> {
                                               "Resolve time": "$resolveTime",
                                               "Resolved by": "${loggedInUser.email}"
                                             });
+                                            widget.issue.status = "Resolved";
+                                            Fluttertoast.showToast(
+                                              msg: "Issue resolved successfully",
+                                              toastLength: Toast.LENGTH_LONG,
+                                            );
                                             Navigator.of(context).pop();
                                           },
                                         ),
