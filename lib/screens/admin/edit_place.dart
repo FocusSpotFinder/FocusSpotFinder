@@ -359,40 +359,27 @@ class _editPlaceState extends State<editPlace> {
                                         fontWeight: FontWeight.bold,
                                         color: Colors.indigo.shade900,
                                       )),
-                                  IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              scrollable: true,
-                                              title: Text('Edit Place'),
-                                              content: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                    "You can fully edit new places (FSF place)\nGoogle place (Google Place API) information can be partially edited",
-                                                    style: GoogleFonts.lato(
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: Colors.black,
-                                                    )
-                                                ),
-                                              ),
-                                              actions: [
-                                                ElevatedButton(
-                                                    child: Text("Close"),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    })
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    icon: Icon(Icons.info_outline, color: Colors.grey),
-                                  ),
                                 ]
                             ),
-
+                            SizedBox(
+                              height: 30,
+                            ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    width: 300,
+                                    child: Text(
+                                        "FSF place can be fully edited.\n"
+                                            "Google place (from Places API) data can be partially edited, such as: "
+                                            "available services, phone number, website, twitter, instagram and photos.",
+                                        style: GoogleFonts.lato(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        )),
+                                )
+                            ]),
                             SizedBox(
                               height: 30,
                             ),
@@ -806,7 +793,45 @@ class _editPlaceState extends State<editPlace> {
                                         : SizedBox.shrink(),
                                   )
                                 ]
-                            ): SizedBox.shrink(),
+                            ): Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+
+                                children: [
+                                  Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+
+                                      children: [
+                                        Text("Photos",
+                                            //textAlign: TextAlign.start,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            )),
+                                        ]
+                                  ),
+                                  Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                      Text(
+                                      "No photos found\n",
+                                      overflow: TextOverflow.ellipsis,
+                                      //textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      )),
+                                      ]
+                                  ),
+                                ]
+                            ),
+
+
                             SizedBox(
                               height: 15,
                             ),
@@ -892,7 +917,7 @@ class _editPlaceState extends State<editPlace> {
                                           ],
                                         )
                                             : Text(
-                                          "No reviews found\n  \n ",
+                                          "No reviews found\n",
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -1039,6 +1064,24 @@ class _editPlaceState extends State<editPlace> {
         "Website":"$website",
         "Twitter":"$twitter",
         "Instagram":"$instagram",
+      }).catchError((e) async {
+        if (e.code == 'not-found') {
+          var doc = FirebaseFirestore.instance.collection('googlePlace').doc(placeId);
+          var docRef = await doc.set({
+            "Available services": "$services",
+            "Phone number": "$phone",
+            "Website":"$website",
+            "Twitter":"$twitter",
+            "Instagram":"$instagram",
+          });
+
+          if (photos.isNotEmpty) {
+            var docRef2 = await doc.update({"Photos": "$photos"});
+            photos = null;
+          } else {
+            var docRef2 = await doc.update({"Photos": ""});
+          }
+        }
       });
 
       if (photos.isNotEmpty) {
@@ -1076,7 +1119,6 @@ class _editPlaceState extends State<editPlace> {
       } else {
         var docRef2 = await doc.update({"Photos": ""});
       }
-
 
     }
 
