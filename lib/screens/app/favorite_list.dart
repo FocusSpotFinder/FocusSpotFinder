@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/favorite_list_model.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/place_info.dart';
+import 'package:focus_spot_finder/screens/app/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

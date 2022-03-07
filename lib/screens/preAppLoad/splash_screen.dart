@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/providers/places_provider.dart';
 import 'package:focus_spot_finder/providers/places_state.dart';
-import 'package:focus_spot_finder/screens/app/app_page.dart';
-import 'package:focus_spot_finder/screens/permission_screen.dart';
+import 'package:focus_spot_finder/screens/app/auth/initial_screen.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/permission_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'auth/initial_screen.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({Key key});

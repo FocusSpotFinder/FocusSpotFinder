@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import '../../../Widget/customClipper.dart';
 import 'user_profile.dart';
-import 'package:focus_spot_finder/screens/controller.dart';
+import 'package:focus_spot_finder/Widget/controller.dart';
 
 class Profile extends StatefulWidget {
   final void Function() onBackPress;

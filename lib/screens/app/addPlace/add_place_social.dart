@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/app/app_page.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class addPlaceSocial extends StatefulWidget {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:focus_spot_finder/screens/app/app_index_provider.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/app_index_provider.dart';
 import 'package:focus_spot_finder/screens/app/favorite_list.dart';
 import 'package:focus_spot_finder/screens/app/home.dart';
 import 'package:focus_spot_finder/screens/app/profile/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'widget/bottom_nav.dart';
-import 'widget/center_bottom_button.dart';
+import '../app/widget/bottom_nav.dart';
+import '../app/widget/center_bottom_button.dart';
 
 class AppPage extends HookConsumerWidget {
   final int initialPage;

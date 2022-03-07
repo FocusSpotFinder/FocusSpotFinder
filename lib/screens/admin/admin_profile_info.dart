@@ -9,7 +9,7 @@ import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
 import 'package:get/get.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/controller.dart';
+import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:logger/logger.dart';
 import '../../../Widget/customClipper.dart';
 import 'package:firebase_storage/firebase_storage.dart';

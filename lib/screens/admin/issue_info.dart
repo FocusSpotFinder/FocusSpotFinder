@@ -6,7 +6,7 @@ import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
 import 'package:focus_spot_finder/screens/admin/edit_place.dart';
 import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
-import 'package:focus_spot_finder/screens/place_info.dart';
+import 'package:focus_spot_finder/screens/app/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

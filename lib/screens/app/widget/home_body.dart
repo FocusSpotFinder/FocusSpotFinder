@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:focus_spot_finder/screens/splash_screen.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +11,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../../models/place.dart';
 import '../../../providers/places_provider.dart';
 import '../home.dart';
-import '../../place_info.dart';
+import '../place_info.dart';
 import '../../../services/marker_service.dart';
 
 class HomeBody extends HookConsumerWidget {

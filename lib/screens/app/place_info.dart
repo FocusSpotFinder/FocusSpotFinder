@@ -12,15 +12,15 @@ import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
-import 'package:focus_spot_finder/screens/app/app_page.dart';
-import 'package:focus_spot_finder/screens/controller.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
+import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'app/widget/bottom_nav.dart';
+import 'widget/bottom_nav.dart';
 
 class PlaceInfo extends StatefulWidget {
   final isFav;

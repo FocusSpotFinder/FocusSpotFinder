@@ -4,12 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/providers/places_provider.dart';
 import 'package:focus_spot_finder/providers/places_state.dart';
 import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/permission_screen.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/permission_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:focus_spot_finder/screens/auth/initial_screen.dart';
+import 'package:focus_spot_finder/screens/app/auth/initial_screen.dart';
 
 class AdminSplashScreen extends HookConsumerWidget {
   const AdminSplashScreen({Key key});

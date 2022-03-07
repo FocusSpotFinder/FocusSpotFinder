@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../app_index_provider.dart';
+import '../../preAppLoad/app_index_provider.dart';
 
 class BottomNav extends ConsumerWidget {
   final void Function(int i) onChange;

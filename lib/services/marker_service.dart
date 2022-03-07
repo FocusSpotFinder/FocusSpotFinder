@@ -1,6 +1,6 @@
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:focus_spot_finder/screens/place_info.dart';
+import 'package:focus_spot_finder/screens/app/place_info.dart';
 import 'package:flutter/material.dart';
 
 class MarkerService {
