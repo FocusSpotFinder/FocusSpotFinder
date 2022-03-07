@@ -1084,7 +1084,7 @@ class _editPlaceState extends State<editPlace> {
         }
       });
 
-      if (photos.isNotEmpty) {
+      if (photos.isNotEmpty || photos != null) {
         var docRef2 = await doc.update({"Photos": "$photos"});
         photos = null;
       } else {
@@ -1113,7 +1113,7 @@ class _editPlaceState extends State<editPlace> {
         var docRef2 = await doc.update({"WorkingHours": ""});
       }
 
-      if (photos.isNotEmpty) {
+      if (photos.isNotEmpty || photos != null) {
         var docRef2 = await doc.update({"Photos": "$photos"});
         photos = null;
       } else {
