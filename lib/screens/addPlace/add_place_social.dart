@@ -319,25 +319,38 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
   void postPlaceDateToFirestoreSocial(String phone, String website,
       String twitter, String instagram, context) async {
-    var collection =
-        FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
-    var docRef = await collection.update({
-      "Phone number": "$phone",
-      "Website": "$website",
-      "Twitter": "$twitter",
-      "Instagram": "$instagram",
-      "Status": "Waiting",
-    });
+    if(!isAdmin){
+      var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+      var docRef = await collection.update({
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "Status": "Waiting",
+      });
 
-    postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
-
-    AlertDialogPlaceAdded(context, ()  {
-      if(isAdmin){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
-      }else{
+      postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
+      AlertDialogPlaceAdded(context, ()  {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
-      }
-    });
+
+      });
+    }else{
+      var collection = FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+      var docRef = await collection.update({
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "Status": "Approved",
+      });
+
+      AlertDialogPlaceAddedAdmin(context, ()  {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+
+      });
+    }
+
+
 
   }
 
@@ -413,6 +426,25 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text("Place added successfully!!\nWaiting for its approval\nThank you!"),
+      actions: [
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  AlertDialogPlaceAddedAdmin(BuildContext context, onYes) {
+    // set up the buttons
+    Widget continueButton = TextButton(child: Text("Close"), onPressed: onYes);
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Place added successfully!!\nThank you!"),
       actions: [
         continueButton,
       ],
