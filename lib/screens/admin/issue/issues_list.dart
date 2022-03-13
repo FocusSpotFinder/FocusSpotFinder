@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/admin/admin_list_body.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
-import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
+import 'package:focus_spot_finder/screens/admin/issue/admin_list_body.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,7 +46,7 @@ class _issuesListState extends State<issuesList> {
             icon: new Icon(Icons.arrow_back_ios_rounded,
                 color: Colors.white, size: 30),
             tooltip: 'Back',
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: widget.onBackPress,
           ),
           actions: <Widget>[
             Container(
@@ -68,9 +65,9 @@ class _issuesListState extends State<issuesList> {
         ),
         body: adminListBody(),
 
-        floatingActionButton: CenterBottomButton(),
+       /* floatingActionButton: AdminCenterBottomButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNav(
+        bottomNavigationBar: AdminBottomNav(
           onChange: (a) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
@@ -78,7 +75,7 @@ class _issuesListState extends State<issuesList> {
                     (route) => false);
           },
 
-      ),
+      ),*/
       ),
     );
   }

@@ -4,14 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
-import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_bottom_nav.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_center_bottom_button.dart';
 import 'package:get/get.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:logger/logger.dart';
-import '../../../Widget/customClipper.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../../Widget/customClipper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
@@ -172,19 +173,19 @@ class _AdminProfileInfoState extends State<AdminProfileInfo> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         toolbarHeight: 55,
-        /*
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 8),
             child: IconButton(
-              icon: Image.asset('assets/chatbot.png',
-                  fit: BoxFit.fitHeight, height: 40),
-              tooltip: 'Chatbot',
-              onPressed: () {},
+              icon: Image.asset('assets/firebase.png',
+                  fit: BoxFit.fitHeight, height: 32),
+              tooltip: 'Firebase',
+              onPressed: () {
+                launchFirebase();
+              },
             ),
           ),
         ],
-         */
       ),
       //end appBar
 
@@ -414,9 +415,9 @@ class _AdminProfileInfoState extends State<AdminProfileInfo> {
         ],
       ),
 
-      floatingActionButton: CenterBottomButton(),
+      floatingActionButton: AdminCenterBottomButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNav(
+      bottomNavigationBar: AdminBottomNav(
         onChange: (a) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
@@ -675,4 +676,17 @@ showAlertDialog(BuildContext context, onYes) {
       return alert;
     },
   );
+}
+Future<void> launchFirebase() async {
+  String url = "https://firebase.google.com/?gclid=Cj0KCQiAmeKQBhDvARIsAHJ7mF6OmPIeu2W7gn63okFHkH8LhJvzQ7fQhWAUKbBA49A0IutQzYCMBEgaArhQEALw_wcB&gclsrc=aw.ds";
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    Fluttertoast.showToast(
+      msg: "Could not open this website",
+      toastLength: Toast.LENGTH_LONG,
+    );
+    throw 'Could not open this website';
+  }
 }

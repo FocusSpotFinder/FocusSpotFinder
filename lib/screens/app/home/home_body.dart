@@ -10,8 +10,8 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../models/place.dart';
 import '../../../providers/places_provider.dart';
-import '../home.dart';
-import '../place_info.dart';
+import 'home.dart';
+import 'place_info.dart';
 import '../../../services/marker_service.dart';
 
 class HomeBody extends HookConsumerWidget {

@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:focus_spot_finder/screens/admin/admin_splash_screen.dart';
-import 'package:focus_spot_finder/screens/app/auth/initial_screen.dart';
-import 'package:focus_spot_finder/screens/app/auth/signup.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/initial_screen.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/signup.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 
 class UserModel {
@@ -122,26 +120,8 @@ class UserModel {
           msg: "Login Successful",
           toastLength: Toast.LENGTH_LONG,
         );
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SplashScreen()));
 
-
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
-        final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-        for (int x = 0; x < allData.length; x++) {
-          var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
-          if (noteInfo["Email"] == email) {
-            log("Admin: "+noteInfo["Email"]);
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminSplashScreen()));
-            isAdmin = true;
-            break;
-            //redirect the admin to his pages
-            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => issuesList()));
-            // break;
-          }
-        }
-        if (!isAdmin) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => SplashScreen()));
-        }
       } else {
         emailNotValidated = true;
         Fluttertoast.showToast(

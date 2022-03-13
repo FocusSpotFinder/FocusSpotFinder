@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/app/addPlace/add_place_location_picker.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place_location_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddPlace extends StatefulWidget {

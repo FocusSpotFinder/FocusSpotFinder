@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/app/addPlace/add_place_social.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place_social.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 

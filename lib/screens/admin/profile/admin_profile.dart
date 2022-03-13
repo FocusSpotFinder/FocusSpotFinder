@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/admin/admin_profile_info.dart';
-import 'package:focus_spot_finder/screens/admin/issues_list.dart';
+import 'package:focus_spot_finder/screens/admin/profile/admin_profile_info.dart';
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import '../../../Widget/customClipper.dart';
-import 'package:focus_spot_finder/screens/app/profile/user_profile.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../../Widget/customClipper.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
 
 class AdminProfile extends StatefulWidget {
@@ -49,19 +49,19 @@ class _AdminProfileState extends State<AdminProfile> {
             onPressed: widget.onBackPress,
           ),
           toolbarHeight: 55,
-          /*
           actions: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 8),
               child: IconButton(
-                icon: Image.asset('assets/chatbot.png',
-                    fit: BoxFit.fitHeight, height: 40),
-                tooltip: 'Chatbot',
-                onPressed: () {},
+                icon: Image.asset('assets/firebase.png',
+                    fit: BoxFit.fitHeight, height: 32),
+                tooltip: 'Firebase',
+                onPressed: () {
+                  launchFirebase();
+                },
               ),
             ),
           ],
-           */
         ),
         //end appBar
 
@@ -196,58 +196,6 @@ class _AdminProfileState extends State<AdminProfile> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => issuesList()));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(vertical: 13),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Color(0xffe0f7fa).withAlpha(100),
-                                    offset: Offset(2, 4),
-                                    blurRadius: 8,
-                                    spreadRadius: 2)
-                              ],
-                              color: Colors.cyan.shade50),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                MediaQuery.of(context).size.width * 0.02),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.report,
-                                  color: Colors.black54,
-                                ),
-                                Text(
-                                  'Issues List',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black54,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
                                   builder: (context) => AdminProfileInfo()));
                         },
                         child: Container(
@@ -369,4 +317,18 @@ class _AdminProfileState extends State<AdminProfile> {
   }
 
 
+}
+
+Future<void> launchFirebase() async {
+  String url = "https://firebase.google.com/?gclid=Cj0KCQiAmeKQBhDvARIsAHJ7mF6OmPIeu2W7gn63okFHkH8LhJvzQ7fQhWAUKbBA49A0IutQzYCMBEgaArhQEALw_wcB&gclsrc=aw.ds";
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    Fluttertoast.showToast(
+      msg: "Could not open this website",
+      toastLength: Toast.LENGTH_LONG,
+    );
+    throw 'Could not open this website';
+  }
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/admin/edit_place.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
-import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
-import 'package:focus_spot_finder/screens/app/place_info.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
+import 'package:focus_spot_finder/screens/admin/issue/edit_place.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_bottom_nav.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_center_bottom_button.dart';
+import 'package:focus_spot_finder/screens/app/home/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -552,9 +552,9 @@ class _issueInfoState extends State<issueInfo> {
 
         ),
 
-        floatingActionButton: CenterBottomButton(),
+        floatingActionButton: AdminCenterBottomButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNav(
+        bottomNavigationBar: AdminBottomNav(
           onChange: (a) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(

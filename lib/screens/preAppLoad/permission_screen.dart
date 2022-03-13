@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
+import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';

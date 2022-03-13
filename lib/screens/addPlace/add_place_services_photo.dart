@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/app/addPlace/add_place_working_hours.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place_working_hours.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

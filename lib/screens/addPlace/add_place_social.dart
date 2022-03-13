@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
+import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class addPlaceSocial extends StatefulWidget {
@@ -20,6 +21,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
   final _formKey = GlobalKey<FormState>();
   final currentUser = UserModel();
   User user = FirebaseAuth.instance.currentUser;
+  bool isAdmin = false;
 
   final phoneNumberEditingController = new TextEditingController();
   final websiteEditingController = new TextEditingController();
@@ -27,6 +29,15 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
   final instagramEditingController = new TextEditingController();
 
   String documentId;
+
+  @override
+  void initState() {
+    super.initState();
+
+    checkIfAdmin();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -249,10 +260,12 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
                                       twitterEditingController.text,
                                       instagramEditingController.text,
                                       context);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppPage()));
+                                  if(isAdmin){
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                                  }else{
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+                                  }
+
                                 });
                               }else{
                                 postPlaceDateToFirestoreSocial(
@@ -261,10 +274,11 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
                                     twitterEditingController.text,
                                     instagramEditingController.text,
                                     context);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AppPage()));
+                                if(isAdmin){
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                                }else{
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+                                }
                               }
 
                             }),
@@ -317,8 +331,12 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
     postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
 
-    AlertDialogPlaceAdded(context, () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AppPage()));
+    AlertDialogPlaceAdded(context, ()  {
+      if(isAdmin){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+      }else{
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+      }
     });
 
   }
@@ -394,7 +412,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
     Widget continueButton = TextButton(child: Text("Close"), onPressed: onYes);
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Place added successfully!!\nWaiting for its approval\n Thank you!"),
+      content: Text("Place added successfully!!\nWaiting for its approval\nThank you!"),
       actions: [
         continueButton,
       ],
@@ -408,5 +426,17 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
     );
   }
 
+
+  Future<void> checkIfAdmin() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (int x = 0; x < allData.length; x++) {
+      var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+      if (noteInfo["Email"] == FirebaseAuth.instance.currentUser.email) {
+        isAdmin = true;
+        break;
+      }
+    }
+  }
 
 }

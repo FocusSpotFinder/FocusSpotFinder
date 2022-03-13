@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:focus_spot_finder/screens/admin/admin_profile.dart';
+import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
+import 'package:focus_spot_finder/screens/app/setUp/center_bottom_button.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/app_index_provider.dart';
 import 'package:focus_spot_finder/screens/app/favorite_list.dart';
-import 'package:focus_spot_finder/screens/app/home.dart';
+import 'package:focus_spot_finder/screens/app/home/home.dart';
+import 'package:focus_spot_finder/screens/app/profile/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
-import 'package:focus_spot_finder/screens/app/widget/center_bottom_button.dart';
 
-class AdminAppPage extends HookConsumerWidget {
+class AppPage extends HookConsumerWidget {
   final int initialPage;
-  const AdminAppPage({this.initialPage = 0, Key key}) : super(key: key);
+  const AppPage({this.initialPage = 0, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -29,7 +29,7 @@ class AdminAppPage extends HookConsumerWidget {
             onBackPress: () =>
                 ref.read(appIndexProvider.notifier).changeIndex(0),
           ),
-          AdminProfile(
+          Profile(
             onBackPress: () =>
                 ref.read(appIndexProvider.notifier).changeIndex(0),
           )
@@ -41,7 +41,7 @@ class AdminAppPage extends HookConsumerWidget {
         onChange: (a) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (c) => AdminAppPage(initialPage: a,)),
+                  builder: (c) => AppPage(initialPage: a,)),
                   (route) => false);
         },
       ),

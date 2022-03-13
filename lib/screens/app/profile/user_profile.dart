@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
+import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
+import 'package:focus_spot_finder/screens/app/setUp/center_bottom_button.dart';
 import 'package:get/get.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
@@ -12,9 +15,6 @@ import '../../../Widget/customClipper.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
-import '../../preAppLoad/app_page.dart';
-import '../widget/bottom_nav.dart';
-import '../widget/center_bottom_button.dart';
 
 class UserProfile extends StatefulWidget {
   @override

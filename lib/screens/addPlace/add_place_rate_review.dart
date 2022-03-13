@@ -6,7 +6,7 @@ import 'package:focus_spot_finder/Widget/customClipper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:focus_spot_finder/screens/app/addPlace/add_place_services_photo.dart';
+import 'package:focus_spot_finder/screens/addPlace/add_place_services_photo.dart';
 
 class AddPlaceRateReview extends StatefulWidget {
   final String docId;

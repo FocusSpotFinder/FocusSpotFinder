@@ -1,21 +1,15 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/favorite_list_model.dart';
 import 'package:focus_spot_finder/models/geometry.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:favorite_button/favorite_button.dart';
-import 'package:focus_spot_finder/screens/admin/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/admin/edit_place.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
-import 'package:focus_spot_finder/screens/app/widget/bottom_nav.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
+import 'package:focus_spot_finder/screens/admin/issue/edit_place.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_bottom_nav.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:get/get.dart';
@@ -118,6 +112,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
 
           PopupMenuButton(
             icon: Icon(Icons.ios_share, color: Colors.white, size: 30),
+            tooltip: 'Share',
             onSelected: (result) {
               switch (result) {
                 case 'whatsapp':
@@ -562,7 +557,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
         backgroundColor: Colors.white,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNav(
+      bottomNavigationBar: AdminBottomNav(
         onChange: (a) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(

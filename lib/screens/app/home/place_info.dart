@@ -12,15 +12,14 @@ import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/app_page.dart';
+import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
+import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'widget/bottom_nav.dart';
 
 class PlaceInfo extends StatefulWidget {
   final isFav;
@@ -161,9 +160,11 @@ class _PlaceInfoState extends State<PlaceInfo> {
             },
           ),
           SizedBox(width: 10,), //remove this box when we impliment share
-          /*
+
           PopupMenuButton(
             icon: Icon(Icons.ios_share, color: Colors.white, size: 30),
+            tooltip: 'Share',
+
             onSelected: (result) {
               switch (result) {
                 case 'whatsapp':
@@ -228,7 +229,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
               ),
             ],
           ),
-          */
+
         ],
       ),
       //end appBar

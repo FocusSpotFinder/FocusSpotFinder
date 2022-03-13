@@ -1,5 +1,5 @@
-import 'package:focus_spot_finder/screens/app/auth/login.dart';
-import 'package:focus_spot_finder/screens/app/auth/signup.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/login.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:focus_spot_finder/screens/app/auth/login.dart';
-import 'package:focus_spot_finder/screens/app/auth/signup.dart';
-import 'package:focus_spot_finder/screens/app/auth/initial_screen.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/login.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/signup.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/auth/initial_screen.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

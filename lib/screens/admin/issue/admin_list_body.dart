@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/issue.dart';
-import 'package:focus_spot_finder/screens/admin/issue_info.dart';
+import 'package:focus_spot_finder/screens/admin/issue/issue_info.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:visibility_detector/visibility_detector.dart';
