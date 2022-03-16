@@ -13,6 +13,7 @@ Since Focus Spot Finder only works on iOS devices, the following are the instruc
 2.	Start Android Studio
 3.	Open plugin preferences (Preferences > Plugins)
 4.	Select the Flutter plugin and click Install
+
 5.	Click Yes when prompted to install the Dart plugin
 6.	Click Restart when prompted
 
@@ -23,6 +24,7 @@ To open Focus Spot Finder on your device:
 4.	Copy the project link from the GitHub page or enter the following link in the URL field: https://github.com/FocusSpotFinder/FocusSpotFinder.git
 5.	Click on Clone
 6.	Or download the project from GitHub as a zip file, extract it and open the project in Android Studio
+7.	Open pubspec.yaml file and click on "Pub get"
 
 To run Focus Spot Finder on iOS simulator:
 1.	Install XCode from AppStore through: https://apps.apple.com/us/app/xcode/id497799835?mt=12
