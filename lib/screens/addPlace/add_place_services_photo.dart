@@ -20,7 +20,8 @@ class AddPlaceServicesPhoto extends StatefulWidget {
 
 class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
   var myController = Get.put(MyController());
-  var photo;
+  String photo;
+  List<String> photosList = [];
 
   List<String> _availableServices = [
     "WiFi",
@@ -84,12 +85,12 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
             AlertDialogAddPlaceServicesPhoto(context, () async {
               if (myController.f1.value != null &&
                   myController.f1.value.path.isNotEmpty) {
-                photo = await uploadImageToStorage(
-                    myController.f1.value, widget.docId);
+                photo = await uploadImageToStorage(myController.f1.value, widget.docId);
+                photosList.add(photo);
+                print(photosList);
               }
 
-              postPlaceDateToFirestoreServicesPhoto(
-                  photo, userChecked, context);
+              postPlaceDateToFirestoreServicesPhoto(photosList, userChecked, context);
 
               myController.f1 = File('').obs;
 
@@ -262,10 +263,10 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
 
                                     AlertDialogSkip(context, () {
                                       photo = null;
+                                      photosList.clear();
                                       userChecked.clear();
 
-                                      postPlaceDateToFirestoreServicesPhoto(
-                                          photo, userChecked, context);
+                                      postPlaceDateToFirestoreServicesPhoto(photosList, userChecked, context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -276,7 +277,7 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
 
                                   }else {
                                     postPlaceDateToFirestoreServicesPhoto(
-                                        photo, userChecked, context);
+                                        photosList, userChecked, context);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -298,15 +299,20 @@ class _AddPlaceServicesPhotoState extends State<AddPlaceServicesPhoto> {
         ));
   }
 
-  void postPlaceDateToFirestoreServicesPhoto(
-      photo, List<String> services, context) async {
+  void postPlaceDateToFirestoreServicesPhoto(List<String> photo, List<String> services, context) async {
     var doc = FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
-    if (photo != null) {
+    if(photo.isNotEmpty){
+      var docRef = await doc.update({"Photos": "$photo"});
+    }else{
+      var docRef = await doc.update({"Photos": ""});
+    }
+
+    /* if (photo != null) {
       var docRef = await doc.update({"Photos": "[$photo]"});
       photo = null;
     } else {
       var docRef = await doc.update({"Photos": ""});
-    }
+    }*/
 
     var collection =
     FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);

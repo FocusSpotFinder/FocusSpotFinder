@@ -939,8 +939,7 @@ class _addPlaceworkingHoursState extends State<addPlaceworkingHours> {
   }
 
   void postPlaceDateToFirestoreWorkingHours(workingHours, context) async {
-    var doc =
-        FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
+    var doc = FirebaseFirestore.instance.collection('newPlace').doc(widget.docId);
     var docRef = await doc.update({"WorkingHours": "$workingHours"});
   }
 

@@ -68,7 +68,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
   final instagramEditingController = new TextEditingController();
 
   var myController = Get.put(MyController());
-  var photo;
+  String photo;
+  List<dynamic> photosList;
 
   @override
   void initState() {
@@ -85,6 +86,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
+
+    photosList = widget.place.photos;
 
     super.initState();
   }
@@ -1332,7 +1335,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                         }else {
                           if (myController.f1.value != null && myController.f1.value.path.isNotEmpty ) {
                             photo = await uploadImageToStorage(myController.f1.value, widget.place.placeId);
-
+                            //photosList.add(photo);
                           }
                           Navigator.pop(context);
                           postRateAndReviewToFirestore(
@@ -1471,9 +1474,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
 
     if(photo!= null){
-      List<dynamic> photosList = widget.place.photos;
+      //List<dynamic> photosList = widget.place.photos;
       photosList.add(photo);
-      print(photosList.toString());
+      //print(photosList.toString());
       if(widget.place.placeId.length == 27){
         var collection4 = FirebaseFirestore.instance
             .collection('googlePlace')
