@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -29,13 +29,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses Camera to upload your profile picture</string>
-
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Sharing your location at all times will allow the application to list workspaces near you.</string>
-
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sharing your location will allow the application to list workspaces near you.</string>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses Photo Library to upload your profile picture</string>
 	<key>UILaunchStoryboardName</key>
@@ -45,8 +42,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
