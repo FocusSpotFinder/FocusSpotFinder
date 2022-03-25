@@ -1,6 +1,6 @@
 # Focus Spot Finder
 
-Focus Spot Finder is a location based application for finding suitable workspaces
+Focus Spot Finder is a location based mobile application for finding suitable workspaces
 based on your current location, where you can add new workspace or rate and review an existing
 workspace and more!
 
