@@ -12,6 +12,7 @@ class DynamicLinkService {
         handleDLink(initialLink);
       }
 
+
     }).onError((error) {
       print(error);
     });
