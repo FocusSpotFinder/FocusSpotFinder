@@ -11,7 +11,7 @@ workspace and more!
 - Google Places API
 - Firebase
 
-## Launshing Instructions
+## Launch Instructions
 
 Since Focus Spot Finder only works on iOS devices, the following are the instructions to run the application using Mac:
 
