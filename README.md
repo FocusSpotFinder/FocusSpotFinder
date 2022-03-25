@@ -1,11 +1,17 @@
 # Focus Spot Finder
 
 Focus Spot Finder is a location based application for finding suitable workspaces
-based on your current location, where you can Add new workspace or rate and review an existing
-workspace.
+based on your current location, where you can add new workspace or rate and review an existing
+workspace and more!
 
+## Technologies
+- Flutter
+- Dart
+- Google Maps API
+- Google Places API
+- Firebase
 
-## Getting Started
+## Launshing Instructions
 
 Since Focus Spot Finder only works on iOS devices, the following are the instructions to run the application using Mac:
 
@@ -23,6 +29,7 @@ To open Focus Spot Finder on your device:
 4.	Copy the project link from the GitHub page or enter the following link in the URL field: https://github.com/FocusSpotFinder/FocusSpotFinder.git
 5.	Click on Clone
 6.	Or download the project from GitHub as a zip file, extract it and open the project in Android Studio
+7.	Open Pubspec.yaml file, and click on "Pub get"
 
 To run Focus Spot Finder on iOS simulator:
 1.	Install XCode from AppStore through: https://apps.apple.com/us/app/xcode/id497799835?mt=12
