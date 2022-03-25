@@ -15,12 +15,13 @@ workspace and more!
 
 Since Focus Spot Finder only works on iOS devices, the following are the instructions to run the application using Mac:
 
-1.	Install Android Studio by visiting their website through: https://developer.android.com/studio
-2.	Start Android Studio
-3.	Open plugin preferences (Preferences > Plugins)
-4.	Select the Flutter plugin and click Install
-5.	Click Yes when prompted to install the Dart plugin
-6.	Click Restart when prompted
+1.	Install Flutter by visiting their website through: https://docs.flutter.dev/get-started/install/macos
+2.	Install Android Studio by visiting their website through: https://developer.android.com/studio
+3.	Start Android Studio
+4.	Open plugin preferences (Preferences > Plugins)
+5.	Select the Flutter plugin and click Install
+6.	Click Yes when prompted to install the Dart plugin
+7.	Click Restart when prompted
 
 To open Focus Spot Finder on your device:
 1.	Start Android Studio
