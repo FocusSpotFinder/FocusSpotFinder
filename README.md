@@ -34,13 +34,17 @@ To open Focus Spot Finder on your device:
 
 To run Focus Spot Finder on iOS simulator:
 1.	Install XCode from AppStore through: https://apps.apple.com/us/app/xcode/id497799835?mt=12
+      
       Then you have two options to run Focus Spot Finder on iOS simulator
+      
       First option: Run Focus Spot Finder through Android studio: 121  
 1.	Click on Open iOS Simulator
 2.	Click on Run 
       
       If the first option did not work, you can use the second option.
+      
       Second option: Run Focus Spot Finder through XCode:
+      
       In Android Studio While the project is opened
 1.	Go to iOS File
 2.	Open App delegate file (iOS -> Runner -> App delegate)
