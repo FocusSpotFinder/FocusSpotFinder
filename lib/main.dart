@@ -35,9 +35,6 @@ class FocusSpotFinder extends StatelessWidget {
         final Uri deepLink = initialLink.link;
         print(deepLink);
         print('deepLink deepLink deepLink');
-
-        // Example of using the dynamic link to push the user to a different screen
-        // Navigator.pushNamed(context, deepLink.path);
       }else{
         print('deepLink else');
 
