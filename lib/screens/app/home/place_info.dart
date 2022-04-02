@@ -588,7 +588,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
             print('pop up clicked');
             if (value == 0) {
               alertRate();
-            } else if (value == 1) {
+            } else if (value == 1){
+              alertServices();
+            }else if (value == 2) {
               alertReport();
             }
           },
@@ -617,11 +619,27 @@ class _PlaceInfoState extends State<PlaceInfo> {
               PopupMenuItem(
                 child: Center(
                   child: Text(
-                    'Report an Issue',
+                    'Edit Services & Accounts',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
                 value: 1,
+              ),
+              PopupMenuItem(
+                height: 4,
+                child: Container(
+                  height: 2,
+                  color: Colors.black,
+                ),
+              ),
+              PopupMenuItem(
+                child: Center(
+                  child: Text(
+                    'Report an Issue',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                value: 2,
               ),
             ];
           }),
@@ -1085,7 +1103,13 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   onPressed: () {
                     if (reviewEditingController.text != "") {
                       Navigator.pop(context);
-                      alertServices();
+                      postRateAndReviewToFirestoreRateReview(
+                          quietRate,
+                          crowdedRate,
+                          foodRate,
+                          techRate,
+                          reviewEditingController.text,
+                          context);
                     } else {
                       Fluttertoast.showToast(msg: "Please enter review");
                     }
@@ -1385,12 +1409,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 websiteEditingController.text = "";
                                 twitterEditingController.text = "";
                                 instagramEditingController.text = "";
-                                postRateAndReviewToFirestore(
-                                    quietRate,
-                                    crowdedRate,
-                                    foodRate,
-                                    techRate,
-                                    reviewEditingController.text,
+                                postRateAndReviewToFirestoreServicesAccounts(
                                     userChecked,
                                     phoneNumberEditingController.text,
                                     websiteEditingController.text,
@@ -1401,12 +1420,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               });
                             }else{
                               Navigator.pop(context);
-                              postRateAndReviewToFirestore(
-                                  quietRate,
-                                  crowdedRate,
-                                  foodRate,
-                                  techRate,
-                                  reviewEditingController.text,
+                              postRateAndReviewToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1438,12 +1452,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 //photosList.add(photo);
                               }
                               Navigator.pop(context);
-                              postRateAndReviewToFirestore(
-                                  quietRate,
-                                  crowdedRate,
-                                  foodRate,
-                                  techRate,
-                                  reviewEditingController.text,
+                              postRateAndReviewToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1503,18 +1512,12 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
   }
 
-  void postRateAndReviewToFirestore(
+  void postRateAndReviewToFirestoreRateReview(
       double quiet,
       double crowded,
       double food,
       double tech,
       String review,
-      List<String> services,
-      String phone,
-      String website,
-      String twitter,
-      String instagram,
-      String photo,
       context) async {
     final _auth = FirebaseAuth.instance;
     User user = _auth.currentUser;
@@ -1533,6 +1536,34 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Food quality": "$food",
       "Technical facilities": "$tech"
     });
+
+    //postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "New rate & review added", "New rate & review added", context);
+
+    Fluttertoast.showToast(
+      msg: "Rate & review submitted successfully",
+      toastLength: Toast.LENGTH_LONG,
+    );
+
+    quietRate = 0;
+    crowdedRate = 0;
+    foodRate = 0;
+    techRate = 0;
+    reviewEditingController.text = "";
+
+  }
+
+  void postRateAndReviewToFirestoreServicesAccounts(
+      List<String> services,
+      String phone,
+      String website,
+      String twitter,
+      String instagram,
+      String photo,
+      context) async {
+    final _auth = FirebaseAuth.instance;
+    User user = _auth.currentUser;
+    String uid = user.uid;
+    String placeId = widget.place.placeId;
 
     if (phone == "") {
       phone = widget.place.phoneNumber;
@@ -1599,14 +1630,13 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-    postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "New rate & review added", "New rate & review added", context);
+    postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "New rate & review added", context);
 
     Fluttertoast.showToast(
-      msg: "Rate & review submitted successfully",
+      msg: "Your edits submitted successfully",
       toastLength: Toast.LENGTH_LONG,
     );
 
-    reviewEditingController.text = "";
     userChecked.clear();
     phoneNumberEditingController.text = "";
     websiteEditingController.text = "";

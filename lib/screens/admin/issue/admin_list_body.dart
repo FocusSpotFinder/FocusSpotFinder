@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/issue.dart';
@@ -23,6 +25,7 @@ class adminListBody extends HookConsumerWidget {
             stream: issues.readItems(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
+                log(snapshot.error.toString());
                 return Text('Something went wrong');
               } else if (snapshot.hasData || snapshot.data != null) {
                 return ListView.separated(

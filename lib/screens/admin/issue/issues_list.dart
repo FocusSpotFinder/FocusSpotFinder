@@ -65,17 +65,6 @@ class _issuesListState extends State<issuesList> {
         ),
         body: adminListBody(),
 
-       /* floatingActionButton: AdminCenterBottomButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: AdminBottomNav(
-          onChange: (a) {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (c) => AdminAppPage(initialPage: a,)),
-                    (route) => false);
-          },
-
-      ),*/
       ),
     );
   }

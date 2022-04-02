@@ -70,7 +70,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           prefixIcon:
-              Image.asset('assets/websiteGrey.jpg', height: 30, width: 30),
+          Image.asset('assets/websiteGrey.jpg', height: 30, width: 30),
           fillColor: Colors.grey.shade100,
           filled: true,
           hintText: "Website",
@@ -107,7 +107,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           prefixIcon:
-              Image.asset('assets/instagram.png', width: 15, height: 15),
+          Image.asset('assets/instagram.png', width: 15, height: 15),
           fillColor: Colors.grey.shade100,
           filled: true,
           hintText: "@Instagram",
@@ -158,163 +158,162 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
-      height: height,
-      child: Stack(
-        children: <Widget>[
-          //to show the decoration on the background
-          Positioned(
-            top: -MediaQuery.of(context).size.height * .15,
-            right: -MediaQuery.of(context).size.width * .4,
-            child: Container(
-                child: Transform.rotate(
-              angle: -pi / 3.5,
-              child: ClipPath(
-                clipper: ClipPainter(),
+          height: height,
+          child: Stack(
+            children: <Widget>[
+              //to show the decoration on the background
+              Positioned(
+                top: -MediaQuery.of(context).size.height * .15,
+                right: -MediaQuery.of(context).size.width * .4,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * .5,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.cyan.shade50,
-                        Colors.cyan.shade400,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .2),
-                  //the title
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: 'Place information',
-                      style: GoogleFonts.lato(
-                        textStyle: Theme.of(context).textTheme.headline1,
-                        fontSize: 38,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.indigo.shade900,
+                    child: Transform.rotate(
+                      angle: -pi / 3.5,
+                      child: ClipPath(
+                        clipper: ClipPainter(),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * .5,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.cyan.shade50,
+                                Colors.cyan.shade400,
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
+                    )),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: height * .2),
+                      //the title
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: 'Place information',
+                          style: GoogleFonts.lato(
+                            textStyle: Theme.of(context).textTheme.headline1,
+                            fontSize: 38,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.indigo.shade900,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
 
-                  Text(
-                      "If you know the any of the following fields please fill them, or skip",
-                      style: GoogleFonts.lato(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                      )),
+                      Text(
+                          "If you know the any of the following fields please fill them, or skip",
+                          style: GoogleFonts.lato(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          )),
 
-                  SizedBox(height: 50),
-                  //open a form and call the fields that was created up
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        phoneNumberField,
-                        SizedBox(
-                          height: 30,
-                        ),
-                        websiteField,
-                        SizedBox(
-                          height: 30,
-                        ),
-                        twitterField,
-                        SizedBox(
-                          height: 30,
-                        ),
-                        instagramField,
-                        SizedBox(
-                          height: 30,
-                        ),
-                        nextButton,
-                        TextButton(
-                            child: Text('Skip',
-                                style: GoogleFonts.lato(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue,
-                                )),
-                            onPressed: () {
-                              if(phoneNumberEditingController.text != "" ||
-                                  websiteEditingController.text != "" ||
-                                  twitterEditingController.text != "" ||
-                                  instagramEditingController.text != "" ){
-                                AlertDialogSkip(context, () {
-                                  postPlaceDateToFirestoreSocial(
-                                      phoneNumberEditingController.text,
-                                      websiteEditingController.text,
-                                      twitterEditingController.text,
-                                      instagramEditingController.text,
-                                      context);
-                                  if(isAdmin){
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                      SizedBox(height: 50),
+                      //open a form and call the fields that was created up
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            phoneNumberField,
+                            SizedBox(
+                              height: 30,
+                            ),
+                            websiteField,
+                            SizedBox(
+                              height: 30,
+                            ),
+                            twitterField,
+                            SizedBox(
+                              height: 30,
+                            ),
+                            instagramField,
+                            SizedBox(
+                              height: 30,
+                            ),
+                            nextButton,
+                            TextButton(
+                                child: Text('Skip',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.blue,
+                                    )),
+                                onPressed: () {
+                                  if(phoneNumberEditingController.text != "" ||
+                                      websiteEditingController.text != "" ||
+                                      twitterEditingController.text != "" ||
+                                      instagramEditingController.text != "" ){
+                                    AlertDialogSkip(context, () {
+                                      postPlaceDateToFirestoreSocial(
+                                          phoneNumberEditingController.text,
+                                          websiteEditingController.text,
+                                          twitterEditingController.text,
+                                          instagramEditingController.text,
+                                          context);
+                                      if(isAdmin){
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                                      }else{
+                                        AlertDialogPlaceAdded(context, ()  {});
+                                      }
+
+                                    });
                                   }else{
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+                                    postPlaceDateToFirestoreSocial(
+                                        phoneNumberEditingController.text,
+                                        websiteEditingController.text,
+                                        twitterEditingController.text,
+                                        instagramEditingController.text,
+                                        context);
+                                    if(isAdmin){
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                                    }else{
+                                      AlertDialogPlaceAdded(context, ()  {});                                    }
                                   }
 
-                                });
-                              }else{
-                                postPlaceDateToFirestoreSocial(
-                                    phoneNumberEditingController.text,
-                                    websiteEditingController.text,
-                                    twitterEditingController.text,
-                                    instagramEditingController.text,
-                                    context);
-                                if(isAdmin){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
-                                }else{
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
-                                }
-                              }
+                                }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: height * .055),
+                    ],
+                  ),
+                ),
+              ),
 
-                            }),
+              Positioned(
+                top: 40,
+                left: 0,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+                          child: Icon(Icons.arrow_back_ios_rounded,
+                              color: Colors.black, size: 30),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: height * .055),
-                ],
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 40,
-            left: 0,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-                      child: Icon(Icons.arrow_back_ios_rounded,
-                          color: Colors.black, size: 30),
-                    ),
-                  ],
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 
   void postPlaceDateToFirestoreSocial(String phone, String website,
@@ -331,7 +330,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
       postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
       AlertDialogPlaceAdded(context, ()  {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
 
       });
     }else{
@@ -346,7 +345,6 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
       AlertDialogPlaceAddedAdmin(context, ()  {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
-
       });
     }
 
@@ -422,7 +420,10 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
   AlertDialogPlaceAdded(BuildContext context, onYes) {
     // set up the buttons
-    Widget continueButton = TextButton(child: Text("Close"), onPressed: onYes);
+    Widget continueButton = TextButton(child: Text("Close"), onPressed: (){
+      Navigator.pop(context);
+     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+    });
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text("Place added successfully!!\nWaiting for its approval\nThank you!"),
@@ -441,7 +442,10 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
   AlertDialogPlaceAddedAdmin(BuildContext context, onYes) {
     // set up the buttons
-    Widget continueButton = TextButton(child: Text("Close"), onPressed: onYes);
+    Widget continueButton = TextButton(child: Text("Close"), onPressed: (){
+      Navigator.pop(context);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+    });
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text("Place added successfully!!\nThank you!"),

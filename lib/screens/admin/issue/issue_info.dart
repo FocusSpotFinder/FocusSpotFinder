@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
@@ -160,13 +161,30 @@ class _issueInfoState extends State<issueInfo> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  Text("Place ID",
-                                      //textAlign: TextAlign.start,
-                                      style: GoogleFonts.lato(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text("Place ID",
+                                          //textAlign: TextAlign.start,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          )),
+                                      IconButton(
+                                        icon: new Icon(Icons.copy,
+                                            color: Colors.black, size: 30),
+                                        tooltip: 'Copy',
+                                        onPressed: () {
+                                          Clipboard.setData(ClipboardData(text: widget.issue.placeId));
+                                          Fluttertoast.showToast(
+                                            msg: "Place ID copied to clipboard",
+                                            toastLength: Toast.LENGTH_LONG,
+                                          );
+                                        }
+                                      ),
+                                    ]
+                                  ),
 
                                   Text(widget.issue.placeId,
                                       //textAlign: TextAlign.start,
@@ -185,13 +203,31 @@ class _issueInfoState extends State<issueInfo> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  Text("User ID",
-                                      //textAlign: TextAlign.start,
-                                      style: GoogleFonts.lato(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      )),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text("User ID",
+                                            //textAlign: TextAlign.start,
+                                            style: GoogleFonts.lato(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            )),
+                                        IconButton(
+                                            icon: new Icon(Icons.copy,
+                                                color: Colors.black, size: 30),
+                                            tooltip: 'Copy',
+                                            onPressed: () {
+                                              Clipboard.setData(ClipboardData(text: widget.issue.userId));
+                                              Fluttertoast.showToast(
+                                                msg: "User ID copied to clipboard",
+                                                toastLength: Toast.LENGTH_LONG,
+                                              );
+                                            }
+                                        ),
+                                      ]
+                                  ),
+
 
                                   Text(widget.issue.userId,
                                       //textAlign: TextAlign.start,
