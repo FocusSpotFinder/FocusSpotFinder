@@ -61,6 +61,7 @@ class DynamicLinkService {
 
       sharedPreferences.setString('dLink', param1);
       print(param1);
+      //open placeInfo and send the place by calling getPlace and send the place id
     }
 
   }
