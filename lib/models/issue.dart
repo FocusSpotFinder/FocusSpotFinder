@@ -17,15 +17,27 @@ class Issue {
   Stream<QuerySnapshot> issues;
 
   Issue({this.placeId, this.userId, this.reportId, this.type, this.status, this.message,
-      this.reportTime, this.resolveTime, this.resolvedBy, this.issues});
+    this.reportTime, this.resolveTime, this.resolvedBy, this.issues});
 
-  Stream<QuerySnapshot> readItems() {
+  Stream<QuerySnapshot> readReportItems() {
     deleteOldReports();
 
     Query reportsCollection = FirebaseFirestore.instance
         .collection('Reports')
         .orderBy('Status', descending: true)
-    .orderBy('Report time', descending: true);
+        .orderBy('Report time', descending: true);
+
+    issues = reportsCollection.snapshots();
+    return issues;
+  }
+
+  Stream<QuerySnapshot> readNotificationsItems() {
+    deleteOldReports();
+
+    Query reportsCollection = FirebaseFirestore.instance
+        .collection('Notifications')
+        .orderBy('Status', descending: true)
+        .orderBy('Report time', descending: true);
 
     issues = reportsCollection.snapshots();
     return issues;
@@ -62,5 +74,6 @@ class Issue {
 
     }
   }
+
 
 }
