@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/admin/home/admin_place_info.dart';
 import 'package:focus_spot_finder/screens/admin/issue/notification_list_body.dart';
 import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
-import 'package:focus_spot_finder/screens/admin/issue/edit_place.dart';
 import 'package:focus_spot_finder/screens/admin/setUp/admin_bottom_nav.dart';
 import 'package:focus_spot_finder/screens/admin/setUp/admin_center_bottom_button.dart';
-import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class notificationsList extends StatefulWidget {
   final void Function() onBackPress;
