@@ -328,7 +328,7 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
         "Status": "Waiting",
       });
 
-      postPlaceDateToFirestoreReports(user.uid, widget.docId, "New place added", "New place added", context);
+      postPlaceDateToFirestoreNotifications(user.uid, widget.docId, "New place added", "New place added", context);
       AlertDialogPlaceAdded(context, ()  {
         //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
 
@@ -352,9 +352,9 @@ class _addPlaceSocialState extends State<addPlaceSocial> {
 
   }
 
-  void postPlaceDateToFirestoreReports(String uid, String placeId, String type, String message, context) async {
+  void postPlaceDateToFirestoreNotifications(String uid, String placeId, String type, String message, context) async {
     DateTime reportTime = DateTime.now();
-    var collection = FirebaseFirestore.instance.collection('Reports');
+    var collection = FirebaseFirestore.instance.collection('Notifications');
     var docRef = await collection.add({
       "UserId": "$uid",
       "PlaceId": "$placeId",

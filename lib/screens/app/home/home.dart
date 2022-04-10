@@ -11,7 +11,7 @@ class Home extends HookWidget {
         toolbarHeight: 55,
         leading: SizedBox(width: 10),
 
-        /*
+
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 8),
@@ -25,7 +25,7 @@ class Home extends HookWidget {
             ),
           ),
         ],
-         */
+
       ),
       body: HomeBody(),
     );

@@ -1103,7 +1103,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   onPressed: () {
                     if (reviewEditingController.text != "") {
                       Navigator.pop(context);
-                      postRateAndReviewToFirestoreRateReview(
+                      postToFirestoreRateReview(
                           quietRate,
                           crowdedRate,
                           foodRate,
@@ -1409,7 +1409,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 websiteEditingController.text = "";
                                 twitterEditingController.text = "";
                                 instagramEditingController.text = "";
-                                postRateAndReviewToFirestoreServicesAccounts(
+                                postToFirestoreServicesAccounts(
                                     userChecked,
                                     phoneNumberEditingController.text,
                                     websiteEditingController.text,
@@ -1420,7 +1420,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               });
                             }else{
                               Navigator.pop(context);
-                              postRateAndReviewToFirestoreServicesAccounts(
+                              postToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1452,7 +1452,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 //photosList.add(photo);
                               }
                               Navigator.pop(context);
-                              postRateAndReviewToFirestoreServicesAccounts(
+                              postToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1512,7 +1512,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
   }
 
-  void postRateAndReviewToFirestoreRateReview(
+  void postToFirestoreRateReview(
       double quiet,
       double crowded,
       double food,
@@ -1537,7 +1537,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Technical facilities": "$tech"
     });
 
-    //postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "New rate & review added", "New rate & review added", context);
 
     Fluttertoast.showToast(
       msg: "Rate & review submitted successfully",
@@ -1552,7 +1551,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   }
 
-  void postRateAndReviewToFirestoreServicesAccounts(
+  void postToFirestoreServicesAccounts(
       List<String> services,
       String phone,
       String website,
@@ -1630,7 +1629,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-    postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "New rate & review added", context);
+    postPlaceDateToFirestoreNotification(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "Workspace services or accounts edited", context);
 
     Fluttertoast.showToast(
       msg: "Your edits submitted successfully",
@@ -2441,9 +2440,25 @@ class _PlaceInfoState extends State<PlaceInfo> {
     return url;
   }
 
+
   void postPlaceDateToFirestoreReports(String uid, String placeId, String type, String message, context) async {
     DateTime reportTime = DateTime.now();
     var collection = FirebaseFirestore.instance.collection('Reports');
+    var docRef = await collection.add({
+      "UserId": "$uid",
+      "PlaceId": "$placeId",
+      "Type":"$type",
+      "Status":"Unresolved",
+      "Report time": "$reportTime",
+      "Message":"$message",
+      "Resolve time":"",
+      "Resolved by":""
+    });
+
+  }
+  void postPlaceDateToFirestoreNotification(String uid, String placeId, String type, String message, context) async {
+    DateTime reportTime = DateTime.now();
+    var collection = FirebaseFirestore.instance.collection('Notifications');
     var docRef = await collection.add({
       "UserId": "$uid",
       "PlaceId": "$placeId",

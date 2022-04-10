@@ -12,8 +12,7 @@ import 'dart:convert' as convert;
 import 'package:intl/intl.dart';
 
 class PlacesService {
-  Future<List<Place>> getPlaces(
-      double lat, double lng, BitmapDescriptor icon) async {
+  Future<List<Place>> getPlaces(double lat, double lng, BitmapDescriptor icon) async {
     //get places from firebase
     List<Place> firebaseList = await getPlacesFirebase();
 
