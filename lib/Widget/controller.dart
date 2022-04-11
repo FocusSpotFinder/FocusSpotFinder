@@ -38,7 +38,7 @@ class MyController extends GetxController {
     final compressedImage = await FlutterImageCompress.compressAndGetFile(filePath, outPath, minWidth: 800, minHeight: 1500, quality: 60);
 
     // listOfFiles.add(compressedImage);
-    f1.value = compressedImage!;
+    f1.value = compressedImage;
     print('path of file is ===== ${f1.value}');
   }
 

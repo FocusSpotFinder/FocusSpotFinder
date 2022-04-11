@@ -708,7 +708,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                height: 300.0, // 
+                height: 300.0, //
                 width: 300.0,
                 child: Column(children: [
                   Column(children: [
@@ -999,30 +999,33 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   height: 36,
                   width: 85,
                   child: ElevatedButton(
-                    child: Text("Cancel"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      quietRate = 0;
-                      crowdedRate = 0;
-                      foodRate = 0;
-                      techRate = 0;
-                    }),
-          ),
-                SizedBox(
-                  height: 36,
-                  width: 85,
-                  child: ElevatedButton(
-                      child: Text("Next"),
+                      child: Text("Cancel"),
                       onPressed: () {
-                        if (quietRate != 0) {
-                          if (crowdedRate != 0) {
-                            if (foodRate != 0) {
-                              if (techRate != 0) {
-                                Navigator.pop(context);
-                                alertReview();
+                        Navigator.pop(context);
+                        quietRate = 0;
+                        crowdedRate = 0;
+                        foodRate = 0;
+                        techRate = 0;
+                      }),
+                ),
+                SizedBox(
+                    height: 36,
+                    width: 85,
+                    child: ElevatedButton(
+                        child: Text("Next"),
+                        onPressed: () {
+                          if (quietRate != 0) {
+                            if (crowdedRate != 0) {
+                              if (foodRate != 0) {
+                                if (techRate != 0) {
+                                  Navigator.pop(context);
+                                  alertReview();
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Please enter ratings");
+                                }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter ratings");
+                                Fluttertoast.showToast(msg: "Please enter ratings");
                               }
                             } else {
                               Fluttertoast.showToast(msg: "Please enter ratings");
@@ -1030,10 +1033,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                           } else {
                             Fluttertoast.showToast(msg: "Please enter ratings");
                           }
-                        } else {
-                          Fluttertoast.showToast(msg: "Please enter ratings");
-                        }
-                      })
+                        })
                 ),
               ])
             ],
@@ -1081,40 +1081,40 @@ class _PlaceInfoState extends State<PlaceInfo> {
           ),
           actions: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          SizedBox(
-              height: 36,
-              width: 85,
-              child: ElevatedButton(
-                  child: Text("Cancel"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    quietRate = 0;
-                    crowdedRate = 0;
-                    foodRate = 0;
-                    techRate = 0;
-                    reviewEditingController.text = "";
-                  }),
-          ),
-          SizedBox(
-              height: 36,
-              width: 85,
-              child: ElevatedButton(
-                  child: Text("Next"),
-                  onPressed: () {
-                    if (reviewEditingController.text != "") {
+              SizedBox(
+                height: 36,
+                width: 85,
+                child: ElevatedButton(
+                    child: Text("Cancel"),
+                    onPressed: () {
                       Navigator.pop(context);
-                      postRateAndReviewToFirestoreRateReview(
-                          quietRate,
-                          crowdedRate,
-                          foodRate,
-                          techRate,
-                          reviewEditingController.text,
-                          context);
-                    } else {
-                      Fluttertoast.showToast(msg: "Please enter review");
-                    }
-                  })
-          ),
+                      quietRate = 0;
+                      crowdedRate = 0;
+                      foodRate = 0;
+                      techRate = 0;
+                      reviewEditingController.text = "";
+                    }),
+              ),
+              SizedBox(
+                  height: 36,
+                  width: 85,
+                  child: ElevatedButton(
+                      child: Text("Next"),
+                      onPressed: () {
+                        if (reviewEditingController.text != "") {
+                          Navigator.pop(context);
+                          postToFirestoreRateReview(
+                              quietRate,
+                              crowdedRate,
+                              foodRate,
+                              techRate,
+                              reviewEditingController.text,
+                              context);
+                        } else {
+                          Fluttertoast.showToast(msg: "Please enter review");
+                        }
+                      })
+              ),
             ])
           ],
         );
@@ -1203,18 +1203,18 @@ class _PlaceInfoState extends State<PlaceInfo> {
                           height: 36,
                           width: 85,
                           child: ElevatedButton(
-                          child: Text("Next"),
-                          onPressed: () {
-                            if(userChecked.isEmpty){
-                              Fluttertoast.showToast(
-                                msg: "Please insure that you have entered information, or skip",
-                                toastLength: Toast.LENGTH_LONG,
-                              );
-                            }else {
-                              Navigator.pop(context);
-                              alertAdditonalInfo();
-                            }
-                          })
+                              child: Text("Next"),
+                              onPressed: () {
+                                if(userChecked.isEmpty){
+                                  Fluttertoast.showToast(
+                                    msg: "Please insure that you have entered information, or skip",
+                                    toastLength: Toast.LENGTH_LONG,
+                                  );
+                                }else {
+                                  Navigator.pop(context);
+                                  alertAdditonalInfo();
+                                }
+                              })
                       ),
                     ])
               ],
@@ -1409,7 +1409,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 websiteEditingController.text = "";
                                 twitterEditingController.text = "";
                                 instagramEditingController.text = "";
-                                postRateAndReviewToFirestoreServicesAccounts(
+                                postToFirestoreServicesAccounts(
                                     userChecked,
                                     phoneNumberEditingController.text,
                                     websiteEditingController.text,
@@ -1420,7 +1420,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                               });
                             }else{
                               Navigator.pop(context);
-                              postRateAndReviewToFirestoreServicesAccounts(
+                              postToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1452,7 +1452,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 //photosList.add(photo);
                               }
                               Navigator.pop(context);
-                              postRateAndReviewToFirestoreServicesAccounts(
+                              postToFirestoreServicesAccounts(
                                   userChecked,
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
@@ -1512,7 +1512,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     }
   }
 
-  void postRateAndReviewToFirestoreRateReview(
+  void postToFirestoreRateReview(
       double quiet,
       double crowded,
       double food,
@@ -1537,7 +1537,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Technical facilities": "$tech"
     });
 
-    //postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "New rate & review added", "New rate & review added", context);
 
     Fluttertoast.showToast(
       msg: "Rate & review submitted successfully",
@@ -1552,7 +1551,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   }
 
-  void postRateAndReviewToFirestoreServicesAccounts(
+  void postToFirestoreServicesAccounts(
       List<String> services,
       String phone,
       String website,
@@ -1630,7 +1629,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-    postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "New rate & review added", context);
+    postPlaceDateToFirestoreNotification(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "Workspace services or accounts edited", context);
 
     Fluttertoast.showToast(
       msg: "Your edits submitted successfully",
@@ -1770,15 +1769,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-          SizedBox(
-          height: 36,
-          width: 85,
-          child: ElevatedButton(
-                child: Text("Close"),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ),
+            SizedBox(
+                height: 36,
+                width: 85,
+                child: ElevatedButton(
+                    child: Text("Close"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+            ),
           ],
         );
       },
@@ -1830,15 +1829,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-          SizedBox(
-          height: 36,
-          width: 85,
-          child: ElevatedButton(
-                child: Text("Close"),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ),
+            SizedBox(
+                height: 36,
+                width: 85,
+                child: ElevatedButton(
+                    child: Text("Close"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+            ),
           ],
         );
       },
@@ -1890,15 +1889,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-          SizedBox(
-          height: 36,
-          width: 85,
-          child:  ElevatedButton(
-                child: Text("Close"),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ),
+            SizedBox(
+                height: 36,
+                width: 85,
+                child:  ElevatedButton(
+                    child: Text("Close"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+            ),
           ],
         );
       },
@@ -1951,15 +1950,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-          SizedBox(
-          height: 36,
-          width: 85,
-          child: ElevatedButton(
-                child: Text("Close"),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ),
+            SizedBox(
+                height: 36,
+                width: 85,
+                child: ElevatedButton(
+                    child: Text("Close"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+            ),
           ],
         );
       },
@@ -2001,7 +2000,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 300.0, // 
+                      height: 300.0, //
                       width: 300.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -2136,15 +2135,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 ),
               ),
               actions: [
-                      SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Cancel"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                      ),
+                SizedBox(
+                  height: 36,
+                  width: 85,
+                  child: ElevatedButton(
+                      child: Text("Cancel"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                ),
               ],
             );
           },
@@ -2219,29 +2218,29 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Cancel"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            incorrectInfoEditingController.text="";
-                          }),
-                      ),
-                      SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () {
-                            AlertDialogReportConfirm(context, () {
-                              Navigator.pop(context);
-                              postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Incorrect information", incorrectInfoEditingController.text , context);
+                        height: 36,
+                        width: 85,
+                        child: ElevatedButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
                               Navigator.pop(context);
                               incorrectInfoEditingController.text="";
-                              alertRecieved();
-                            });
-                          }),
+                            }),
+                      ),
+                      SizedBox(
+                        height: 36,
+                        width: 85,
+                        child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () {
+                              AlertDialogReportConfirm(context, () {
+                                Navigator.pop(context);
+                                postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Incorrect information", incorrectInfoEditingController.text , context);
+                                Navigator.pop(context);
+                                incorrectInfoEditingController.text="";
+                                alertRecieved();
+                              });
+                            }),
                       ),
                     ])
               ],
@@ -2317,29 +2316,29 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Cancel"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            otherEditingController.text="";
-                          }),
-                      ),
-                      SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Submit"),
-                          onPressed: () {
-                            AlertDialogReportConfirm(context, () {
-                              Navigator.pop(context);
-                              postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Other", otherEditingController.text , context);
+                        height: 36,
+                        width: 85,
+                        child: ElevatedButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
                               Navigator.pop(context);
                               otherEditingController.text="";
-                              alertRecieved();
-                            });
-                          }),
+                            }),
+                      ),
+                      SizedBox(
+                        height: 36,
+                        width: 85,
+                        child: ElevatedButton(
+                            child: Text("Submit"),
+                            onPressed: () {
+                              AlertDialogReportConfirm(context, () {
+                                Navigator.pop(context);
+                                postPlaceDateToFirestoreReports(loggedInUser.uid, widget.place.placeId, "Other", otherEditingController.text , context);
+                                Navigator.pop(context);
+                                otherEditingController.text="";
+                                alertRecieved();
+                              });
+                            }),
                       ),
                     ])
               ],
@@ -2402,15 +2401,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 ),
               ),
               actions: [
-                      SizedBox(
-                          height: 36,
-                          width: 85,
-                          child: ElevatedButton(
-                          child: Text("Close"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                      ),
+                SizedBox(
+                  height: 36,
+                  width: 85,
+                  child: ElevatedButton(
+                      child: Text("Close"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                ),
               ],
             );
           },
@@ -2441,6 +2440,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
     return url;
   }
 
+
   void postPlaceDateToFirestoreReports(String uid, String placeId, String type, String message, context) async {
     DateTime reportTime = DateTime.now();
     var collection = FirebaseFirestore.instance.collection('Reports');
@@ -2451,8 +2451,23 @@ class _PlaceInfoState extends State<PlaceInfo> {
       "Status":"Unresolved",
       "Report time": "$reportTime",
       "Message":"$message",
-    "Resolve time":"",
-    "Resolved by":""
+      "Resolve time":"",
+      "Resolved by":""
+    });
+
+  }
+  void postPlaceDateToFirestoreNotification(String uid, String placeId, String type, String message, context) async {
+    DateTime reportTime = DateTime.now();
+    var collection = FirebaseFirestore.instance.collection('Notifications');
+    var docRef = await collection.add({
+      "UserId": "$uid",
+      "PlaceId": "$placeId",
+      "Type":"$type",
+      "Status":"Unresolved",
+      "Report time": "$reportTime",
+      "Message":"$message",
+      "Resolve time":"",
+      "Resolved by":""
     });
 
   }
