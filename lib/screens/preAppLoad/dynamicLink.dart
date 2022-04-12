@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,11 +49,12 @@ class DynamicLinkService {
           minimumVersion: '2',appStoreId:'1610921701'
       ),
     );
-    final ShortDynamicLink shortLink = await dynamicLinks.buildShortLink(parameters);
-    return shortLink.shortUrl;
-    //return parameters;
+    /*final ShortDynamicLink shortLink = await dynamicLinks.buildShortLink(parameters);
+    return shortLink.shortUrl;*/
+    return parameters;
 
   }
+
 
   void handleDLink(PendingDynamicLinkData initialLink)async{
     SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
