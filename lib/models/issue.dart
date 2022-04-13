@@ -32,7 +32,7 @@ class Issue {
   }
 
   Stream<QuerySnapshot> readNotificationsItems() {
-    deleteOldReports();
+    deleteOldNotifications();
 
     Query reportsCollection = FirebaseFirestore.instance
         .collection('Notifications')
@@ -47,6 +47,39 @@ class Issue {
 
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Reports').get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+    for (int x = 0; x < allData.length; x++) {
+      var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+      DateTime currentTime = DateTime.now();
+      DateFormat dateFormat = new DateFormat('yyyy-MM-dd HH:mm:ss');
+      if(noteInfo["Report time"] == null){
+        continue;
+      }else{
+        DateTime resolveTime = dateFormat.parse(noteInfo["Report time"]);
+        DateTime invalidTime = DateTime(
+          resolveTime.year + 1,
+          resolveTime.month,
+          resolveTime.day,
+        );
+
+        if( invalidTime.isBefore(currentTime)){
+          FirebaseFirestore.instance.collection('Reports').doc(querySnapshot.docs[x].id).delete();
+          log("old doc");
+        }
+      }
+
+    }
+  }
+
+
+  deleteOldNotifications() async {
+
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Notifications').get();
 
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
