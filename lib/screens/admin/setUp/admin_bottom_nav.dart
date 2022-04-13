@@ -23,7 +23,7 @@ class AdminBottomNav extends ConsumerWidget {
           //favorites icon
           IconButton(
             icon: Icon(
-              Icons.report,
+              Icons.manage_accounts,
               color: Colors.white,
               size: 30,
             ),
