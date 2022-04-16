@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -34,8 +35,8 @@ class HomeBody extends HookConsumerWidget {
         }
       },
       child: Stack(
-        children: [
-          (state.currentPosition != null)
+          children: [
+        (state.currentPosition != null)
               ? Column(
                   children: <Widget>[
                     Container(
@@ -99,6 +100,7 @@ class HomeBody extends HookConsumerWidget {
                                         .contains(search.value.toLowerCase())) {
                                   return SizedBox();
                                 }
+                                DynamicLinkService().handleBackGroundDynamicLinks();
 
                                 return Card(
                                   child: ListTile(

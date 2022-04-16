@@ -5,6 +5,7 @@ import 'package:focus_spot_finder/screens/app/home/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
 
 class FavList extends StatefulWidget {
   final void Function() onBackPress;
@@ -80,6 +81,7 @@ class _FavListState extends State<FavList> {
                   String name = noteInfo['name'];
                   String vicinity = noteInfo['vicinity'];
                   List<dynamic> types = noteInfo['types'];
+                  DynamicLinkService().handleBackGroundDynamicLinks();
 
                   return Ink(
                     decoration: BoxDecoration(
