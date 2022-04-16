@@ -573,12 +573,13 @@ class _PlaceInfoState extends State<PlaceInfo> {
   }
 
   Widget myPopMenu(BuildContext context) {
+
     return Theme(
       data: Theme.of(context).copyWith(
         cardColor: Colors.white60,
       ),
       child: PopupMenuButton(
-          offset: const Offset(-60, -130),
+          offset: const Offset(120,100),
           icon: Image.asset('assets/logo.png', fit: BoxFit.cover, height: 40),
           onCanceled: () {
             setState(() {
