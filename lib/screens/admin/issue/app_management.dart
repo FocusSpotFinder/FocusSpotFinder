@@ -4,8 +4,8 @@ import 'package:focus_spot_finder/models/issue.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:focus_spot_finder/screens/admin/issue/notifications_list.dart';
-import 'package:focus_spot_finder/screens/admin/issue/reports_list.dart';
+import 'package:focus_spot_finder/screens/admin/issue/notification_list_body.dart';
+import 'package:focus_spot_finder/screens/admin/issue/reports_list_body.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class appManagement extends StatefulWidget {
@@ -40,6 +40,8 @@ class _appManagementState extends State<appManagement> {
         widget.onBackPress();
         return false;
       },
+      child: DefaultTabController(
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.cyan.shade100,
@@ -62,66 +64,23 @@ class _appManagementState extends State<appManagement> {
               ),
             ),
           ],
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Text("Notifications")),
+              Tab(icon: Text("Reports")),
+            ],
+          ),
           toolbarHeight: 55,
         ),
-        body: Stack(
-          children: <Widget> [
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-
-                    Card(
-                      child: InkWell(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => reportsList()),
-                          );
-                        },
-                        child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const ListTile(
-                            leading: Icon(Icons.report),
-                            title: Text('Reports'),
-
-                          ),
-                        ],
-                      ),
-                      )
-                    ),
-                    SizedBox(
-                        height:15
-                    ),
-                    Card(
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => notificationsList()),
-                            );
-                          },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const ListTile(
-                                leading: Icon(Icons.circle_notifications),
-                                title: Text('Notifications'),
-
-                              ),
-                            ],
-                          ),
-                        )
-                    ),
-                  ]
-                )
-            )
+        body: TabBarView(
+          children: [
+            notificationsListBody(),
+            reportsListBody(),
           ],
-        ),
 
       ),
+      )
+    ),
     );
   }
 
