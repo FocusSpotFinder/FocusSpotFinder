@@ -55,6 +55,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
 
 
+
   double quietRate = 0;
   double crowdedRate = 0;
   double foodRate = 0;
@@ -66,6 +67,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
     "Closed Room",
     "Outdoor Seating"
   ];
+  List<String> servicesList = [];
+
   List<String> userChecked = [];
   final phoneNumberEditingController = new TextEditingController();
   final websiteEditingController = new TextEditingController();
@@ -78,7 +81,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   @override
   void initState() {
-    userChecked = widget.place.services;
 
     setState(() {});
 
@@ -99,6 +101,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   @override
   Widget build(BuildContext context) {
+
+    servicesList = widget.place.services;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade100,
@@ -591,6 +596,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
             } else if (value == 1){
               alertServices();
             }else if (value == 2) {
+              alertAdditonalInfo();
+            }else if (value == 3){
               alertReport();
             }
           },
@@ -619,7 +626,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
               PopupMenuItem(
                 child: Center(
                   child: Text(
-                    'Edit Services & Accounts',
+                    'Edit Available Services',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
@@ -635,11 +642,27 @@ class _PlaceInfoState extends State<PlaceInfo> {
               PopupMenuItem(
                 child: Center(
                   child: Text(
-                    'Report an Issue',
+                    'Edit Social Accounts',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
                 value: 2,
+              ),
+              PopupMenuItem(
+                height: 4,
+                child: Container(
+                  height: 2,
+                  color: Colors.black,
+                ),
+              ),
+              PopupMenuItem(
+                child: Center(
+                  child: Text(
+                    'Report an Issue',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                value: 3,
               ),
             ];
           }),
@@ -1179,31 +1202,20 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                          child: Text('Skip',
-                              style: GoogleFonts.lato(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.blue,
-                              )),
+                      ElevatedButton(
+                          child: Text("Cancel"),
                           onPressed: () {
-                            if(userChecked.isNotEmpty){
-                              AlertDialogSkip(context, () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                userChecked.clear();
-                                alertAdditonalInfo();
-                              });
-                            }else{
-                              Navigator.pop(context);
-                              alertAdditonalInfo();
-                            }
+                            Navigator.pop(context);
+                            userChecked = widget.place.services;
+                            setState(() {});
+
                           }),
+
                       SizedBox(
                           height: 36,
                           width: 85,
                           child: ElevatedButton(
-                              child: Text("Next"),
+                              child: Text("Submit"),
                               onPressed: () {
                                 if(userChecked.isEmpty){
                                   Fluttertoast.showToast(
@@ -1212,7 +1224,9 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                   );
                                 }else {
                                   Navigator.pop(context);
-                                  alertAdditonalInfo();
+                                  postToFirestoreServices(
+                                      userChecked,
+                                      context);
                                 }
                               })
                       ),
@@ -1388,49 +1402,17 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                          child: Text('Skip',
-                              style: GoogleFonts.lato(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.blue,
-                              )),
+                      ElevatedButton(
+                          child: Text("Cancel"),
                           onPressed: () {
-                            if(myController.f1.value.path.isNotEmpty ||
-                                phoneNumberEditingController.text != "" ||
-                                websiteEditingController.text != "" ||
-                                twitterEditingController.text != "" ||
-                                instagramEditingController.text != ""){
-                              AlertDialogSkip(context, () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                myController.f1 = File('').obs;
-                                phoneNumberEditingController.text = "";
-                                websiteEditingController.text = "";
-                                twitterEditingController.text = "";
-                                instagramEditingController.text = "";
-                                postToFirestoreServicesAccounts(
-                                    userChecked,
-                                    phoneNumberEditingController.text,
-                                    websiteEditingController.text,
-                                    twitterEditingController.text,
-                                    instagramEditingController.text,
-                                    photo,
-                                    context);
-                              });
-                            }else{
-                              Navigator.pop(context);
-                              postToFirestoreServicesAccounts(
-                                  userChecked,
-                                  phoneNumberEditingController.text,
-                                  websiteEditingController.text,
-                                  twitterEditingController.text,
-                                  instagramEditingController.text,
-                                  photo,
-                                  context);
-
-                            }
+                            Navigator.pop(context);
+                            myController.f1 = File('').obs;
+                            phoneNumberEditingController.text = "";
+                            websiteEditingController.text = "";
+                            twitterEditingController.text = "";
+                            instagramEditingController.text = "";
                           }),
+
                       SizedBox(
                         height: 36,
                         width: 85,
@@ -1452,8 +1434,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
                                 //photosList.add(photo);
                               }
                               Navigator.pop(context);
-                              postToFirestoreServicesAccounts(
-                                  userChecked,
+                              postToFirestoreAccounts(
                                   phoneNumberEditingController.text,
                                   websiteEditingController.text,
                                   twitterEditingController.text,
@@ -1473,31 +1454,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
     );
   }
 
-  AlertDialogSkip(BuildContext context, onYes) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text("No"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(child: Text("Yes"), onPressed: onYes);
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text("Are sure you want to skip?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
 
   void _onSelected(bool selected, String dataName) {
@@ -1551,31 +1507,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
 
   }
 
-  void postToFirestoreServicesAccounts(
+  void postToFirestoreServices(
       List<String> services,
-      String phone,
-      String website,
-      String twitter,
-      String instagram,
-      String photo,
       context) async {
     final _auth = FirebaseAuth.instance;
     User user = _auth.currentUser;
     String uid = user.uid;
     String placeId = widget.place.placeId;
+    String phone = widget.place.phoneNumber;
+    String website = widget.place.website;
+    String twitter = widget.place.twitter;
+    String instagram = widget.place.instagram;
 
-    if (phone == "") {
-      phone = widget.place.phoneNumber;
-    }
-    if (website == "") {
-      website = widget.place.website;
-    }
-    if (twitter == "") {
-      twitter = widget.place.twitter;
-    }
-    if (instagram == "") {
-      instagram = widget.place.instagram;
-    }
+
 
     if(widget.place.placeId.length == 27) {
       var collection3 = FirebaseFirestore.instance
@@ -1629,7 +1573,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
           "Photos": "",});
       }
     }
-    postPlaceDateToFirestoreNotification(loggedInUser.uid, widget.place.placeId, "Workspace services or accounts edited", "Workspace services or accounts edited", context);
+    postPlaceDateToFirestoreNotification(loggedInUser.uid, widget.place.placeId, "Workspace available services edited", "Workspace available services edited", context);
 
     Fluttertoast.showToast(
       msg: "Your edits submitted successfully",
@@ -1644,6 +1588,102 @@ class _PlaceInfoState extends State<PlaceInfo> {
     myController.f1 = File('').obs;
 
   }
+
+  void postToFirestoreAccounts(
+      String phone,
+      String website,
+      String twitter,
+      String instagram,
+      String photo,
+      context) async {
+    final _auth = FirebaseAuth.instance;
+    User user = _auth.currentUser;
+    String uid = user.uid;
+    String placeId = widget.place.placeId;
+
+    if (phone == "") {
+      phone = widget.place.phoneNumber;
+    }
+    if (website == "") {
+      website = widget.place.website;
+    }
+    if (twitter == "") {
+      twitter = widget.place.twitter;
+    }
+    if (instagram == "") {
+      instagram = widget.place.instagram;
+    }
+
+    if(widget.place.placeId.length == 27) {
+      var collection3 = FirebaseFirestore.instance
+          .collection('googlePlace')
+          .doc(widget.place.placeId);
+      var docReff3 = await collection3.set({
+        "Available services": "${widget.place.services}",
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "PlaceId": "$placeId"
+      });
+    }else{
+      var collection3 = FirebaseFirestore.instance
+          .collection('newPlace')
+          .doc(widget.place.placeId);
+      var docReff3 = await collection3.update({
+        "Available services": "${widget.place.services}",
+        "Phone number": "$phone",
+        "Website": "$website",
+        "Twitter": "$twitter",
+        "Instagram": "$instagram",
+        "PlaceId": "$placeId"
+      });
+    }
+
+    if(photo!= null){
+      //List<dynamic> photosList = widget.place.photos;
+      photosList.add(photo);
+      //print(photosList.toString());
+      if(widget.place.placeId.length == 27){
+        var collection4 = FirebaseFirestore.instance
+            .collection('googlePlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "$photosList",});
+      }else{
+        var collection4 = FirebaseFirestore.instance
+            .collection('newPlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "$photosList",});
+      }
+    }else{
+      if(widget.place.placeId.length == 27){
+        var collection4 = FirebaseFirestore.instance
+            .collection('googlePlace')
+            .doc(widget.place.placeId);
+        var docReff4 = await collection4.update({
+          "Photos": "",});
+      }
+    }
+    postPlaceDateToFirestoreNotification(loggedInUser.uid, widget.place.placeId, "Workspace social accounts edited", "Workspace social accounts edited", context);
+
+    Fluttertoast.showToast(
+      msg: "Your edits submitted successfully",
+      toastLength: Toast.LENGTH_LONG,
+    );
+
+    userChecked.clear();
+    phoneNumberEditingController.text = "";
+    websiteEditingController.text = "";
+    twitterEditingController.text = "";
+    instagramEditingController.text = "";
+    myController.f1 = File('').obs;
+
+  }
+
+
+
 
   Future<void> launchPhone(String phonee) async {
     String phone = "tel:" + phonee;

@@ -36,7 +36,7 @@ class notificationsListBody extends HookConsumerWidget {
                 ),
                 DropdownButton<String>(
                   hint: (search.value == "")? Text("All", style: GoogleFonts.lato(fontSize: 12,)):Text(search.value, style: GoogleFonts.lato(fontSize: 12,)) ,
-                  items: <String>['All', 'New place added', 'Workspace services or accounts edited'].map((String value) {
+                  items: <String>['All', 'New place added', 'Workspace available services edited', 'Workspace social accounts edited'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value, style: GoogleFonts.lato(fontSize: 12,)),
