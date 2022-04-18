@@ -135,7 +135,7 @@ class _ChatbotState extends State<Chatbot> {
 
   void sendMessage(String text) async {
     if (text.isEmpty) return;
-    log(text);
+    log("User: ["+text+"]");
     setState(() {
       addMessage(
         Message(text: DialogText(text: [text])),
@@ -150,6 +150,12 @@ class _ChatbotState extends State<Chatbot> {
     if (response.message == null) return;
     setState(() {
       addMessage(response.message);
+      log("Chatbot: "+ response.message.text.props.first.toString());
+      if(response.message.text.props.first.toString().contains("I will find")){
+        log("finding workspaces now");
+      }
+
+
     });
   }
 
