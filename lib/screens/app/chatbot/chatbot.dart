@@ -135,7 +135,7 @@ class _ChatbotState extends State<Chatbot> {
 
   void sendMessage(String text) async {
     if (text.isEmpty) return;
-    log("User: ["+text+"]");
+    log("User: "+text);
     setState(() {
       addMessage(
         Message(text: DialogText(text: [text])),
@@ -150,13 +150,101 @@ class _ChatbotState extends State<Chatbot> {
     if (response.message == null) return;
     setState(() {
       addMessage(response.message);
-      log("Chatbot: "+ response.message.text.props.first.toString());
-      if(response.message.text.props.first.toString().contains("I will find")){
+      log("Chatbot: "+ response.message.text?.text[0]);
+
+      if(response.message.text?.text[0].contains("I will find")){
         log("finding workspaces now");
-      }
+        //DialogPlatform platform = ;
+
+        final DialogText text = new DialogText(text: ["place object"]);
+        Message msg = new Message(text: text);
+        addMessage(msg);
+
+        //when the user clicks on the card it should open place_info.dart and send the place id
+        //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
+        //Message msg2 = new Message(basicCard: card);
+        //addMessage(msg2);
 
 
+        final str = response.message.text?.text[0];
+        getPlaceDate(str);
+
+
+
+    }
     });
+  }
+
+  getPlaceDate(String str) {
+    //type
+    final start = 'Type: ';
+    final end = ',';
+
+    final startIndex = str.indexOf(start);
+    final endIndex = str.indexOf(end);
+    final result = str.substring(startIndex + start.length, endIndex).trim();
+
+    log("***type: "+ result.toString());
+
+    //openNow
+    final start2 = 'Open now: ';
+    final end2 = ', Services:';
+
+    final startIndex2 = str.indexOf(start2);
+    final endIndex2 = str.indexOf(end2);
+    final result2 = str.substring(startIndex2 + start2.length, endIndex2).trim();
+
+    log("***openNow: "+ result2.toString());
+
+    //services
+    final start3 = 'Services: ';
+    final end3 = ', Crowded:';
+
+    final startIndex3 = str.indexOf(start3);
+    final endIndex3 = str.indexOf(end3);
+    final result3 = str.substring(startIndex3 + start3.length, endIndex3).trim();
+
+    log("***services  : "+ result3.toString());
+
+    //crowded
+    final start4 = 'Crowded: ';
+    final end4 = ', Quiet:';
+
+    final startIndex4 = str.indexOf(start4);
+    final endIndex4 = str.indexOf(end4);
+    final result4 = str.substring(startIndex4 + start4.length, endIndex4).trim();
+
+    log("***crowded  : "+ result4.toString());
+
+    //quiet
+    final start5 = 'Quiet: ';
+    final end5 = ', Good food quality:';
+
+    final startIndex5 = str.indexOf(start5);
+    final endIndex5 = str.indexOf(end5);
+    final result5 = str.substring(startIndex5 + start5.length, endIndex5).trim();
+
+    log("***quiet  : "+ result5.toString());
+
+    //food
+    final start6 = 'Good food quality:';
+    final end6 = 'and Technical facilities: ';
+
+    final startIndex6 = str.indexOf(start6);
+    final endIndex6 = str.indexOf(end6);
+    final result6 = str.substring(startIndex6 + start6.length, endIndex6).trim();
+
+    log("***good food : "+ result6.toString());
+
+    //technical
+    final start7 = 'Technical facilities: ';
+    final end7 = '';
+
+    final startIndex7 = str.indexOf(start7);
+    final endIndex7 = str.indexOf(end7);
+    final result7 = str.substring(startIndex7 + start7.length, endIndex7).trim();
+
+    log("***technical : "+ result7.toString());
   }
 
   void addMessage(Message message, [bool isUserMessage = false]) {
