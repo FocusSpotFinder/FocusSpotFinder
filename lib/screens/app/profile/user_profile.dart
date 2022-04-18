@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:focus_spot_finder/screens/app/chatbot/chatbot.dart';
 import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/setUp/center_bottom_button.dart';
@@ -172,7 +173,7 @@ class _UserProfileState extends State<UserProfile> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         toolbarHeight: 55,
-        /*
+
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 8),
@@ -180,11 +181,16 @@ class _UserProfileState extends State<UserProfile> {
               icon: Image.asset('assets/chatbot.png',
                   fit: BoxFit.fitHeight, height: 40),
               tooltip: 'Chatbot',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Chatbot()));
+              },
             ),
           ),
         ],
-         */
+
       ),
       //end appBar
 

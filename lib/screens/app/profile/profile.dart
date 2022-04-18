@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/app/chatbot/chatbot.dart';
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -47,7 +48,7 @@ class _ProfileState extends State<Profile> {
             onPressed: widget.onBackPress,
           ),
           toolbarHeight: 55,
-          /*
+
           actions: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 8),
@@ -55,11 +56,16 @@ class _ProfileState extends State<Profile> {
                 icon: Image.asset('assets/chatbot.png',
                     fit: BoxFit.fitHeight, height: 40),
                 tooltip: 'Chatbot',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Chatbot()));
+                },
               ),
             ),
           ],
-           */
+
         ),
         //end appBar
 

@@ -184,7 +184,6 @@ class _PlaceInfoState extends State<PlaceInfo> {
           SizedBox(width: 10,)
         ],
       ),
-      //end appBar
 
       body: Stack(
         children: [

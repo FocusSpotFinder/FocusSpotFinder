@@ -56,6 +56,8 @@ dependencies:
   shared_preferences: ^2.0.13
   url_launcher: ^6.0.18
   visibility_detector: ^0.2.2
+  bubble: ^1.2.1
+  dialog_flowtter: ^0.3.1
 
 dev_dependencies:
   flutter_app_name: ^0.1.0

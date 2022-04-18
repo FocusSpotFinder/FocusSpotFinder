@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "focus-spot-finder-340900",
+  "private_key_id": "6645e9f5a36c476c943a74fb6764a4bc70baa1a7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDJoRdG/232rcwK\nnODmBFBR2YqconL83AW2owH3+J4l65XFVT85TcGdPDE7G2WRM86d++ozUzb2ovZM\n3B6zGR20bApekJRmdOtsKidDNTwt5BtNmxHaFNw8TKlLMSvlL0bVIAVxP7Y+3aLZ\nr72iw+G7o3ANsW9u+1kH5XNrfg801CeB4XC5tq4xbq78Vow89LwgknfmNE5BFprI\nJlUWfTbpfi/GqR7Wwm3slgZELqJmwWL2e9oIWj//N7KIc6fBCFJnCKgzflOwSJTD\nFmfrC95cUkyUi4HZ44U/cxlsw0zzm93g2bBIPYVF/peuYAW+uEbsI1M7diPRbVls\nk85vGEa3AgMBAAECggEALFjkpEaBGq0OQFVR9/WB7wbAgIQQc4I3NXzz7WT+78s5\ntV3zGnj6OUmocF4twDqbWs8yK1jFsYiVUMFndS/0gx7yRutY4JIdx7wbx6H5WwSd\nZrvRONy2tgKMh8/IXk/ALhcta0O+o2QfMe7/8EFSMHGZr0FUB5577gsvEDj5Qj51\ngE/LcHdpit7w7Q3Zkr8MjG5w6J7PSZSQNSgSP0/SuGee2ZRxpXYMaJRFudcrvwfN\nS7hcD73NnFK5LcKTd9eyBVqgIfyhbUZ+rqSqvJdLIokENcrjO0jBAxER8T6Gvt08\nYR+OsudrCF4Xi5cCp1oXAwBcSJpCGA1YTk7wy1k6iQKBgQDmhKGUDTeo8YNVZqvB\ntE/d7GqvRoC+fjWLKbxZ3kJI/SHw7gxI0SMaURpJbBG4k5r+1JiG0gP8wZd4n3Ps\n3C3kbKhVoK3UZXaJ4exymHKwOIX282idL/WlER9MXxrK0575iddcUdwUAhRc+FHi\nOddAkZLR/dFDESM65ayYoExTmQKBgQDf6vFQfYYdjI/83oNqSotcCrQ5D4XQT8DW\n5g+zWzdHdvGQ8Azsb8dXifXCr2i6lHTpJQvmwnlL8yBGZ49wZsplFFawI7Z2d58H\nKAmVifkiB9dnRvw/TGEUMaotE1VEkjO67SJ1cwtMmEyDnwUIUDdyZ0GVbPJg7XsM\n3vPM1TLezwKBgQCVyKiU4uG/zO5hl40TGG6s7OmFanJNVQTFoCDa5Ch99L0RKByj\nVAFTIE/MVYROQtr7qnhRYjVlDwW1Qya4SXkoa9IVkYph8GvNvBc/fv9GsfOaOx9G\nw9sBntaPcVyfXlJ2IrLlMeumtJM2tcO/E4ZiVjTobdyDj6cspgA4TDBMQQKBgQDG\n6+QXOnwj0hS0c0TR74lgak3zBxw8lC1ffCBkmNtCDKPLu8XvYdn4paIDo2rpnitC\nV9v707aIR2Pbx/KAy4BwTaI5dnCJS/mmFOZ2x4zgs5CjukcrQIJZu0lQJAWzFiMI\no9Ph/SMDl6UZpPKGkSTA6IQ16ARnIXIYXBTAWoKHtwKBgAuep25JAE/uvjRKY1L0\nZSmWkoE9ISQ3qWfbJmDrZeWsVFBiCDaPh2Ob6LXhIktCwgEAnNTX2E2n7XbRB8pu\nSDQZDtY9i3KGZ3gmlLqRopBvUWuYQysrYWo9Ami656kPpfTErgKCLm9hvl6QzW24\nj3V1G/j3P/4bn+mPV98gJJhn\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-integration@focus-spot-finder-340900.iam.gserviceaccount.com",
+  "client_id": "117053191494790349428",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-integration%40focus-spot-finder-340900.iam.gserviceaccount.com"
+}
