@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:bubble/bubble.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 
