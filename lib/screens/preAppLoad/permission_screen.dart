@@ -1,15 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_spot_finder/screens/admin/setUp/admin_app_page.dart';
 import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class PermissionScreen extends StatelessWidget {
-  const PermissionScreen({Key key}) : super(key: key);
+class PermissionScreen extends StatefulWidget {
+
+  @override
+  State<PermissionScreen> createState() => _PermissionScreenState();
+}
+
+
+class _PermissionScreenState extends State<PermissionScreen> {
+
+  bool isAdmin = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    checkIfAdmin();
+  }
+
+  Future<void> checkIfAdmin() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (int x = 0; x < allData.length; x++) {
+      var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+      if (noteInfo["Email"] == FirebaseAuth.instance.currentUser.email) {
+        isAdmin = true;
+        break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -54,8 +86,12 @@ class PermissionScreen extends StatelessWidget {
                       color: Colors.blue,
                     )),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => AppPage()));
+                  if(isAdmin){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
+                  }else{
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+                  }
+
                 }
             ),
           ],
