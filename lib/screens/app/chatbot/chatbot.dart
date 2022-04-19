@@ -2,8 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
+import 'package:focus_spot_finder/data/data.dart';
+import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/screens/app/chatbot/chatbot_body.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/permission_screen.dart';
+import 'package:focus_spot_finder/services/geolocator_service.dart';
+import 'package:focus_spot_finder/services/places_service.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class Chatbot extends StatefulWidget {
@@ -17,6 +25,8 @@ class _ChatbotState extends State<Chatbot> {
   DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> messages = [];
+  final locatorService = GeoLocatorService();
+  final placesService = PlacesService();
 
   //place date
   String type;
@@ -26,6 +36,7 @@ class _ChatbotState extends State<Chatbot> {
   double crowded = 0.0;
   double food = 0.0;
   double tech = 0.0;
+
 
   @override
   void initState() {
@@ -295,6 +306,21 @@ class _ChatbotState extends State<Chatbot> {
       tech = 0.33;
     }
     log("***technical : "+ tech.toString());
+
+
+    Permission.locationWhenInUse.request().then((value) async {
+      Logger().i(value);
+      if (value.isGranted) {
+        Position position = await locatorService.getLocation();
+        List<Place> placesList = await placesService.getPlaces(position.latitude, position.longitude, Data().icon );
+        log(placesList.length.toString());
+
+      } else {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => PermissionScreen()));
+      }
+    }
+    );
+
   }
 
   bool parseBool(String open) {
