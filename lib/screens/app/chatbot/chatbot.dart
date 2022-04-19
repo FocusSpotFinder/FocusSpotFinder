@@ -16,8 +16,16 @@ class _ChatbotState extends State<Chatbot> {
 
   DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
-
   List<Map<String, dynamic>> messages = [];
+
+  //place date
+  String type;
+  bool isOpen = true;
+  List<String> services = [];
+  double quiet = 0.0;
+  double crowded = 0.0;
+  double food = 0.0;
+  double tech = 0.0;
 
   @override
   void initState() {
@@ -66,6 +74,7 @@ class _ChatbotState extends State<Chatbot> {
                   , color: Colors.black38
               ),),
             ),
+            //get the chatbot body from the class chatbot_body.dart
             Expanded(child: ChatbotBody(messages: messages)),
             Container(
               child: ListTile(
@@ -148,31 +157,44 @@ class _ChatbotState extends State<Chatbot> {
     );
 
     if (response.message == null) return;
+
     setState(() {
       addMessage(response.message);
       log("Chatbot: "+ response.message.text?.text[0]);
+    });
 
-      if(response.message.text?.text[0].contains("I will find")){
-        log("finding workspaces now");
-        //DialogPlatform platform = ;
-
-        final DialogText text = new DialogText(text: ["place object"]);
-        Message msg = new Message(text: text);
-        addMessage(msg);
-
-        //when the user clicks on the card it should open place_info.dart and send the place id
-        //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
-        //Message msg2 = new Message(basicCard: card);
-        //addMessage(msg2);
+  }
 
 
-        final str = response.message.text?.text[0];
-        getPlaceDate(str);
+  void addMessage(Message message, [bool isUserMessage = false]) {
+    messages.add({
+      'message': message,
+      'isUserMessage': isUserMessage,
+    });
 
+    if(message.text?.text[0].contains("I will find")){
+      log("finding workspaces now");
+
+      final DialogText text = new DialogText(text: ["Finding workspace now"]);
+      Message msg = new Message(text: text);
+      addMessage(msg);
+
+      final str = message.text?.text[0];
+      getPlaceDate(str);
+
+      final DialogText text2 = new DialogText(text: ["place object"]);
+      Message msg2 = new Message(text: text2);
+      addMessage(msg2);
+
+      //when the user clicks on the card it should open place_info.dart and send the place id
+      //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
+      //Message msg2 = new Message(basicCard: card);
+      //addMessage(msg2);
 
 
     }
-    });
+
+
   }
 
   getPlaceDate(String str) {
@@ -184,7 +206,8 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex = str.indexOf(end);
     final result = str.substring(startIndex + start.length, endIndex).trim();
 
-    log("***type: "+ result.toString());
+    type = result.toString();
+    log("***type: "+ type.toString());
 
     //openNow
     final start2 = 'Open now: ';
@@ -192,9 +215,10 @@ class _ChatbotState extends State<Chatbot> {
 
     final startIndex2 = str.indexOf(start2);
     final endIndex2 = str.indexOf(end2);
-    final result2 = str.substring(startIndex2 + start2.length, endIndex2).trim();
+    var result2 = str.substring(startIndex2 + start2.length, endIndex2).trim();
 
-    log("***openNow: "+ result2.toString());
+    isOpen = parseBool(result2);
+    log("***openNow: "+ isOpen.toString());
 
     //services
     final start3 = 'Services: ';
@@ -204,7 +228,8 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex3 = str.indexOf(end3);
     final result3 = str.substring(startIndex3 + start3.length, endIndex3).trim();
 
-    log("***services  : "+ result3.toString());
+    services = result3.split('and');
+    log("***services  : "+ services.toString());
 
     //crowded
     final start4 = 'Crowded: ';
@@ -214,7 +239,14 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex4 = str.indexOf(end4);
     final result4 = str.substring(startIndex4 + start4.length, endIndex4).trim();
 
-    log("***crowded  : "+ result4.toString());
+    if(result4.toString() == "Yes"){
+      crowded = 0.1;
+    }else if(result4.toString() == "It doesnt matter"){
+      crowded = 0.0;
+    }else if(result4.toString() == "No"){
+      crowded = 0.33;
+    }
+    log("***crowded  : "+ crowded.toString());
 
     //quiet
     final start5 = 'Quiet: ';
@@ -224,7 +256,14 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex5 = str.indexOf(end5);
     final result5 = str.substring(startIndex5 + start5.length, endIndex5).trim();
 
-    log("***quiet  : "+ result5.toString());
+    if(result5.toString() == "Yes"){
+      quiet = 0.33;
+    }else if(result5.toString() == "It doesnt matter"){
+      quiet = 0.0;
+    }else if(result5.toString() == "No"){
+      quiet = 0.1;
+    }
+    log("***quiet  : "+ quiet.toString());
 
     //food
     final start6 = 'Good food quality:';
@@ -234,24 +273,36 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex6 = str.indexOf(end6);
     final result6 = str.substring(startIndex6 + start6.length, endIndex6).trim();
 
-    log("***good food : "+ result6.toString());
+    if(result6.toString() == "Yes"){
+      food = 0.1;
+    }else if(result6.toString() == "It doesnt matter"){
+      food = 0.0;
+    }else if(result6.toString() == "No"){
+      food = 0.33;
+    }
+    log("***good food : "+ food.toString());
 
     //technical
-    final start7 = 'Technical facilities: ';
-    final end7 = '';
+    final start7 = 'and Technical facilities: ';
 
     final startIndex7 = str.indexOf(start7);
-    final endIndex7 = str.indexOf(end7);
-    final result7 = str.substring(startIndex7 + start7.length, endIndex7).trim();
-
-    log("***technical : "+ result7.toString());
+    final result7 = str.substring(startIndex7 + start7.length,).trim();
+    if(result7.toString() == "Yes"){
+      tech = 0.1;
+    }else if(result7.toString() == "It doesnt matter"){
+      tech = 0.0;
+    }else if(result7.toString() == "No"){
+      tech = 0.33;
+    }
+    log("***technical : "+ tech.toString());
   }
 
-  void addMessage(Message message, [bool isUserMessage = false]) {
-    messages.add({
-      'message': message,
-      'isUserMessage': isUserMessage,
-    });
+  bool parseBool(String open) {
+    if(open.toLowerCase() == 'true' || open.toLowerCase() == 'yes'){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @override
