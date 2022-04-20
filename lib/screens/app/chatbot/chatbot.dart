@@ -198,8 +198,8 @@ class _ChatbotState extends State<Chatbot> {
       Future.delayed(Duration(seconds: 7), () {
         setState(() {
           final DialogText text2 = new DialogText(text: ["Please wait..."]);
-        Message msg2 = new Message(text: text2);
-        addMessage(msg2);
+          Message msg2 = new Message(text: text2);
+          addMessage(msg2);
         });
       });
 
@@ -331,41 +331,25 @@ class _ChatbotState extends State<Chatbot> {
 
         log(placesList.length.toString());
         for(int i=0; i<placesList.length; i++){
-         // if(placesList[i].openingHours.openNow == open){
-            log(placesList[i].placeId + placesList[i].openingHours.openNow.toString());
+          // if(placesList[i].openingHours.openNow == open){
+          log(placesList[i].placeId + placesList[i].openingHours.openNow.toString());
+          //matched open/close
 
-            for(int j=0 ; j<placesList[i].services.length ; j++) {
-              for(int k=0 ; k<services.length; k++){
-                if(placesList[i].services[j] == services[k])
-                  log(placesList[i].services[j]);
+          for(int j=0 ; j<placesList[i].services.length ; j++) {
+            for(int k=0 ; k<services.length; k++){
+              if(placesList[i].services[j] == services[k]) {
+                log(placesList[i].services[j]);
+                //matched services
+
               }
             }
-         // }
-        }
-        /*for(int i=0 ; i<placesList.length ; i++){
-          /*if(placesList[i].types.toString().toLowerCase().contains(type.toLowerCase())) {
-            log("found match place type "+placesList[i].name);
-          }*/
-          log(placesList[i].placeId);
-          if(placesList[i].openingHours.openNow == open){
-            log("found match opening hours "+placesList[i].name);
+            // }
           }
 
-          /*for(int j=0 ; j<placesList[i].services.length ; j++) {
-            for(int k=0 ; k<services.length ; k++){
-              if (placesList[i].services[j].toLowerCase() == services[k].toLowerCase()) {
-                log("matched services" + services[k]);
-              }
-            }
-          }*/
-
 
         }
-
-         */
-
-
-      } else {
+      }
+      else {
         final DialogText text2 = new DialogText(text: ["Please enable your location permission, so I can find workspaces for you!"]);
         Message msg2 = new Message(text: text2);
         addMessage(msg2);      }
