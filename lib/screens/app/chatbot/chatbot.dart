@@ -32,10 +32,10 @@ class _ChatbotState extends State<Chatbot> {
   String type;
   bool open;
   List<String> services = [];
-  double quiet = 0.0;
-  double crowded = 0.0;
-  double food = 0.0;
-  double tech = 0.0;
+  String quietRate;
+  String crowdedRate;
+  String foodRate;
+  String techRate;
 
 
   @override
@@ -146,7 +146,9 @@ class _ChatbotState extends State<Chatbot> {
               ),
 
             ),
-
+            SizedBox(
+              height: 25,
+            ),
           ],
         ),
       ),
@@ -265,6 +267,8 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex4 = str.indexOf(end4);
     final result4 = str.substring(startIndex4 + start4.length, endIndex4).trim();
 
+    crowdedRate = result4;
+    /*
     if(result4.toString() == "Yes"){
       crowded = 0.1;
     }else if(result4.toString() == "It doesnt matter"){
@@ -272,7 +276,8 @@ class _ChatbotState extends State<Chatbot> {
     }else if(result4.toString() == "No"){
       crowded = 0.33;
     }
-    log("***crowded  : "+ crowded.toString());
+     */
+    log("***crowded  : "+ crowdedRate.toString());
 
     //quiet
     final start5 = 'Quiet: ';
@@ -282,6 +287,9 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex5 = str.indexOf(end5);
     final result5 = str.substring(startIndex5 + start5.length, endIndex5).trim();
 
+    quietRate = result5;
+
+    /*
     if(result5.toString() == "Yes"){
       quiet = 0.33;
     }else if(result5.toString() == "It doesnt matter"){
@@ -289,7 +297,8 @@ class _ChatbotState extends State<Chatbot> {
     }else if(result5.toString() == "No"){
       quiet = 0.1;
     }
-    log("***quiet  : "+ quiet.toString());
+     */
+    log("***quiet  : "+ quietRate.toString());
 
     //food
     final start6 = 'Good food quality:';
@@ -299,6 +308,9 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex6 = str.indexOf(end6);
     final result6 = str.substring(startIndex6 + start6.length, endIndex6).trim();
 
+    foodRate = result6;
+
+    /*
     if(result6.toString() == "Yes"){
       food = 0.1;
     }else if(result6.toString() == "It doesnt matter"){
@@ -306,13 +318,18 @@ class _ChatbotState extends State<Chatbot> {
     }else if(result6.toString() == "No"){
       food = 0.33;
     }
-    log("***good food : "+ food.toString());
+     */
+    log("***good food : "+ foodRate.toString());
 
     //technical
     final start7 = 'and Technical facilities: ';
 
     final startIndex7 = str.indexOf(start7);
     final result7 = str.substring(startIndex7 + start7.length,).trim();
+
+    techRate = result7;
+
+    /*
     if(result7.toString() == "Yes"){
       tech = 0.1;
     }else if(result7.toString() == "It doesnt matter"){
@@ -320,7 +337,8 @@ class _ChatbotState extends State<Chatbot> {
     }else if(result7.toString() == "No"){
       tech = 0.33;
     }
-    log("***technical : "+ tech.toString());
+     */
+    log("***technical : "+ techRate.toString());
 
 
     Permission.locationWhenInUse.request().then((value) async {
@@ -339,7 +357,10 @@ class _ChatbotState extends State<Chatbot> {
             for(int k=0 ; k<services.length; k++){
               if(placesList[i].services[j] == services[k]) {
                 log(placesList[i].services[j]);
+
                 //matched services
+
+
 
               }
             }
