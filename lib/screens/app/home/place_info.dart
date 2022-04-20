@@ -65,7 +65,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
     "Meetings Room",
     "Isolated Capsule",
     "Closed Room",
-    "Outdoor Seating"
+    "Outdoor Seating",
+    "Parkings"
   ];
   List<String> servicesList = [];
 
@@ -1163,13 +1164,15 @@ class _PlaceInfoState extends State<PlaceInfo> {
                   )),
               content: Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: Scrollbar(
+                isAlwaysShown: true,
+                child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
                     SizedBox(
                       height: 300.0,
                       width: 300.0,
                       child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: _availableServices.length,
@@ -1197,6 +1200,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     )
                   ],
                 ),
+              ),
+                )
               ),
               actions: [
                 Row(
@@ -1238,6 +1243,8 @@ class _PlaceInfoState extends State<PlaceInfo> {
       },
     );
   }
+
+
 
   alertAdditonalInfo() {
     showDialog(

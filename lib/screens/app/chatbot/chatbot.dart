@@ -186,20 +186,31 @@ class _ChatbotState extends State<Chatbot> {
     if(message.text?.text[0].contains("I will find")){
       log("finding workspaces now");
 
-      final DialogText text = new DialogText(text: ["Finding workspaces for you now!"]);
-      Message msg = new Message(text: text);
-      addMessage(msg);
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          final DialogText text = new DialogText(
+              text: ["Finding workspaces for you now!"]);
+          Message msg = new Message(text: text);
+          addMessage(msg);
+        });
+      });
 
-      final DialogText text2 = new DialogText(text: ["Please wait..."]);
-      Message msg2 = new Message(text: text2);
-      addMessage(msg2);
+      Future.delayed(Duration(seconds: 7), () {
+        setState(() {
+          final DialogText text2 = new DialogText(text: ["Please wait..."]);
+        Message msg2 = new Message(text: text2);
+        addMessage(msg2);
+        });
+      });
+
+
 
       final str = message.text?.text[0];
       getPlaceDate(str);
 
-      final DialogText text3 = new DialogText(text: ["place object"]);
+      /*final DialogText text3 = new DialogText(text: ["place object"]);
       Message msg3 = new Message(text: text3);
-      addMessage(msg3);
+      addMessage(msg3);*/
 
       //when the user clicks on the card it should open place_info.dart and send the place id
       //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
@@ -320,7 +331,16 @@ class _ChatbotState extends State<Chatbot> {
 
         log(placesList.length.toString());
         for(int i=0; i<placesList.length; i++){
-          log(placesList[i].placeId);
+         // if(placesList[i].openingHours.openNow == open){
+            log(placesList[i].placeId + placesList[i].openingHours.openNow.toString());
+
+            for(int j=0 ; j<placesList[i].services.length ; j++) {
+              for(int k=0 ; k<services.length; k++){
+                if(placesList[i].services[j] == services[k])
+                  log(placesList[i].services[j]);
+              }
+            }
+         // }
         }
         /*for(int i=0 ; i<placesList.length ; i++){
           /*if(placesList[i].types.toString().toLowerCase().contains(type.toLowerCase())) {

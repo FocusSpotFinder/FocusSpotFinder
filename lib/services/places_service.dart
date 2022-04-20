@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:focus_spot_finder/data/data.dart';
@@ -272,8 +274,7 @@ class PlacesService {
 
     //group the response and access the variable "results"
     //and map the response into place objects in a list
-    var jsonResults =
-        json['results'] as List;
+    var jsonResults = json['results'] as List;
 
     List<Place> list = jsonResults.map((place) => Place.fromJson(place, icon)).toList();
 
