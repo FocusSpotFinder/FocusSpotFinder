@@ -30,7 +30,7 @@ class _ChatbotState extends State<Chatbot> {
 
   //place date
   String type;
-  bool isOpen = true;
+  bool open;
   List<String> services = [];
   double quiet = 0.0;
   double crowded = 0.0;
@@ -127,7 +127,7 @@ class _ChatbotState extends State<Chatbot> {
                     icon: Icon(
                       Icons.send,
                       size: 30.0,
-                      color: Colors.cyan.shade100,
+                      color: Colors.indigo,
                     ),
                     onPressed: () {
 
@@ -186,16 +186,20 @@ class _ChatbotState extends State<Chatbot> {
     if(message.text?.text[0].contains("I will find")){
       log("finding workspaces now");
 
-      final DialogText text = new DialogText(text: ["Finding workspace now"]);
+      final DialogText text = new DialogText(text: ["Finding workspaces for you now!"]);
       Message msg = new Message(text: text);
       addMessage(msg);
+
+      final DialogText text2 = new DialogText(text: ["Please wait..."]);
+      Message msg2 = new Message(text: text2);
+      addMessage(msg2);
 
       final str = message.text?.text[0];
       getPlaceDate(str);
 
-      final DialogText text2 = new DialogText(text: ["place object"]);
-      Message msg2 = new Message(text: text2);
-      addMessage(msg2);
+      final DialogText text3 = new DialogText(text: ["place object"]);
+      Message msg3 = new Message(text: text3);
+      addMessage(msg3);
 
       //when the user clicks on the card it should open place_info.dart and send the place id
       //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
@@ -228,8 +232,8 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex2 = str.indexOf(end2);
     var result2 = str.substring(startIndex2 + start2.length, endIndex2).trim();
 
-    isOpen = parseBool(result2);
-    log("***openNow: "+ isOpen.toString());
+    open = parseBool(result2);
+    log("***openNow: "+ open.toString());
 
     //services
     final start3 = 'Services: ';
@@ -239,7 +243,7 @@ class _ChatbotState extends State<Chatbot> {
     final endIndex3 = str.indexOf(end3);
     final result3 = str.substring(startIndex3 + start3.length, endIndex3).trim();
 
-    services = result3.split('and');
+    services = result3.split(' and ');
     log("***services  : "+ services.toString());
 
     //crowded
@@ -312,12 +316,39 @@ class _ChatbotState extends State<Chatbot> {
       Logger().i(value);
       if (value.isGranted) {
         Position position = await locatorService.getLocation();
-        List<Place> placesList = await placesService.getPlaces(position.latitude, position.longitude, Data().icon );
+        List<Place> placesList = await placesService.getPlacesChatbot(position.latitude, position.longitude, Data().icon, type.toLowerCase() );
+
         log(placesList.length.toString());
+        for(int i=0; i<placesList.length; i++){
+          log(placesList[i].placeId);
+        }
+        /*for(int i=0 ; i<placesList.length ; i++){
+          /*if(placesList[i].types.toString().toLowerCase().contains(type.toLowerCase())) {
+            log("found match place type "+placesList[i].name);
+          }*/
+          log(placesList[i].placeId);
+          if(placesList[i].openingHours.openNow == open){
+            log("found match opening hours "+placesList[i].name);
+          }
+
+          /*for(int j=0 ; j<placesList[i].services.length ; j++) {
+            for(int k=0 ; k<services.length ; k++){
+              if (placesList[i].services[j].toLowerCase() == services[k].toLowerCase()) {
+                log("matched services" + services[k]);
+              }
+            }
+          }*/
+
+
+        }
+
+         */
+
 
       } else {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => PermissionScreen()));
-      }
+        final DialogText text2 = new DialogText(text: ["Please enable your location permission, so I can find workspaces for you!"]);
+        Message msg2 = new Message(text: text2);
+        addMessage(msg2);      }
     }
     );
 
