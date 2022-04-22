@@ -42,7 +42,8 @@ class _editPlaceState extends State<editPlace> {
     "Meetings Room",
     "Isolated Capsule",
     "Closed Room",
-    "Outdoor Seating"
+    "Outdoor Seating",
+    "Parkings"
   ];
   List<String> userCheckedServices = [];
   final hoursEditingController = new TextEditingController();
