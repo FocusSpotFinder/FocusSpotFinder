@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
@@ -9,28 +11,16 @@ import 'package:focus_spot_finder/screens/app/home/place_info.dart';
 
 class ChatbotBody extends StatefulWidget {
   final List<Map<String, dynamic>> messages;
-  const ChatbotBody({Key key, this.messages = const [],}) : super(key: key);
+  final loggedInUser;
+  ChatbotBody({Key key, this.messages = const [],this.loggedInUser}) : super(key: key);
 
   @override
   State<ChatbotBody> createState() => _ChatbotBodyState();
 }
-User user = FirebaseAuth.instance.currentUser;
-UserModel loggedInUser = UserModel();
+
 
 class _ChatbotBodyState extends State<ChatbotBody> {
 
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(user.uid)
-        .get()
-        .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +37,7 @@ class _ChatbotBodyState extends State<ChatbotBody> {
             _MessageContainer(
               message: message,
               isUserMessage: isUserMessage,
+              loggedInUser: widget.loggedInUser,
             ),
           ],
         );
@@ -65,12 +56,14 @@ class _ChatbotBodyState extends State<ChatbotBody> {
 class _MessageContainer extends StatelessWidget {
   final Message message;
   final bool isUserMessage;
+  UserModel loggedInUser = UserModel();
 
 
-  const _MessageContainer({
+   _MessageContainer({
     Key key,
     this.message,
     this.isUserMessage = false,
+    this.loggedInUser,
   }) : super(key: key);
 
 
@@ -85,7 +78,6 @@ class _MessageContainer extends StatelessWidget {
       child: Row(
         mainAxisAlignment: !isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-
           !isUserMessage ? Container(
             color: Colors.white,
             height: 50,

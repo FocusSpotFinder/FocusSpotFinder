@@ -1,14 +1,20 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
+import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:focus_spot_finder/data/data.dart';
 import 'package:focus_spot_finder/models/place.dart';
+import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/app/chatbot/chatbot_body.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/permission_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:focus_spot_finder/services/places_service.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -27,6 +33,9 @@ class _ChatbotState extends State<Chatbot> {
   List<Map<String, dynamic>> messages = [];
   final locatorService = GeoLocatorService();
   final placesService = PlacesService();
+  var myController = Get.put(MyController());
+  User user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
   //place date
   String type;
@@ -42,6 +51,15 @@ class _ChatbotState extends State<Chatbot> {
   void initState() {
     super.initState();
     auth();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    super.initState();
   }
 
   auth () async {
@@ -60,7 +78,10 @@ class _ChatbotState extends State<Chatbot> {
             icon: new Icon(Icons.arrow_back_ios_rounded,
                 color: Colors.white, size: 30),
             tooltip: 'Back',
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: ()  {
+              myController.f1 = File('').obs;
+              Navigator.of(context).pop();
+            },
           ),
           toolbarHeight: 55,
           title:Row (
@@ -86,7 +107,7 @@ class _ChatbotState extends State<Chatbot> {
               ),),
             ),
             //get the chatbot body from the class chatbot_body.dart
-            Expanded(child: ChatbotBody(messages: messages)),
+            Expanded(child: ChatbotBody(messages: messages, loggedInUser: loggedInUser,)),
             Container(
               child: ListTile(
 
