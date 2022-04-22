@@ -168,7 +168,7 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: Colors.cyan.shade100,
         leading: IconButton(
           icon:
-              Icon(Icons.arrow_back_ios_rounded, color: Colors.white, size: 30),
+          Icon(Icons.arrow_back_ios_rounded, color: Colors.white, size: 30),
           tooltip: 'Back',
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -201,25 +201,25 @@ class _UserProfileState extends State<UserProfile> {
             right: -MediaQuery.of(context).size.width * .4,
             child: Container(
                 child: Transform.rotate(
-              angle: -pi / 3.5,
-              child: ClipPath(
-                clipper: ClipPainter(),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * .5,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.cyan.shade50,
-                        Colors.cyan.shade400,
-                      ],
+                  angle: -pi / 3.5,
+                  child: ClipPath(
+                    clipper: ClipPainter(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * .5,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.cyan.shade50,
+                            Colors.cyan.shade400,
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            )),
+                )),
           ),
           Form(
             key: _formKey,
@@ -239,46 +239,46 @@ class _UserProfileState extends State<UserProfile> {
                     child: Column(
                       children: [
                         Obx(
-                          () => CircleAvatar(
+                              () => CircleAvatar(
                             radius: MediaQuery.of(context).size.height * 0.1,
                             backgroundColor:
-                                Colors.cyan.shade100.withOpacity(0.8),
+                            Colors.cyan.shade100.withOpacity(0.8),
                             child: ClipOval(
                               child: Stack(
                                 children: [
                                   myController.f1.value.path.isEmpty
                                       ? (loggedInUser.profileImage != null &&
-                                              loggedInUser
-                                                  .profileImage.isNotEmpty)
-                                          ? CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              radius: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
-                                              backgroundImage: NetworkImage(
-                                                  loggedInUser.profileImage),
-                                            )
-                                          : CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              radius: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
-                                              backgroundImage: AssetImage(
-                                                'assets/place_holder.png',
-                                              ))
+                                      loggedInUser
+                                          .profileImage.isNotEmpty)
+                                      ? CircleAvatar(
+                                    backgroundColor:
+                                    Colors.transparent,
+                                    radius: MediaQuery.of(context)
+                                        .size
+                                        .height *
+                                        0.1,
+                                    backgroundImage: NetworkImage(
+                                        loggedInUser.profileImage),
+                                  )
                                       : CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.1,
-                                          backgroundImage:
-                                              FileImage(myController.f1.value),
-                                        ),
+                                      backgroundColor:
+                                      Colors.transparent,
+                                      radius: MediaQuery.of(context)
+                                          .size
+                                          .height *
+                                          0.1,
+                                      backgroundImage: AssetImage(
+                                        'assets/place_holder.png',
+                                      ))
+                                      : CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    radius: MediaQuery.of(context)
+                                        .size
+                                        .height *
+                                        0.1,
+                                    backgroundImage:
+                                    FileImage(myController.f1.value),
+                                  ),
                                   Positioned(
                                     bottom: 8,
                                     right: 8,
@@ -319,7 +319,7 @@ class _UserProfileState extends State<UserProfile> {
                                 )),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.003),
+                                MediaQuery.of(context).size.height * 0.003),
                           ],
                         )
                       ],
@@ -359,10 +359,10 @@ class _UserProfileState extends State<UserProfile> {
                                     color: Colors.black.withOpacity(0.5)),
                                 Text(
                                   "Birthday:  "
-                                 "  ${age.day}/${age.month}/${age.year}",                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black.withOpacity(0.4)),
+                                      "  ${age.day}/${age.month}/${age.year}",                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black.withOpacity(0.4)),
                                 ),
                                 SizedBox(),
                               ],
@@ -427,9 +427,9 @@ class _UserProfileState extends State<UserProfile> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (c) => AppPage(
-                        initialPage: a,
-                      )),
-              (route) => false);
+                    initialPage: a,
+                  )),
+                  (route) => false);
         },
       ),
     );
@@ -509,7 +509,7 @@ class _UserProfileState extends State<UserProfile> {
                       onPressed: null,
                     ),
                     Obx(
-                      () => Text(
+                          () => Text(
                         myController.dropDownText.value,
                         style: TextStyle(
                             fontSize: 20,
@@ -602,7 +602,7 @@ class _UserProfileState extends State<UserProfile> {
     if (myController.f1.value != null &&
         myController.f1.value.path.isNotEmpty) {
       userModel.profileImage =
-          await uploadImageToStorage(myController.f1.value, user.uid);
+      await uploadImageToStorage(myController.f1.value, user.uid);
     }
 
     await firebaseFirestore

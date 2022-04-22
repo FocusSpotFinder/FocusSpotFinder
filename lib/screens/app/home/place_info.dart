@@ -579,7 +579,7 @@ class _PlaceInfoState extends State<PlaceInfo> {
         cardColor: Colors.white60,
       ),
       child: PopupMenuButton(
-          offset: const Offset(120,100),
+          offset: Offset(100, -4.5 * kToolbarHeight),
           icon: Image.asset('assets/logo.png', fit: BoxFit.cover, height: 40),
           onCanceled: () {
             setState(() {

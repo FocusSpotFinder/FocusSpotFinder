@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>focusspotfinder.page.link</string>
+		<string>applinks:focusspotfinder.page.link</string>
 	</array>
 </dict>
 </plist>
