@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,8 +20,7 @@ class DynamicLinkService {
   }
 
   void handleInitialDeepLink() async {
-    final PendingDynamicLinkData initialLink = await FirebaseDynamicLinks.instance.
-    getInitialLink();
+    final PendingDynamicLinkData initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
     print('main initialLink');
     print(initialLink?.link);
     if (initialLink != null) {
@@ -68,7 +64,6 @@ class DynamicLinkService {
 
       sharedPreferences.setString('dLink', param1);
       print(param1);
-      //open placeInfo and send the place by calling getPlace and send the place id
     }
 
   }

@@ -268,15 +268,7 @@ class _ChatbotState extends State<Chatbot> {
     final result4 = str.substring(startIndex4 + start4.length, endIndex4).trim();
 
     crowdedRate = result4;
-    /*
-    if(result4.toString() == "Yes"){
-      crowded = 0.1;
-    }else if(result4.toString() == "It doesnt matter"){
-      crowded = 0.0;
-    }else if(result4.toString() == "No"){
-      crowded = 0.33;
-    }
-     */
+
     log("***crowded  : "+ crowdedRate.toString());
 
     //quiet
@@ -289,15 +281,6 @@ class _ChatbotState extends State<Chatbot> {
 
     quietRate = result5;
 
-    /*
-    if(result5.toString() == "Yes"){
-      quiet = 0.33;
-    }else if(result5.toString() == "It doesnt matter"){
-      quiet = 0.0;
-    }else if(result5.toString() == "No"){
-      quiet = 0.1;
-    }
-     */
     log("***quiet  : "+ quietRate.toString());
 
     //food
@@ -310,15 +293,6 @@ class _ChatbotState extends State<Chatbot> {
 
     foodRate = result6;
 
-    /*
-    if(result6.toString() == "Yes"){
-      food = 0.1;
-    }else if(result6.toString() == "It doesnt matter"){
-      food = 0.0;
-    }else if(result6.toString() == "No"){
-      food = 0.33;
-    }
-     */
     log("***good food : "+ foodRate.toString());
 
     //technical
@@ -329,15 +303,6 @@ class _ChatbotState extends State<Chatbot> {
 
     techRate = result7;
 
-    /*
-    if(result7.toString() == "Yes"){
-      tech = 0.1;
-    }else if(result7.toString() == "It doesnt matter"){
-      tech = 0.0;
-    }else if(result7.toString() == "No"){
-      tech = 0.33;
-    }
-     */
     log("***technical : "+ techRate.toString());
 
 
@@ -348,27 +313,225 @@ class _ChatbotState extends State<Chatbot> {
         List<Place> placesList = await placesService.getPlacesChatbot(position.latitude, position.longitude, Data().icon, type.toLowerCase() );
 
         log(placesList.length.toString());
-        for(int i=0; i<placesList.length; i++){
-          // if(placesList[i].openingHours.openNow == open){
-          log(placesList[i].placeId + placesList[i].openingHours.openNow.toString());
-          //matched open/close
+        for(int i =0 ; i<placesList.length; i++){
+          //log(placesList[i].placeId);
 
+          //if(placesList[i].openingHours.openNow != null && placesList[i].openingHours.openNow == open){
+          //log("open");
           for(int j=0 ; j<placesList[i].services.length ; j++) {
             for(int k=0 ; k<services.length; k++){
               if(placesList[i].services[j] == services[k]) {
-                log(placesList[i].services[j]);
+                //log(placesList[i].services[j]);
 
-                //matched services
+                if(placesList[i].crowded >= 0.5 && (crowdedRate == "Yes" || crowdedRate == "It doesnt matter")){
+
+                  if(placesList[i].quiet >= 0.5 && (quietRate == "Yes" || quietRate == "It doesnt matter")){
+
+                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }else{
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }
+
+                  }else{
+
+                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
 
 
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }else{
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }
+
+                  }
+
+                }else{
+
+                  if(placesList[i].quiet >= 0.5 && (quietRate == "Yes" || quietRate == "It doesnt matter")){
+
+                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }else{
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }
+
+                  }else{
+
+                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }else{
+
+                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }else{
+                        setState(() {
+                          final DialogText text = new DialogText(
+                              text: [placesList[i].name]);
+                          Message msg = new Message(text: text);
+                          addMessage(msg);
+                        });
+                        log("place found");
+
+                      }
+
+                    }
+
+                  }
+
+                }
 
               }
             }
-            // }
           }
-
-
+          // }
         }
+
       }
       else {
         final DialogText text2 = new DialogText(text: ["Please enable your location permission, so I can find workspaces for you!"]);
@@ -394,3 +557,4 @@ class _ChatbotState extends State<Chatbot> {
   }
 
 }
+

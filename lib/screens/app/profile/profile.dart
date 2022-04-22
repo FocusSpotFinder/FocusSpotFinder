@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -250,6 +252,7 @@ class _ProfileState extends State<Profile> {
                       GestureDetector(
                         onTap: () {
                           loggedInUser.alertDialogSignOut(context, () {
+                            myController.f1 = File('').obs;
                             loggedInUser.logout(context);
                           });
                         },

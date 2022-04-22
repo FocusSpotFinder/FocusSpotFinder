@@ -1,21 +1,40 @@
 import 'package:bubble/bubble.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 
-class ChatbotBody extends StatelessWidget {
+class ChatbotBody extends StatefulWidget {
   final List<Map<String, dynamic>> messages;
+  const ChatbotBody({Key key, this.messages = const [],}) : super(key: key);
 
-  const ChatbotBody({
-    Key key,
-    this.messages = const [],
-  }) : super(key: key);
+  @override
+  State<ChatbotBody> createState() => _ChatbotBodyState();
+}
+User user = FirebaseAuth.instance.currentUser;
+UserModel loggedInUser = UserModel();
+
+class _ChatbotBodyState extends State<ChatbotBody> {
+
+  @override
+  void initState() {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       itemBuilder: (context, i) {
-        var obj = messages[messages.length - 1 - i];
+        var obj = widget.messages[widget.messages.length - 1 - i];
         Message message = obj['message'];
         bool isUserMessage = obj['isUserMessage'] ?? false;
         return Row(
@@ -31,7 +50,7 @@ class ChatbotBody extends StatelessWidget {
         );
       },
       separatorBuilder: (_, i) => Container(height: 10),
-      itemCount: messages.length,
+      itemCount: widget.messages.length,
       reverse: true,
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -53,9 +72,9 @@ class _MessageContainer extends StatelessWidget {
   }) : super(key: key);
 
 
+
   @override
   Widget build(BuildContext context) {
-    UserModel loggedInUser = UserModel();
 
     return Container(
 
@@ -239,4 +258,6 @@ class _CardContainer extends StatelessWidget {
       ),
     );
   }
+
+
 }
