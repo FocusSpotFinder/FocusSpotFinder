@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
+import 'package:focus_spot_finder/screens/app/home/place_info.dart';
 
 class ChatbotBody extends StatefulWidget {
   final List<Map<String, dynamic>> messages;
@@ -96,6 +98,7 @@ class _MessageContainer extends StatelessWidget {
             ),
           ) : Container(),
 
+          (message.text != null)?
           Padding(
             padding: EdgeInsets.all(5.0),
             child: Bubble(
@@ -129,37 +132,38 @@ class _MessageContainer extends StatelessWidget {
                     ],
                   ),
                 )),
-          ),
+          ):  _CardContainer(card: message.card),
+
 
 
           isUserMessage? Container(
-            height: 50,
-            width: 50,
-            child:(loggedInUser.profileImage !=
-                null &&
-                loggedInUser
-                    .profileImage.isNotEmpty)
-                ? CircleAvatar(
-              backgroundColor:
-              Colors.transparent,
-              radius: MediaQuery.of(context)
-                  .size
-                  .height *
-                  0.1,
-              backgroundImage: NetworkImage(
+              height: 50,
+              width: 50,
+              child:(loggedInUser.profileImage !=
+                  null &&
                   loggedInUser
-                      .profileImage),
-            )
-                : CircleAvatar(
+                      .profileImage.isNotEmpty)
+                  ? CircleAvatar(
                 backgroundColor:
                 Colors.transparent,
                 radius: MediaQuery.of(context)
                     .size
                     .height *
                     0.1,
-                backgroundImage: AssetImage(
-                  'assets/place_holder.png',
-                ))
+                backgroundImage: NetworkImage(
+                    loggedInUser
+                        .profileImage),
+              )
+                  : CircleAvatar(
+                  backgroundColor:
+                  Colors.transparent,
+                  radius: MediaQuery.of(context)
+                      .size
+                      .height *
+                      0.1,
+                  backgroundImage: AssetImage(
+                    'assets/place_holder.png',
+                  ))
           ) : Container(),
 
         ],
@@ -185,8 +189,11 @@ class _CardContainer extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      child: Card(
-        color: Colors.orange,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+    child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    color: Colors.indigo,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,19 +212,25 @@ class _CardContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0,0,5,0),
+                      child: Text(
                     card.title ?? '',
+                    textAlign: TextAlign.left,
+
                     style: TextStyle(
-                      fontSize: 22,
                       color: Colors.white,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.bold,
+
                     ),
+                  ),
                   ),
                   if (card.subtitle != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
                         card.subtitle,
+                        textAlign: TextAlign.left,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -226,29 +239,34 @@ class _CardContainer extends StatelessWidget {
                       constraints: BoxConstraints(
                         maxHeight: 40,
                       ),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        // padding: const EdgeInsets.symmetric(vertical: 5),
-                        itemBuilder: (context, i) {
-                          CardButton button = card.buttons[i];
-                          return TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.white,
-                              backgroundColor: Colors.blue,
-                            ),
-                            child: Text(button.text ?? ''),
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(button.postback ?? ''),
-                              ));
-                            },
+                      child: Container(
+                          width: 100,
+                          alignment: Alignment.center,
+                          child: TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.indigo,
+                          backgroundColor: Colors.white,
+
+                        ),
+                        child: Text(card.buttons[0].text ?? ''),
+                        onPressed: () async {
+
+                          String placeId = card.buttons[0].postback;
+                          Place place = await Place.getPlaceInfo(placeId);
+                          bool isFav = await Place.checkIfFav(placeId);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PlaceInfo(
+                                  place: place,
+                                  isFav: isFav,
+                                  geo: place.geometry,
+                                )),
                           );
                         },
-                        separatorBuilder: (_, i) => Container(width: 10),
-                        itemCount: card.buttons.length,
-                      ),
+                      )
+
+    )
                     ),
                 ],
               ),
@@ -256,6 +274,7 @@ class _CardContainer extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 

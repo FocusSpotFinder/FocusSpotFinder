@@ -185,7 +185,7 @@ class _ChatbotState extends State<Chatbot> {
       'isUserMessage': isUserMessage,
     });
 
-    if(message.text?.text[0].contains("I will find")){
+    if(message.text != null && message.text?.text[0].contains("I will find")){
       log("finding workspaces now");
 
       Future.delayed(Duration(seconds: 3), () {
@@ -318,6 +318,7 @@ class _ChatbotState extends State<Chatbot> {
 
           //if(placesList[i].openingHours.openNow != null && placesList[i].openingHours.openNow == open){
           //log("open");
+
           for(int j=0 ; j<placesList[i].services.length ; j++) {
             for(int k=0 ; k<services.length; k++){
               if(placesList[i].services[j] == services[k]) {
@@ -331,43 +332,56 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }
 
                     }else{
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
@@ -379,22 +393,30 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
 
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
@@ -402,21 +424,28 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
@@ -432,21 +461,29 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
@@ -454,22 +491,29 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }
 
                     }
@@ -480,21 +524,28 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
-
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
@@ -502,21 +553,29 @@ class _ChatbotState extends State<Chatbot> {
 
                       if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }else{
                         setState(() {
-                          final DialogText text = new DialogText(
-                              text: [placesList[i].name]);
-                          Message msg = new Message(text: text);
+                          final CardButton btn = new CardButton (text: "Open",
+                              postback: placesList[i].placeId);
+                          final List<CardButton> buttons = new List<
+                              CardButton>();
+                          buttons.add(btn);
+                          final DialogCard card = new DialogCard (
+                              title: placesList[i].name, buttons: buttons);
+                          Message msg = new Message(card: card);
                           addMessage(msg);
                         });
-                        log("place found");
 
                       }
 
