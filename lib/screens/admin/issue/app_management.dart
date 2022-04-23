@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:focus_spot_finder/screens/admin/issue/notification_list_body.dart';
 import 'package:focus_spot_finder/screens/admin/issue/reports_list_body.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class appManagement extends StatefulWidget {
@@ -66,16 +67,27 @@ class _appManagementState extends State<appManagement> {
           ],
           bottom: TabBar(
             tabs: [
-              Tab(icon: Text("Notifications")),
-              Tab(icon: Text("Reports")),
+              Tab(icon: Text("Reports",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ))),
+              Tab(icon: Text("Notifications",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ))),
             ],
           ),
           toolbarHeight: 55,
         ),
         body: TabBarView(
           children: [
-            notificationsListBody(),
             reportsListBody(),
+            notificationsListBody(),
+
           ],
 
       ),

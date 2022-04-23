@@ -7,6 +7,7 @@ import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/app/chatbot/chatbot.dart';
 import 'dart:math';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import '../../../Widget/customClipper.dart';
 import 'user_profile.dart';
@@ -301,6 +302,18 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: 20,
                       ),
+
+                      SizedBox(
+                        height: 120,
+                      ),
+                      Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            fontSize: 10,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ))
+
                     ],
                   ),
                 ),

@@ -6,6 +6,7 @@ import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/admin/profile/admin_profile_info.dart';
 import 'dart:math';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../Widget/customClipper.dart';
@@ -292,8 +293,15 @@ class _AdminProfileState extends State<AdminProfile> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 120,
                       ),
+                      Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            fontSize: 10,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ))
                     ],
                   ),
                 ),

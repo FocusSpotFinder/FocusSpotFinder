@@ -96,8 +96,20 @@ class InitialScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 60,
+              ),
+              Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: 10,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ))
             ],
           ),
+
+
         ),
       ),
     );

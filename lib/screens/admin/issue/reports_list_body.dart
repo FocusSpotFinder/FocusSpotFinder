@@ -41,7 +41,10 @@ class reportsListBody extends HookConsumerWidget {
                   items: <String>['All', 'Place permanently closed', 'Place not found','Incorrect information' , 'Other'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value, style: GoogleFonts.lato(fontSize: 18,)),
+                      child: Container(
+                        width: 250,
+                        child: Text(value, style: GoogleFonts.lato(fontSize: 12,)),
+                      )
 
                     );
                   }).toList(),
