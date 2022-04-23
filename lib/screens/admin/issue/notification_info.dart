@@ -477,49 +477,6 @@ class _notificationInfoState extends State<notificationInfo> {
                                           color: Colors.black,
                                         )),
                                   ]),
-
-                              Column(
-                                  children: [
-                                    IconButton(
-                                      icon: Image.asset('assets/delete.png'),
-                                      iconSize: 60,
-                                      onPressed: () async {
-                                        AlertDialogDelete(context, ()  {
-                                          Navigator.of(context).pop();
-                                          //delete place
-                                          if(widget.issue.placeId.length == 27){
-                                            //google place, black list
-                                            deleteGooglePlace(widget.issue.placeId);
-                                          }else{
-                                            //new place
-                                            deleteFirebasePlace(widget.issue.placeId);
-                                          }
-                                          Fluttertoast.showToast(
-                                            msg: "Place deleted successfully",
-                                            toastLength: Toast.LENGTH_LONG,
-                                          );
-                                        });
-                                      },
-                                    ),
-
-                                    Text("Delete Place",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.lato(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                        )),
-                                  ]),
-                            ]): Row(),
-
-                        SizedBox(
-                          height: 25,
-                        ),
-
-                        (widget.issue.type != "New place added"  && widget.issue.status != "Resolved")?
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
                               Column(
                                   children: [
                                     IconButton(
@@ -551,8 +508,14 @@ class _notificationInfoState extends State<notificationInfo> {
                                           color: Colors.black,
                                         )),
                                   ]),
-
                             ]): Row(),
+
+
+                        SizedBox(
+                          height: 25,
+                        ),
+
+
                         SizedBox(
                           height: 35,
                         ),
