@@ -700,6 +700,9 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                     ])),
           ),
           actions: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
             SizedBox(
                 height: 36,
                 width: 85,
@@ -709,6 +712,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                       Navigator.pop(context);
                     })
             ),
+            ])
           ],
         );
       },
@@ -760,6 +764,9 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                     ])),
           ),
           actions: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
             SizedBox(
                 height: 36,
                 width: 85,
@@ -769,6 +776,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                       Navigator.pop(context);
                     })
             ),
+            ])
           ],
         );
       },
@@ -820,6 +828,9 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                     ])),
           ),
           actions: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
             SizedBox(
                 height: 36,
                 width: 85,
@@ -829,6 +840,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                       Navigator.pop(context);
                     })
             ),
+        ])
           ],
         );
       },
@@ -881,6 +893,9 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                     ])),
           ),
           actions: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
             SizedBox(
                 height: 36,
                 width: 85,
@@ -890,6 +905,7 @@ class _AdminPlaceInfoState extends State<AdminPlaceInfo> {
                       Navigator.pop(context);
                     })
             ),
+            ])
           ],
         );
       },

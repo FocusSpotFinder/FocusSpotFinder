@@ -1163,45 +1163,45 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     color: Colors.indigo.shade900,
                   )),
               content: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Scrollbar(
-                isAlwaysShown: true,
-                child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 300.0,
-                      width: 300.0,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: _availableServices.length,
-                          itemBuilder: (context, i) {
-                            return StatefulBuilder(builder:
-                                (BuildContext context, StateSetter setState) {
-                              return Center(
-                                child: ListTile(
-                                    title: Text(_availableServices[i],
-                                        style: GoogleFonts.lato(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                        )),
-                                    trailing: Checkbox(
-                                      value: userChecked.contains(_availableServices[i]) || widget.place.services.contains(_availableServices[i]) ,
-                                      onChanged: (val) {
-                                        setState(() {});
-                                        _onSelected(val, _availableServices[i]);
-                                      },
-                                    )),
-                              );
-                            });
-                          }),
-                    )
-                  ],
-                ),
-              ),
-                )
+                  padding: const EdgeInsets.all(8.0),
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 300.0,
+                            width: 300.0,
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: _availableServices.length,
+                                itemBuilder: (context, i) {
+                                  return StatefulBuilder(builder:
+                                      (BuildContext context, StateSetter setState) {
+                                    return Center(
+                                      child: ListTile(
+                                          title: Text(_availableServices[i],
+                                              style: GoogleFonts.lato(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.black,
+                                              )),
+                                          trailing: Checkbox(
+                                            value: userChecked.contains(_availableServices[i]) || widget.place.services.contains(_availableServices[i]) ,
+                                            onChanged: (val) {
+                                              setState(() {});
+                                              _onSelected(val, _availableServices[i]);
+                                            },
+                                          )),
+                                    );
+                                  });
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
               ),
               actions: [
                 Row(
@@ -1816,15 +1816,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            SizedBox(
-                height: 36,
-                width: 85,
-                child: ElevatedButton(
-                    child: Text("Close"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      height: 36,
+                      width: 85,
+                      child: ElevatedButton(
+                          child: Text("Close"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                  ),
+                ])
           ],
         );
       },
@@ -1876,15 +1880,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            SizedBox(
-                height: 36,
-                width: 85,
-                child: ElevatedButton(
-                    child: Text("Close"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      height: 36,
+                      width: 85,
+                      child: ElevatedButton(
+                          child: Text("Close"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                  ),
+                ])
           ],
         );
       },
@@ -1936,15 +1944,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            SizedBox(
-                height: 36,
-                width: 85,
-                child:  ElevatedButton(
-                    child: Text("Close"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      height: 36,
+                      width: 85,
+                      child:  ElevatedButton(
+                          child: Text("Close"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                  ),
+                ])
           ],
         );
       },
@@ -1997,15 +2009,20 @@ class _PlaceInfoState extends State<PlaceInfo> {
                     ])),
           ),
           actions: [
-            SizedBox(
-                height: 36,
-                width: 85,
-                child: ElevatedButton(
-                    child: Text("Close"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      height: 36,
+                      width: 85,
+                      child: ElevatedButton(
+                          child: Text("Close"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                  ),
+                ]
+            )
           ],
         );
       },
@@ -2182,15 +2199,20 @@ class _PlaceInfoState extends State<PlaceInfo> {
                 ),
               ),
               actions: [
-                SizedBox(
-                  height: 36,
-                  width: 85,
-                  child: ElevatedButton(
-                      child: Text("Cancel"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 36,
+                        width: 85,
+                        child: ElevatedButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                      ),
+
+                    ])
               ],
             );
           },
