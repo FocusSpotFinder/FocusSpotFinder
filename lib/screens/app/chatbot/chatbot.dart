@@ -231,16 +231,6 @@ class _ChatbotState extends State<Chatbot> {
       final str = message.text?.text[0];
       getPlaceDate(str);
 
-      /*final DialogText text3 = new DialogText(text: ["place object"]);
-      Message msg3 = new Message(text: text3);
-      addMessage(msg3);*/
-
-      //when the user clicks on the card it should open place_info.dart and send the place id
-      //final BasicCard  card = new BasicCard(title: "workspace name", subtitle: "workspace type",);
-      //Message msg2 = new Message(basicCard: card);
-      //addMessage(msg2);
-
-
     }
 
 
@@ -335,8 +325,6 @@ class _ChatbotState extends State<Chatbot> {
 
         log(placesList.length.toString());
         for(int i =0 ; i<placesList.length; i++){
-          //log(placesList[i].placeId);
-
           //if(placesList[i].openingHours.openNow != null && placesList[i].openingHours.openNow == open){
           //log("open");
 
