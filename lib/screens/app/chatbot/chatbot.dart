@@ -248,17 +248,6 @@ class _ChatbotState extends State<Chatbot> {
     type = result.toString();
     log("***type: "+ type.toString());
 
-    //openNow
-    final start2 = 'Open now: ';
-    final end2 = ', Services:';
-
-    final startIndex2 = str.indexOf(start2);
-    final endIndex2 = str.indexOf(end2);
-    var result2 = str.substring(startIndex2 + start2.length, endIndex2).trim();
-
-    open = parseBool(result2);
-    log("***openNow: "+ open.toString());
-
     //services
     final start3 = 'Services: ';
     final end3 = ', Crowded:';
