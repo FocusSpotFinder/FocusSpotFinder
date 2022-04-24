@@ -321,7 +321,9 @@ class _AdminProfileState extends State<AdminProfile> {
     Logger().wtf(_data.data());
     this.loggedInUser = UserModel.fromMap(_data.data());
     myController.userName.value = loggedInUser.name;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
 

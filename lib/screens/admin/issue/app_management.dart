@@ -17,22 +17,8 @@ class appManagement extends StatefulWidget {
 }
 
 class _appManagementState extends State<appManagement> {
-  User user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
   final issues = Issue();
 
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(user.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -630,7 +630,9 @@ class _UserProfileState extends State<UserProfile> {
     if (loggedInUser.gender != null && loggedInUser.gender.isNotEmpty)
       myController.dropDownText.value = loggedInUser.gender;
     if (loggedInUser.birthday != null) age = loggedInUser.birthday;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   static Future<String> uploadImageToStorage(
