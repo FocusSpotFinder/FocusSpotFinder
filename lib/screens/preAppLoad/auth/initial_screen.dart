@@ -11,6 +11,7 @@ class InitialScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           height: MediaQuery.of(context).size.height,
+          //coulmn that displays the app logo and name
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -41,6 +42,7 @@ class InitialScreen extends StatelessWidget {
               SizedBox(
                 height: 80,
               ),
+              //Login button, when clicked navigate to login page
               InkWell(
                 onTap: () {
                   Navigator.push(context,
@@ -72,6 +74,7 @@ class InitialScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+
               //to detect any press on the sign up button
               GestureDetector(
                 //when pressed
@@ -79,6 +82,8 @@ class InitialScreen extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Signup()));
                 },
+                //Signup button, when clicked navigate to signup page
+                //container is used instead of inkwell for decoration purposes
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(vertical: 13),
@@ -99,6 +104,7 @@ class InitialScreen extends StatelessWidget {
               SizedBox(
                 height: 60,
               ),
+              //copyrights sentence
               Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(

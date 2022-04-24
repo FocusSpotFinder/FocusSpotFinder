@@ -16,6 +16,7 @@ class Signup extends StatefulWidget {
 class _SignUpScreenState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
+  //controllers to store the field info
   final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
@@ -25,11 +26,13 @@ class _SignUpScreenState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    //name field with assigned name controller
     final nameField = TextFormField(
       autofocus: false,
       controller: nameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
+        //validate if field meets the min requirements and if not empty
         RegExp regex = new RegExp(r'^.{2,}$');
         if (value.isEmpty) {
           return ("Please enter your name");
@@ -77,10 +80,12 @@ class _SignUpScreenState extends State<Signup> {
           )),
     );
 
+    //email field with assigned email controller
     final emailField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
+      //validate if field meets the min requirements and if not empty
       validator: (value) {
         if (value.isEmpty) {
           return ("Please enter your email");
@@ -133,10 +138,12 @@ class _SignUpScreenState extends State<Signup> {
           )),
     );
 
+    //password field with assigned password controller
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordEditingController,
       obscureText: true,
+      //validate if field meets the min requirements and if not empty
       validator: (value) {
         RegExp regex = new RegExp(
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
@@ -186,10 +193,12 @@ class _SignUpScreenState extends State<Signup> {
           )),
     );
 
+    //password confirm field with assigned password confirm controller
     final passwordConfirmField = TextFormField(
       autofocus: false,
       controller: passwordConfirmEditingController,
       obscureText: true,
+      //validate if field meets the min requirements and if not empty
       validator: (value) {
         if (value.isEmpty) {
           return ("Please enter your password");
@@ -238,6 +247,7 @@ class _SignUpScreenState extends State<Signup> {
           )),
     );
 
+    //signup button
     final signupButton = Material(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: Colors.cyan.shade100,
@@ -269,6 +279,7 @@ class _SignUpScreenState extends State<Signup> {
         height: height,
         child: Stack(
           children: <Widget>[
+            //background decoration
             Positioned(
               top: -MediaQuery.of(context).size.height * .15,
               right: -MediaQuery.of(context).size.width * .4,
@@ -294,6 +305,7 @@ class _SignUpScreenState extends State<Signup> {
                 ),
               )),
             ),
+           //app title
             Container(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: SingleChildScrollView(
@@ -324,6 +336,7 @@ class _SignUpScreenState extends State<Signup> {
                     SizedBox(
                       height: 50,
                     ),
+                    //open a form and call the fields defined up
                     Form(
                       key: _formKey,
                       child: Column(
@@ -351,6 +364,7 @@ class _SignUpScreenState extends State<Signup> {
                     SizedBox(
                       height: 20,
                     ),
+                    //give the user option to open login page if already signed up
                     InkWell(
                       onTap: () {
                         Navigator.push(context,
@@ -386,6 +400,8 @@ class _SignUpScreenState extends State<Signup> {
                 ),
               ),
             ),
+
+            //back button in the top right corner
             Positioned(
               top: 40,
               left: 0,

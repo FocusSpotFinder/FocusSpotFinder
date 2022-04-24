@@ -12,20 +12,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  final emailEditingController =
-      new TextEditingController();
-  final passwordEditingController =
-      new TextEditingController();
-  final currentUser = UserModel();
+  final _formKey = GlobalKey<FormState>(); //key for the login form
+  final emailEditingController = new TextEditingController(); //email controller
+  final passwordEditingController = new TextEditingController(); //password controller
+  final currentUser = UserModel(); //user object
 
   @override
   Widget build(BuildContext context) {
+    //define the email field, assign the email controller
     final emailField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
+        //when submitted check if field is empty
         if (value.isEmpty) {
           return ("Please enter your email");
         }
@@ -37,17 +37,19 @@ class _LoginScreenState extends State<Login> {
         }
         return null;
       },
+      //when saved assign the text to the controller
       onSaved: (value) {
         emailEditingController.text = value;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          suffixIcon: IconButton(
+          prefixIcon: Icon(Icons.mail), //email icon at the beginning of the field
+          suffixIcon: IconButton( //i icon at the end of the field, when clicked show the following dialog
             onPressed: () {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
+                    //alert dialog that tells the user about this field
                     return AlertDialog(
                       scrollable: true,
                       title: Text('Email'),
@@ -68,6 +70,7 @@ class _LoginScreenState extends State<Login> {
             },
             icon: Icon(Icons.info_outline),
           ),
+          //when there is error received show this message
           errorText: currentUser.emailNotValidated
               ? 'Please signup or validate your email'
               : null,
@@ -79,13 +82,15 @@ class _LoginScreenState extends State<Login> {
           )),
     );
 
+    //define the password field, assign the password controller
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordEditingController,
       obscureText: true,
       validator: (value) {
-        RegExp regex = new RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        //vaildate the password if it meets strong password requirements
+        //and check if field left empty when submitted
+        RegExp regex = new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
         if (value.isEmpty) {
           return ("Please enter your password");
         }
@@ -95,12 +100,13 @@ class _LoginScreenState extends State<Login> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
-          suffixIcon: IconButton(
+          prefixIcon: Icon(Icons.vpn_key), //password icon at the beginning of the field
+          suffixIcon: IconButton(  //i icon at the end of the field, when clicked show the following dialog
             onPressed: () {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
+                    //alert dialog that tells the user about this field
                     return AlertDialog(
                       scrollable: true,
                       title: Text('Password'),
@@ -121,6 +127,7 @@ class _LoginScreenState extends State<Login> {
             },
             icon: Icon(Icons.info_outline),
           ),
+          //when error recieved, show this message
           errorText: currentUser.wrongPassword
               ? 'Please enter the correct password'
               : null,
@@ -132,6 +139,7 @@ class _LoginScreenState extends State<Login> {
           )),
     );
 
+    //set up the login button
     final loginButton = Material(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: Colors.cyan.shade100,
@@ -139,6 +147,7 @@ class _LoginScreenState extends State<Login> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
+          //when the button is pressed validate the fields, if validated call sign in method
           if (_formKey.currentState.validate()) {
             currentUser.signIn(emailEditingController.text,
                 passwordEditingController.text, context);
@@ -186,6 +195,7 @@ class _LoginScreenState extends State<Login> {
               ),
             )),
           ),
+          //show show the app title
           Container(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: SingleChildScrollView(
@@ -230,7 +240,7 @@ class _LoginScreenState extends State<Login> {
                         ),
                         loginButton,
 
-                        //
+                        //forgot password button
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -243,6 +253,7 @@ class _LoginScreenState extends State<Login> {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 onPressed: () {
+                                  //when clicked open password reset screen
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -291,6 +302,7 @@ class _LoginScreenState extends State<Login> {
               ),
             ),
           ),
+          //back button at the top right corner
           Positioned(
             top: 40,
             left: 0,
@@ -317,6 +329,7 @@ class _LoginScreenState extends State<Login> {
     ));
   }
 
+  //checks what type of error is based on the flags defined in login method
   String checkError() {
     if (currentUser.emailNotValidated) {
       return 'Email not verified';

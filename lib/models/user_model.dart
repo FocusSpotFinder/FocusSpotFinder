@@ -110,11 +110,13 @@ class UserModel {
   bool wrongPassword = false;
   bool isAdmin = false;
 
+  //method to sign in the user
   void signIn(String email, String password, context) async {
     final _auth = FirebaseAuth.instance;
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
+    //this method is defined by firabase to signin
+    await _auth.signInWithEmailAndPassword(email: email, password: password)
         .then((user) async {
+          //if logged in successfully show message and redirect to splashscreen
       if (user.user.emailVerified) {
         Fluttertoast.showToast(
           msg: "Login Successful",
@@ -123,6 +125,7 @@ class UserModel {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SplashScreen()));
 
       } else {
+        //ig not validated show this message
         emailNotValidated = true;
         Fluttertoast.showToast(
           msg: "Not a user",
@@ -139,8 +142,10 @@ class UserModel {
   }
 
   bool resetNoEmail = false;
+  //to reset the user password
   void resetPassword(String email, context) async {
     final _auth = FirebaseAuth.instance;
+    //send resert email to the provided if email is correct
     await _auth.sendPasswordResetEmail(email: email).then((user) {
       Fluttertoast.showToast(
         msg: "Reset link has been sent to your email",
@@ -148,6 +153,7 @@ class UserModel {
       );
       Navigator.of(context).pop();
     }).catchError((error) {
+      //if there is error then there is no matched email
       resetNoEmail = true;
       (context as Element).markNeedsBuild();
     });

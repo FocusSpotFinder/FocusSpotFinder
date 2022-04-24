@@ -7,7 +7,6 @@ import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:developer';
 
 class PermissionScreen extends StatefulWidget {
 
@@ -23,6 +22,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
   @override
   void initState() {
+    //first check if the user is admin or not
     checkIfAdmin();
 
     super.initState();
@@ -30,10 +30,13 @@ class _PermissionScreenState extends State<PermissionScreen> {
   }
 
   Future<void> checkIfAdmin() async {
+    //gets snapshot of the admins collection and maps it to accessible data
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Admin').get();
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    //loop over the admin collection dara
     for (int x = 0; x < allData.length; x++) {
       var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
+      //if the email in admin collection equals the current user email, then the user is admin
       if (noteInfo["Email"] == FirebaseAuth.instance.currentUser.email) {
         isAdmin = true;
         break;
@@ -46,6 +49,8 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
     return Scaffold(
       body: Center(
+        //column that has an icon and explain for the user what is the problem
+        //which is that we cant access the location so the user can use the app properly
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -62,24 +67,26 @@ class _PermissionScreenState extends State<PermissionScreen> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
+            //Allow permission button the user can click to open the settings and allow location permission
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(), primary: Colors.cyan.shade100),
+                style: ElevatedButton.styleFrom(shape: StadiumBorder(), primary: Colors.cyan.shade100),
                 onPressed: () async {
-                  // await OpenAppSettings.openAppSettings();
                   Logger().i(await Permission.locationWhenInUse.status);
                   if (await Permission.locationWhenInUse
                       .request()
                       .then((value) => value.isGranted)) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SplashScreen()));
+                    //when the user allow permission navigate to splash screen to redirect the user
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SplashScreen()));
                   } else {
+                    //open app settings so the user can enable permissions
                     Logger().i("opening setting");
                     openAppSettings();
                   }
                 },
                 child: Text('Allow Permission')
             ),
+            //Not Now button, so the user can skip the permissions and open the app, but the map and places will not be listed
+           //because they require user location to list the places
             TextButton(
                 child: Text('Not Now',
                     style: GoogleFonts.lato(
@@ -88,6 +95,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
                       color: Colors.blue,
                     )),
                 onPressed: () {
+                  //if admin redirect to admin app page, otherwise to user app page
                   if(isAdmin){
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminAppPage()));
                   }else{

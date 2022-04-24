@@ -18,6 +18,7 @@ class _passwordResetState extends State<passwordReset> {
 
   @override
   Widget build(BuildContext context) {
+    //email field to reset the password
     final emailField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
@@ -40,7 +41,7 @@ class _passwordResetState extends State<passwordReset> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.mail),
-          suffixIcon: IconButton(
+          suffixIcon: IconButton(  //i icon at the end of the field, when clicked show the following dialog
             onPressed: () {
               showDialog(
                   context: context,
@@ -65,6 +66,7 @@ class _passwordResetState extends State<passwordReset> {
             },
             icon: Icon(Icons.info_outline),
           ),
+          //when error received show this message
           errorText: currentUser.resetNoEmail
               ? 'No user was found with the current email'
               : null,
@@ -76,6 +78,7 @@ class _passwordResetState extends State<passwordReset> {
           )),
     );
 
+    //the reset button that will be cliecked
     final resetButton = Material(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       color: Colors.cyan.shade100,
@@ -83,6 +86,7 @@ class _passwordResetState extends State<passwordReset> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         onPressed: () {
+          //first validate the email field, if validated call reset password methos
           if (_formKey.currentState.validate()) {
             currentUser.resetPassword(emailEditingController.text, context);
           }
@@ -129,6 +133,7 @@ class _passwordResetState extends State<passwordReset> {
               ),
             )),
           ),
+          //container that has the email field defined up and reset button
           Container(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: SingleChildScrollView(
@@ -169,6 +174,7 @@ class _passwordResetState extends State<passwordReset> {
               ),
             ),
           ),
+          //back button at the top right corner
           Positioned(
             top: 40,
             left: 0,
