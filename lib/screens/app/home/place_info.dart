@@ -17,6 +17,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:focus_spot_finder/screens/app/setUp/app_page.dart';
 import 'package:focus_spot_finder/Widget/controller.dart';
 import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
+import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,10 +110,19 @@ class _PlaceInfoState extends State<PlaceInfo> {
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade100,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios_rounded,
-              color: Colors.white, size: 30),
-          tooltip: 'Back',
-          onPressed: () => Navigator.of(context).pop(),
+            icon: new Icon(Icons.arrow_back_ios_rounded,
+                color: Colors.white, size: 30),
+            tooltip: 'Back',
+            onPressed: () {
+                //Navigator.of(context).pop();
+              if (FirebaseAuth.instance.currentUser != null) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => AppPage()));
+            }else{
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => SplashScreen()));
+              }
+            }
         ),
         toolbarHeight: 55,
         actions: <Widget>[

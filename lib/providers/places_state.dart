@@ -17,6 +17,7 @@ class PlacesState extends Equatable {
   @override
   List<Object> get props => [loading, nearbyPlaces, currentPosition];
 
+  //to retirn this when called
   PlacesState copyWith({
     bool loading,
     List<Place> nearbyPlaces,

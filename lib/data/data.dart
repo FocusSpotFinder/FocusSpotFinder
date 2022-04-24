@@ -5,13 +5,13 @@ class Data {
   Data._();
   static Data _instance = Data._();
   factory Data() => _instance;
-  final String key = 'AIzaSyAC2psGRULwPfw4sJCJQ_W_gwKuoPsdaog';
+  final String key = 'AIzaSyAC2psGRULwPfw4sJCJQ_W_gwKuoPsdaog'; //the api key
 
   BitmapDescriptor icon;
 
   Future<void> init(BuildContext context) async {
     ImageConfiguration configuration = createLocalImageConfiguration(context);
     icon = await BitmapDescriptor.fromAssetImage(
-        configuration, 'assets/marker.png');
+        configuration, 'assets/marker.png'); //the marker icon to be returned when called
   }
 }
