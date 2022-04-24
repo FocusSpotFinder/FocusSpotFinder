@@ -15,6 +15,7 @@ class MyController extends GetxController {
 
   final ImagePicker _picker = ImagePicker();
 
+  //to pic an image
   onImageButtonPressed(
     ImageSource source,
   ) async {
@@ -28,6 +29,7 @@ class MyController extends GetxController {
     } catch (e) {}
   }
 
+  //to set the image
   setImageFile({
     f,
   }) async {
@@ -37,7 +39,6 @@ class MyController extends GetxController {
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
     final compressedImage = await FlutterImageCompress.compressAndGetFile(filePath, outPath, minWidth: 800, minHeight: 1500, quality: 60);
 
-    // listOfFiles.add(compressedImage);
     f1.value = compressedImage;
     print('path of file is ===== ${f1.value}');
   }
@@ -53,6 +54,8 @@ class MyController extends GetxController {
             height: MediaQuery.of(context).size.height / 5,
             child: Column(
               children: [
+                //the bar that will be showed to the user
+                //it has camera and gallery buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -115,6 +118,8 @@ class MyController extends GetxController {
         });
   }
 
+
+  //request camera permission from the user
   getCameraPermission() async {
     var camPerm = await Permission.camera.request();
     if (camPerm.isDenied) {
@@ -126,6 +131,7 @@ class MyController extends GetxController {
     }
   }
 
+  //request gallery permission from the user
   getGalleryPermission() async {
     var galPerm = await Permission.photos.request();
     if (galPerm.isDenied) {
