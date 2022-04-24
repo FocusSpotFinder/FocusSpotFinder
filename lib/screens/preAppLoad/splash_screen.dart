@@ -63,6 +63,9 @@ class SplashScreen extends HookConsumerWidget {
             break;
           }
         }
+        //if not admin check if there is a link in the prefenreces
+        //if yes then open the shared page
+        //else open user app page
         if (!isAdmin) {
 
           SharedPreferences prefs=await SharedPreferences.getInstance();
