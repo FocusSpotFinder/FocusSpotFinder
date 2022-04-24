@@ -40,11 +40,11 @@ class reportsListBody extends HookConsumerWidget {
                   hint: (search.value == "")? Text("All", style: GoogleFonts.lato(fontSize: 12,)):Text(search.value, style: GoogleFonts.lato(fontSize: 12,)) ,
                   items: <String>['All', 'Place permanently closed', 'Place not found','Incorrect information' , 'Other'].map((String value) {
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Container(
-                        width: 250,
-                        child: Text(value, style: GoogleFonts.lato(fontSize: 12,)),
-                      )
+                        value: value,
+                        child: Container(
+                          width: 250,
+                          child: Text(value, style: GoogleFonts.lato(fontSize: 12,)),
+                        )
 
                     );
                   }).toList(),
@@ -70,8 +70,7 @@ class reportsListBody extends HookConsumerWidget {
                   log(snapshot.error.toString());
                   return Text('Something went wrong');
                 } else if (snapshot.hasData || snapshot.data != null) {
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(height: 7.0),
+                  return ListView.builder(
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (context, index) {
 
@@ -93,67 +92,73 @@ class reportsListBody extends HookConsumerWidget {
                         return SizedBox();
                       }
 
-                      return Ink(
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.shade50,
-                        ),
-                        child: ListTile(
-                            isThreeLine: false,
-                            shape: RoundedRectangleBorder(),
-                            title: Text(
-                              type,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: (status == "Unresolved" || status == "Waiting")?
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "$status",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.lato(
-                                    color: Colors.red,
+                      return Column(
+                          children: [
+                            Ink(
+                              decoration: BoxDecoration(
+                                color: Colors.cyan.shade50,
+                              ),
+                              child: ListTile(
+                                  isThreeLine: false,
+                                  shape: RoundedRectangleBorder(),
+                                  title: Text(
+                                    type,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                              ],
-                            ):
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "$status",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.lato(
-                                    color: Colors.green,
+                                  subtitle: (status == "Unresolved" || status == "Waiting")?
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "$status",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.lato(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ):
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "$status",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.lato(
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            onTap: () async {
+                                  onTap: () async {
 
-                              Issue issue = new Issue(
-                                  placeId: placeId,
-                                  userId: userId,
-                                  reportId: reportId,
-                                  type: type,
-                                  status: status,
-                                  message: message,
-                                  reportTime: reportTime,
-                                  resolveTime: resovleTime,
-                                  resolvedBy: resovledBy);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => reportInfo(issue: issue)),
-                              );
-                            }
-                        ),
-                      );
+                                    Issue issue = new Issue(
+                                        placeId: placeId,
+                                        userId: userId,
+                                        reportId: reportId,
+                                        type: type,
+                                        status: status,
+                                        message: message,
+                                        reportTime: reportTime,
+                                        resolveTime: resovleTime,
+                                        resolvedBy: resovledBy);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => reportInfo(issue: issue)),
+                                    );
+                                  }
+                              ),
+
+                            ),
+                            SizedBox(height: 7,),
+
+                          ]);
                     },
                   );
                 }
