@@ -16,21 +16,26 @@ class PlacesNotifier extends StateNotifier<PlacesState> {
   final placesService = PlacesService();
   final locatorService = GeoLocatorService();
 
+  //first make the places state loading
+  //then load the current location
+  //then load placed
   Future<void> init(BuildContext context) async {
     state = state.copyWith(loading: true);
-
     await loadCurrentLocation();
     await Data().init(context);
     await loadPlaces();
     state = state.copyWith(loading: false);
   }
 
+  //load the places
   Future<void> loadPlaces() async {
-    if (!state.loading) {
-      state = state.copyWith(loading: true);
+    if (!state.loading) {state = state.copyWith(loading: true);
+      //request the places from the places_service and send the user location
+    //the location is stored in the places state
       final data = await placesService.getPlaces(state.currentPosition.latitude,
           state.currentPosition.longitude, Data().icon);
 
+      //measure the distance for each place from the user location
       for (Place place in data) {
         place.distance = locatorService.getDistance(
             state.currentPosition.latitude,
@@ -38,14 +43,19 @@ class PlacesNotifier extends StateNotifier<PlacesState> {
             place.geometry.location.lat,
             place.geometry.location.lng);
 
+        //if place openNow variable is null then assign false
         place.isOpen = place.openingHours?.openNow ?? false;
       }
 
+      //assign the places into two lists. open and closed
       final openPlaces = data.where((element) => element.isOpen).toList();
       final closedPlaces = data.where((element) => !element.isOpen).toList();
 
+      //sort the open and closed places based on the distance
       openPlaces.sort((a, b) => a.distance.compareTo(b.distance));
       closedPlaces.sort((a, b) => a.distance.compareTo(b.distance));
+
+      //combine the twolists
       final sortedList = openPlaces + closedPlaces;
 
       try {
@@ -62,6 +72,7 @@ class PlacesNotifier extends StateNotifier<PlacesState> {
     }
   }
 
+  //get the location the user and assign it in the places state
   Future<void> loadCurrentLocation() async {
     final data = await locatorService.getLocation();
     state = state.copyWith(currentPosition: data);
