@@ -3,9 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeoLocatorService {
+  //get the current location
   Future<Position> getLocation() async {
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   //calculates the distance between the users lat and lng, and the place lat and lng

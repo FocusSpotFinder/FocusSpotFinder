@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:focus_spot_finder/data/data.dart';
@@ -236,8 +234,8 @@ class PlacesService {
   }
 
 
-  //--------------------------------------------
-
+  //get the places for chatbot
+  //the diffrence it will request only the required data to minmize the time
   Future<List<Place>> getPlacesChatbot(double lat, double lng, BitmapDescriptor icon, String type) async {
     //get places from firebase
     List<Place> firebaseList = await getPlacesFirebaseChatbot(type);
@@ -245,6 +243,7 @@ class PlacesService {
     var response;
     var json;
 
+    //based on the given type, request the places from google api
     switch(type){
       case "cafe":
         response = await http.get(Uri.parse(

@@ -20,6 +20,7 @@ class MarkerService {
         infoWindow: InfoWindow(
             title: place.name,
             snippet: place.vicinity,
+            //when clicked open placeInfo
             onTap: () async {
               Place place = await Place.getPlaceInfo(placeId);
               bool isFav = await Place.checkIfFav(placeId);
