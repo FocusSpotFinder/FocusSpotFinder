@@ -19,8 +19,9 @@ class Issue {
   Issue({this.placeId, this.userId, this.reportId, this.type, this.status, this.message,
     this.reportTime, this.resolveTime, this.resolvedBy, this.issues});
 
+  //read report from reports collection
   Stream<QuerySnapshot> readReportItems() {
-    deleteOldReports();
+    deleteOldReports(); //delete any old reports first
 
     Query reportsCollection = FirebaseFirestore.instance
         .collection('Reports')
@@ -31,8 +32,9 @@ class Issue {
     return issues;
   }
 
+  //read notifications from notifications collection
   Stream<QuerySnapshot> readNotificationsItems() {
-    deleteOldNotifications();
+    deleteOldNotifications(); //delete any old notifications first
 
     Query reportsCollection = FirebaseFirestore.instance
         .collection('Notifications')
@@ -52,6 +54,8 @@ class Issue {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
 
+    //get the date of the report time and the current date
+    //if the report is one year old delete the document
     for (int x = 0; x < allData.length; x++) {
       var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
       DateTime currentTime = DateTime.now();
@@ -84,7 +88,8 @@ class Issue {
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-
+    //get the date of the report time and the current date
+    //if the report is one year old delete the document
     for (int x = 0; x < allData.length; x++) {
       var noteInfo = querySnapshot.docs[x].data() as Map<String, dynamic>;
       DateTime currentTime = DateTime.now();

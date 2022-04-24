@@ -52,7 +52,7 @@ class UserModel {
   }
 
   bool emailUsed = false;
-
+  //signup method that uses firebase method to sign the user up
   void signUp(String email, String password, String name, context) async {
     final _auth = FirebaseAuth.instance;
     await _auth
@@ -159,6 +159,7 @@ class UserModel {
     });
   }
 
+  //alert dialog when the user will sign out
   alertDialogSignOut(BuildContext context, onYes) {
     // set up the buttons
     Widget cancelButton = TextButton(
@@ -185,6 +186,7 @@ class UserModel {
     );
   }
 
+  //log out method to log the user out from firebase and the app
   Future<void> logout(BuildContext context) async {
     Navigator.of(context).pop();
     await FirebaseAuth.instance.signOut();

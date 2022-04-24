@@ -7,6 +7,7 @@ class FavoriteListModel {
 
   FavoriteListModel({this.favListItems});
 
+  //read the favorite list docs that is in the user collection
   Stream<QuerySnapshot> readItems() {
     User user = FirebaseAuth.instance.currentUser;
     CollectionReference itemCollectionFav = FirebaseFirestore.instance
@@ -19,6 +20,7 @@ class FavoriteListModel {
     return favListItems;
   }
 
+  //add place to fav list collection
   Future<void> addItem(
       String placeId, String name, String vicinity, List<dynamic> types) async {
     User user = FirebaseAuth.instance.currentUser;
@@ -40,6 +42,7 @@ class FavoriteListModel {
     );
   }
 
+  //remove place from fav list collection
   Future<void> deleteItem(String placeId) async {
     User user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
