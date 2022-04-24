@@ -7,6 +7,7 @@ import 'package:focus_spot_finder/screens/preAppLoad/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:developer';
 
 class PermissionScreen extends StatefulWidget {
 
@@ -22,9 +23,10 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
   @override
   void initState() {
+    checkIfAdmin();
+
     super.initState();
 
-    checkIfAdmin();
   }
 
   Future<void> checkIfAdmin() async {
