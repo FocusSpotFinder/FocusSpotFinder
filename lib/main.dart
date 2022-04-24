@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
+import 'package:focus_spot_finder/services/dynamicLink.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/auth/login.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/auth/signup.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/auth/initial_screen.dart';

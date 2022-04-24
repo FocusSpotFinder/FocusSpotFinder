@@ -1,5 +1,5 @@
 
-import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
+import 'package:focus_spot_finder/services/dynamicLink.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:focus_spot_finder/services/marker_service.dart';
 import 'package:focus_spot_finder/services/places_service.dart';

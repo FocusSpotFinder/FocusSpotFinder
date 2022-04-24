@@ -5,7 +5,7 @@ import 'package:focus_spot_finder/screens/app/home/place_info.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
+import 'package:focus_spot_finder/services/dynamicLink.dart';
 
 class FavList extends StatefulWidget {
   final void Function() onBackPress;

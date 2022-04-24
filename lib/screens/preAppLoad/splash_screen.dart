@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/dynamicLink.dart';
+import 'package:focus_spot_finder/services/dynamicLink.dart';
 import '../../models/place.dart';
 import '../app/home/place_info.dart';
 
@@ -70,20 +70,20 @@ class SplashScreen extends HookConsumerWidget {
             String dLink=prefs.getString('dLink');
             print('dLink');
             print(dLink);
-             Place place = await Place.getPlaceInfo(dLink).whenComplete(() =>
+            Place place = await Place.getPlaceInfo(dLink).whenComplete(() =>
                 prefs.remove('dLink'));
 
-           Navigator.push(
+            Navigator.push(
                 context,
                 MaterialPageRoute(
-                builder: (context) => PlaceInfo(
-              place: place,
-              isFav: false,
-              geo: place.geometry,
-                )   ));
+                    builder: (context) => PlaceInfo(
+                      place: place,
+                      isFav: false,
+                      geo: place.geometry,
+                    )   ));
           }else
-          
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
+
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppPage()));
         }
       }
     });

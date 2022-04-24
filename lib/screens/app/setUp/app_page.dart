@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:focus_spot_finder/screens/app/setUp/bottom_nav.dart';
 import 'package:focus_spot_finder/screens/app/setUp/center_bottom_button.dart';
 import 'package:focus_spot_finder/screens/preAppLoad/app_index_provider.dart';
-import 'package:focus_spot_finder/screens/app/favorite_list.dart';
+import 'package:focus_spot_finder/screens/app/favoriteList/favorite_list.dart';
 import 'package:focus_spot_finder/screens/app/home/home.dart';
 import 'package:focus_spot_finder/screens/app/profile/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

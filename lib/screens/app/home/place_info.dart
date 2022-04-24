@@ -24,7 +24,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../preAppLoad/dynamicLink.dart';
+import '../../../services/dynamicLink.dart';
 
 class PlaceInfo extends StatefulWidget {
   final isFav;
