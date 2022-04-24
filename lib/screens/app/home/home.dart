@@ -14,6 +14,7 @@ class Home extends HookWidget {
 
 
         actions: <Widget>[
+          //the chatbot icon, when clicked open the chatbot page
           Container(
             margin: EdgeInsets.only(right: 8),
             child: IconButton(

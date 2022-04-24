@@ -19,6 +19,7 @@ class AdminAppPage extends HookConsumerWidget {
       controller.jumpToPage(c);
     });
 
+    //construct the page view for the admin
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(),

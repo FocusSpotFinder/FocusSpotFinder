@@ -569,6 +569,8 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
+  //check first the user age
+  //if okay then post details
   void saveInfo(String name, String city) async {
     if (_formKey.currentState.validate()) {
       if (isAdult(age)) {
@@ -582,6 +584,7 @@ class _UserProfileState extends State<UserProfile> {
     }
   }
 
+  //save user data to firebase
   postDetailsToFirestore() async {
     //call fire store
     //call user model
@@ -618,6 +621,7 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
+  //get the user data and map it to user obj
   void getUserData() async {
     var _data = await FirebaseFirestore.instance
         .collection("Users")

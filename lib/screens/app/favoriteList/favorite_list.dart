@@ -52,22 +52,9 @@ class _FavListState extends State<FavList> {
             onPressed: widget.onBackPress,
           ),
           toolbarHeight: 55,
-          /*
-          actions: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 8),
-              child: IconButton(
-                icon: Image.asset('assets/chatbot.png',
-                    fit: BoxFit.fitHeight, height: 40),
-                tooltip: 'Chatbot',
-                onPressed: () {},
-              ),
-            ),
-          ],
-           */
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: favoriteList.readItems(),
+          stream: favoriteList.readItems(), //call this to load the places from firebase
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong');
@@ -77,6 +64,7 @@ class _FavListState extends State<FavList> {
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   var noteInfo = snapshot.data.docs[index].data() as Map<String, dynamic>;
+                  //get the values
                   String placeId = noteInfo['placeId'];
                   String name = noteInfo['name'];
                   String vicinity = noteInfo['vicinity'];
@@ -90,11 +78,13 @@ class _FavListState extends State<FavList> {
                     child: ListTile(
                         isThreeLine: true,
                         shape: RoundedRectangleBorder(),
+                        //place name
                         title: Text(
                           name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        //place types and vicinity
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -111,6 +101,7 @@ class _FavListState extends State<FavList> {
                             ),
                           ],
                         ),
+                        //when the listTile is clicked open place info
                         onTap: () async {
                           Place place = await Place.getPlaceInfo(placeId);
                           Navigator.push(
@@ -137,6 +128,7 @@ class _FavListState extends State<FavList> {
     );
   }
 
+  //to format the type in the listTile
   List<Text> typeFormat(List list) {
     List<Text> T = [];
 

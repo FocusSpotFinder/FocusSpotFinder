@@ -12,6 +12,7 @@ class CenterBottomButton extends HookWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isClicked = useState(false);
 
+    //the center button contents
     return FloatingActionButton(
       onPressed: () {},
       child: Theme(

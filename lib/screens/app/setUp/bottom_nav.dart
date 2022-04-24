@@ -12,6 +12,7 @@ class BottomNav extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    //when the user clicks a thing in the bottom app bar,open it
     return BottomAppBar(
       color: Colors.cyan.shade100,
       shape: CircularNotchedRectangle(),

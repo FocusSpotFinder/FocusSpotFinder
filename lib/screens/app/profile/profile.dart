@@ -75,6 +75,7 @@ class _ProfileState extends State<Profile> {
         body: Container(
           child: Stack(
             children: <Widget>[
+              //background decoration
               Positioned(
                 top: -MediaQuery.of(context).size.height * .15,
                 right: -MediaQuery.of(context).size.width * .4,
@@ -111,6 +112,7 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
+                      //the user photo
                       Container(
                         height: MediaQuery.of(context).size.height * 0.3,
                         width: MediaQuery.of(context).size.width,
@@ -166,9 +168,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.02),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Column(
                                 children: [
                                   Text(" ${myController.userName.value}",
@@ -198,6 +198,8 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: 80,
                       ),
+
+                      //profile button when clicked, open the user profile
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -250,6 +252,8 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: 20,
                       ),
+
+                      //sign out button, when clicked call signout method
                       GestureDetector(
                         onTap: () {
                           loggedInUser.alertDialogSignOut(context, () {
@@ -325,6 +329,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  //get the user data from firebase
   Future getUserData() async {
     var _data = await FirebaseFirestore.instance
         .collection("Users")

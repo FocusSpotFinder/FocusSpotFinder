@@ -19,6 +19,7 @@ class AppPage extends HookConsumerWidget {
       controller.jumpToPage(c);
     });
 
+    //construct the page view for the user
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
