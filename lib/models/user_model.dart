@@ -113,7 +113,7 @@ class UserModel {
   //method to sign in the user
   void signIn(String email, String password, context) async {
     final _auth = FirebaseAuth.instance;
-    //this method is defined by firabase to signin
+    //this method is defined by firebase to sign in
     await _auth.signInWithEmailAndPassword(email: email, password: password)
         .then((user) async {
           //if logged in successfully show message and redirect to splashscreen
@@ -125,7 +125,7 @@ class UserModel {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SplashScreen()));
 
       } else {
-        //ig not validated show this message
+        //if the used is not validated show this message
         emailNotValidated = true;
         Fluttertoast.showToast(
           msg: "Not a user",
@@ -133,11 +133,8 @@ class UserModel {
         );
       }
     }).catchError((e) {
-      //  if (e.code == 'auth/wrong-password') {
       wrongPassword = true;
       (context as Element).markNeedsBuild();
-
-      // }
     });
   }
 
