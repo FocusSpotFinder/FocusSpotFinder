@@ -34,7 +34,7 @@ class DynamicLinkService {
 
   //builds a dynamic (share) link that will be sent to the user
   buildDynamicLink(Uri link)async{
-    String i='https://focusspotfinder.page.link';
+    String i='https://focusspotfinder.page.link'; //link to the application website
     FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: i,
@@ -51,7 +51,6 @@ class DynamicLinkService {
       ),
     );
     return parameters;
-
   }
 
 
