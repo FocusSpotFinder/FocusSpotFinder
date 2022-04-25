@@ -176,7 +176,9 @@ class _ChatbotState extends State<Chatbot> {
     );
   }
 
+  //sends the user and chatbot messages to the screen
   void sendMessage(String text) async {
+    //send the user message to the screen and to the chatbot agent
     if (text.isEmpty) return;
     log("User: "+text);
     setState(() {
@@ -186,26 +188,29 @@ class _ChatbotState extends State<Chatbot> {
       );
     });
 
+    //detect if chatbot sent any answer
     DetectIntentResponse response = await dialogFlowtter.detectIntent(
       queryInput: QueryInput(text: TextInput(text: text)),
     );
 
+    //send the chatbot message to the user
     if (response.message == null) return;
-
     setState(() {
       addMessage(response.message);
       log("Chatbot: "+ response.message.text?.text[0]);
     });
-
   }
 
 
+  //ads the message to screen
+  //do processing for finding workspaces
   void addMessage(Message message, [bool isUserMessage = false]) {
     messages.add({
       'message': message,
       'isUserMessage': isUserMessage,
     });
 
+    //if the chatbot send a summary for wokspace qualities, start the search
     if(message.text != null && message.text?.text[0].contains("I will find")){
       log("finding workspaces now");
 

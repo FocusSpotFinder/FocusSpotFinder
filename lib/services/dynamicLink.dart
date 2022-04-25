@@ -58,17 +58,13 @@ class DynamicLinkService {
   void handleDLink(PendingDynamicLinkData initialLink)async{
     SharedPreferences sharedPreferences= await SharedPreferences.getInstance(); //used to store preferences
     final Uri deepLink = initialLink.link; //extract the link
-    print(deepLink);
-
     bool params=deepLink.queryParameters.containsKey('id'); //check if there is a placeId in the link
-
     //if the link contains placeId
     if(params){
       String param1=deepLink.queryParameters['id']; //get the placeId from the link
       sharedPreferences.setString('dLink', param1);//set the placeId in the shared preferences
       print(param1);
     }
-
   }
 
 }
