@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:bubble/bubble.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
-import 'package:focus_spot_finder/screens/app/home/place_info.dart';
+import 'package:focus_spot_finder/screens/app/chatbot/chatbot_place_info.dart';
 
 class ChatbotBody extends StatefulWidget {
   final List<Map<String, dynamic>> messages;
@@ -249,7 +245,7 @@ class _CardContainer extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PlaceInfo(
+                                builder: (context) => ChatbotPlaceInfo(
                                   place: place,
                                   isFav: isFav,
                                   geo: place.geometry,

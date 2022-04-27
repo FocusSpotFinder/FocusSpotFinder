@@ -10,7 +10,6 @@ import 'package:focus_spot_finder/data/data.dart';
 import 'package:focus_spot_finder/models/place.dart';
 import 'package:focus_spot_finder/models/user_model.dart';
 import 'package:focus_spot_finder/screens/app/chatbot/chatbot_body.dart';
-import 'package:focus_spot_finder/screens/preAppLoad/permission_screen.dart';
 import 'package:focus_spot_finder/services/geolocator_service.dart';
 import 'package:focus_spot_finder/services/places_service.dart';
 import 'package:geolocator/geolocator.dart';
@@ -46,6 +45,7 @@ class _ChatbotState extends State<Chatbot> {
   String foodRate;
   String techRate;
 
+  int numOfMatches = 0;
 
   @override
   void initState() {
@@ -214,7 +214,7 @@ class _ChatbotState extends State<Chatbot> {
     if(message.text != null && message.text?.text[0].contains("I will find")){
       log("finding workspaces now");
 
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 4), () {
         setState(() {
           final DialogText text = new DialogText(
               text: ["Finding workspaces for you now!"]);
@@ -223,7 +223,7 @@ class _ChatbotState extends State<Chatbot> {
         });
       });
 
-      Future.delayed(Duration(seconds: 7), () {
+      Future.delayed(Duration(seconds: 8), () {
         setState(() {
           final DialogText text2 = new DialogText(text: ["Please wait..."]);
           Message msg2 = new Message(text: text2);
@@ -242,6 +242,7 @@ class _ChatbotState extends State<Chatbot> {
   }
 
   getPlaceDate(String str) {
+    numOfMatches = 0;
     //type
     final start = 'Type: ';
     final end = ',';
@@ -345,6 +346,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
                       }else{
                         setState(() {
                           final CardButton btn = new CardButton (text: "Open",
@@ -357,6 +359,8 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
+
                       }
 
                     }else{
@@ -373,6 +377,8 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
+
                       }else{
                         setState(() {
                           final CardButton btn = new CardButton (text: "Open",
@@ -385,6 +391,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -406,6 +413,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
 
                       }else{
@@ -420,6 +428,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -437,6 +446,8 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
+
                       }else{
                         setState(() {
                           final CardButton btn = new CardButton (text: "Open",
@@ -449,6 +460,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -474,6 +486,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }else{
                         setState(() {
@@ -487,6 +500,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -504,6 +518,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }else{
                         setState(() {
@@ -517,6 +532,8 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
+
                       }
 
                     }
@@ -537,6 +554,8 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
+
                       }else{
                         setState(() {
                           final CardButton btn = new CardButton (text: "Open",
@@ -549,6 +568,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -566,6 +586,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }else{
                         setState(() {
@@ -579,6 +600,7 @@ class _ChatbotState extends State<Chatbot> {
                           Message msg = new Message(card: card);
                           addMessage(msg);
                         });
+                        numOfMatches++;
 
                       }
 
@@ -592,6 +614,15 @@ class _ChatbotState extends State<Chatbot> {
             }
           }
           // }
+        }
+
+        if(numOfMatches == 0){
+          setState(() {
+            final DialogText text = new DialogText(
+                text: ["No workspaces was found that matches your preferences"]);
+            Message msg = new Message(text: text);
+            addMessage(msg);
+          });
         }
 
       }
