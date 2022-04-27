@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focus_spot_finder/screens/app/chatbot/chatbot.dart';
@@ -39,6 +40,8 @@ class _UserProfileState extends State<UserProfile> {
     Logger().i("yoyo");
     age = DateTime.now();
     super.initState();
+    //FirebaseCrashlytics.instance.crash();
+    
   }
 
   @override
