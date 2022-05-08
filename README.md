@@ -10,6 +10,7 @@ workspace and more!
 - Google Maps API
 - Google Places API
 - Firebase
+- DialogFlow
 
 ## Launch Instructions
 
