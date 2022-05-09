@@ -41,7 +41,6 @@ class _ChatbotState extends State<Chatbot> {
   bool open;
   List<String> services = [];
   String quietRate;
-  String crowdedRate;
   String foodRate;
   String techRate;
 
@@ -256,7 +255,7 @@ class _ChatbotState extends State<Chatbot> {
 
     //services
     final start3 = 'Services: ';
-    final end3 = ', Crowded:';
+    final end3 = ', Quiet:';
 
     final startIndex3 = str.indexOf(start3);
     final endIndex3 = str.indexOf(end3);
@@ -265,21 +264,9 @@ class _ChatbotState extends State<Chatbot> {
     services = result3.split(' and ');
     log("***services  : "+ services.toString());
 
-    //crowded
-    final start4 = 'Crowded: ';
-    final end4 = ', Quiet:';
-
-    final startIndex4 = str.indexOf(start4);
-    final endIndex4 = str.indexOf(end4);
-    final result4 = str.substring(startIndex4 + start4.length, endIndex4).trim();
-
-    crowdedRate = result4;
-
-    log("***crowded  : "+ crowdedRate.toString());
-
     //quiet
     final start5 = 'Quiet: ';
-    final end5 = ', Good food quality:';
+    final end5 = ', Food availability:';
 
     final startIndex5 = str.indexOf(start5);
     final endIndex5 = str.indexOf(end5);
@@ -290,7 +277,7 @@ class _ChatbotState extends State<Chatbot> {
     log("***quiet  : "+ quietRate.toString());
 
     //food
-    final start6 = 'Good food quality:';
+    final start6 = 'Food availability:';
     final end6 = 'and Technical facilities: ';
 
     final startIndex6 = str.indexOf(start6);
@@ -299,7 +286,7 @@ class _ChatbotState extends State<Chatbot> {
 
     foodRate = result6;
 
-    log("***good food : "+ foodRate.toString());
+    log("***Food available: "+ foodRate.toString());
 
     //technical
     final start7 = 'and Technical facilities: ';
@@ -320,15 +307,12 @@ class _ChatbotState extends State<Chatbot> {
 
         log(placesList.length.toString());
         for(int i =0 ; i<placesList.length; i++){
-          //if(placesList[i].openingHours.openNow != null && placesList[i].openingHours.openNow == open){
-          //log("open");
 
           for(int j=0 ; j<placesList[i].services.length ; j++) {
             for(int k=0 ; k<services.length; k++){
               if(placesList[i].services[j] == services[k]) {
                 //log(placesList[i].services[j]);
 
-                if(placesList[i].crowded >= 0.5 && (crowdedRate == "Yes" || crowdedRate == "It doesnt matter")){
 
                   if(placesList[i].quiet >= 0.5 && (quietRate == "Yes" || quietRate == "It doesnt matter")){
 
@@ -468,160 +452,30 @@ class _ChatbotState extends State<Chatbot> {
 
                   }
 
-                }else{
 
-                  if(placesList[i].quiet >= 0.5 && (quietRate == "Yes" || quietRate == "It doesnt matter")){
-
-                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
-
-                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }else{
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }
-
-                    }else{
-
-                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }else{
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }
-
-                    }
-
-                  }else{
-
-                    if(placesList[i].food >= 0.5 && (foodRate == "Yes" || foodRate == "It doesnt matter")){
-
-                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }else{
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }
-
-                    }else{
-
-                      if(placesList[i].tech >= 0.5 && (techRate == "Yes" || techRate == "It doesnt matter")){
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }else{
-                        setState(() {
-                          final CardButton btn = new CardButton (text: "Open",
-                              postback: placesList[i].placeId);
-                          final List<CardButton> buttons = new List<
-                              CardButton>();
-                          buttons.add(btn);
-                          final DialogCard card = new DialogCard (
-                              title: placesList[i].name, buttons: buttons);
-                          Message msg = new Message(card: card);
-                          addMessage(msg);
-                        });
-                        numOfMatches++;
-
-                      }
-
-                    }
-
-                  }
-
-                }
 
               }
             }
           }
-          // }
         }
 
         if(numOfMatches == 0){
           setState(() {
             final DialogText text = new DialogText(
-                text: ["No workspaces was found that matches your preferences"]);
+                text: ["No workspaces were found that matches your preferences"]);
             Message msg = new Message(text: text);
             addMessage(msg);
+          });
+          Future.delayed(Duration(seconds: 2), ()
+          {
+            setState(() {
+              final DialogText text = new DialogText(
+                  text: [
+                    "Would you like to find workspaces again?\n1. Yes\n2. No"
+                  ]);
+              Message msg = new Message(text: text);
+              addMessage(msg);
+            });
           });
         }
 
