@@ -689,9 +689,11 @@ class _PlaceInfoState extends State<PlaceInfo> {
     print(parameter);
     onShare(uri);
   }
+
+  //the message that will be sent
   void onShare(Uri uri) async {
     final box = context.findRenderObject() as RenderBox;
-    await Share.share(uri.toString(),
+    await Share.share("Check out this workspace I found in Focus Spot Finder \n"+uri.toString(),
         subject: 'Focus Spot Finder',
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }

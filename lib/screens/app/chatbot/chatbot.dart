@@ -36,7 +36,7 @@ class _ChatbotState extends State<Chatbot> {
   User user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
-  //place date
+  //place data
   String type;
   bool open;
   List<String> services = [];
@@ -44,11 +44,12 @@ class _ChatbotState extends State<Chatbot> {
   String foodRate;
   String techRate;
 
-  int numOfMatches = 0;
+  int numOfMatches = 0; //number of places that matches the user inputs
 
   @override
   void initState() {
     super.initState();
+    //to connect to dialogFlow and authenticate the user
     auth();
     FirebaseFirestore.instance
         .collection("Users")
@@ -62,6 +63,7 @@ class _ChatbotState extends State<Chatbot> {
   }
 
   auth () async {
+    //connect to dialog flow
     DialogAuthCredentials credentials = await DialogAuthCredentials.fromFile("assets/service.json");
     DialogFlowtter instance = DialogFlowtter(credentials: credentials,);
     dialogFlowtter = instance;
@@ -118,6 +120,7 @@ class _ChatbotState extends State<Chatbot> {
                     color: Color.fromRGBO(220, 220, 220, 1),
                   ),
                   padding: EdgeInsets.only(left: 15),
+                  //text field bar where the user enter input
                   child: TextFormField(
                     controller: _controller,
                     decoration: InputDecoration(
@@ -142,15 +145,14 @@ class _ChatbotState extends State<Chatbot> {
                   ),
                 ),
 
+                //send icon
                 trailing: IconButton(
-
                     icon: Icon(
                       Icons.send,
                       size: 30.0,
                       color: Colors.indigo,
                     ),
                     onPressed: () {
-
                       if (_controller.text.isEmpty) {
                         print("empty message");
                       } else {
