@@ -102,7 +102,7 @@ class InitialScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 60,
+                height: 200,
               ),
               //copyrights sentence
               Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",

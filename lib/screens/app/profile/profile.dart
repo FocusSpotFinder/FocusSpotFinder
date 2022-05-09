@@ -308,7 +308,7 @@ class _ProfileState extends State<Profile> {
                       ),
 
                       SizedBox(
-                        height: 100,
+                        height: 120,
                       ),
                       Text("All copyrights are reserved for King Saud University, Riyadh, Saudi Arabia 2022",
                           textAlign: TextAlign.center,
